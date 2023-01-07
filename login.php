@@ -1,49 +1,28 @@
 <?php
-  // Start session
-  session_start();
 
-  // Check if user is already logged in
-  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-    // Redirect to homepage
-    header('Location: index');
-    exit;
-  }
+include_once 'includes/db_conn.php';
+include_once 'includes/functions.php';
 
-  // Check if form has been submitted
-  if (isset($_POST['submit'])) {
-    // Include database connection and functions
-    require_once 'includes/db_conn.php';
-    require_once 'includes/functions.php';
+sec_session_start();
 
-    // Get form data
-    //Escapes special characters in a string for use in an SQL statement, taking into account the current charset of the connection
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+if (login_check() == true) {
+    header("Location: index.php");
+    exit();
+}
 
-    // Check if email and password are empty
-    if (empty($email) || empty($password)) {
-      $error = 'All fields are required';
+$error_msg = "";
+
+if (isset($_POST['email'], $_POST['password'])) {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+    if (login($email, $password) == true) {
+        header("Location: index.php");
+        exit();
     } else {
-      // Check if email is valid
-      if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-        $error = 'Invalid email';
-      } else {
-        // Check if email and password match a user in the database
-        $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-        $result = mysqli_query($conn, $query);
-        if (mysqli_num_rows($result) == 1) {
-          // User found, log in user
-          $_SESSION['logged_in'] = true;
-          // Redirect to homepage
-          header('Location: index');
-          exit;
-        } else {
-          // Email and password do not match
-          $error = 'Incorrect email or password';
-        }
-      }
+        $error_msg .= '<p class="error">Invalid email or password</p>';
     }
-  }
+}
 ?>
 <!DOCTYPE html>
 <html>

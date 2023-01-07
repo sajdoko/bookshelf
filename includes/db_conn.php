@@ -6,10 +6,10 @@
   define('DB_NAME', 'bookshelf');
 
   // Connect to database
-  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+  $mysqli = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
   // Check connection
-  if (!$conn) {
+  if (!$mysqli) {
     die('Connection failed: ' . mysqli_connect_error());
   }
 ?>

@@ -1,0 +1,20 @@
+bookshelf/
+  ├── assets/
+  |   ├── css/
+  |   |   ├── style.css
+  |   ├── img/
+  |   |   ├── book-cover-1.jpg
+  |   |   ├── book-cover-2.jpg
+  |   |   ├── ...
+  ├── includes/
+  |   ├── header.php
+  |   ├── footer.php
+  |   ├── functions.php
+  ├── pages/
+  |   ├── browse.php
+  |   ├── account.php
+  |   ├── cart.php
+  ├── index.php
+  ├── login.php
+  ├── register.php
+  ├── search.php

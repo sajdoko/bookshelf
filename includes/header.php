@@ -1,6 +1,7 @@
 <?php
-include_once 'includes/db_conn.php';
-include_once 'includes/functions.php';
+  include_once 'includes/db_conn.php';
+  include_once 'includes/functions.php';
+  sec_session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,15 +31,21 @@ include_once 'includes/functions.php';
           <li class="nav-item">
             <a class="nav-link" href="#">Cart</a>
           </li>
-            <?php
-            if (login_check() == true) {
-              echo "<li><a href='my_orders'>My orders</a></li>";
-              echo "<li><a href='logout'>Sign out</a></li>";
-            } else {
-              echo "<li><a href='login'>Sign in</a></li>";
-              echo "<li><a href='register'>Register</a></li>";
-            }
-            ?>
+          <?php if (login_check()) : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="my-orders">My orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="logout">Sign out</a>
+            </li>
+          <?php else : ?>
+            <li class="nav-item">
+              <a class="nav-link" href="login">Sign in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register">Register</a>
+            </li>
+          <?php endif; ?>
         </ul>
       </div>
     </nav>

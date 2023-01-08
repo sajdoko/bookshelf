@@ -96,13 +96,31 @@ function add_order($user_id, $book_id, $quantity, $total_price) {
   return $result;
 }
 
+function sec_session_start() {
+  $session_name = 'sec_session_id';
+  $secure = false;
+  $httponly = true;
+
+  if (ini_set('session.use_only_cookies', 1) === false) {
+    header("Location: error.php?err=Could not initiate a safe session (ini_set)");
+    exit();
+  }
+
+  $cookieParams = session_get_cookie_params();
+  session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
+  session_name($session_name);
+  session_start();
+  session_regenerate_id(true);
+}
+
 function login_check() {
   global $mysqli;
+
   // Check if all session variables are set
-  if (isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
+  if (isset($_SESSION['user_id'], $_SESSION['email'], $_SESSION['login_string'])) {
     $user_id = $_SESSION['user_id'];
     $login_string = $_SESSION['login_string'];
-    $username = $_SESSION['username'];
+    $email = $_SESSION['email'];
 
     // Get the user-agent string of the user
     $user_browser = $_SERVER['HTTP_USER_AGENT'];
@@ -140,50 +158,48 @@ function login_check() {
   }
 }
 
-function sec_session_start() {
-  $session_name = 'sec_session_id';
-  $secure = false;
-  $httponly = true;
 
-  if (ini_set('session.use_only_cookies', 1) === false) {
-    header("Location: error.php?err=Could not initiate a safe session (ini_set)");
-    exit();
-  }
-
-  $cookieParams = session_get_cookie_params();
-  session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], $secure, $httponly);
-  session_name($session_name);
-  session_start();
-  session_regenerate_id(true);
-}
-
+/**
+ * Perform the login operation.
+ *
+ * @param string $email The email of the user.
+ * @param string $password The password of the user.
+ * @return bool True if the login was successfull, false otherwise.
+ */
 function login($email, $password) {
   global $mysqli;
-  if ($stmt = $mysqli->prepare("SELECT user_id, password FROM users WHERE email = ? LIMIT 1")) {
-    $stmt->bind_param('s', $email);
-    $stmt->execute();
-    $stmt->store_result();
 
-    $stmt->bind_result($user_id, $db_password);
-    $stmt->fetch();
-
-    if ($stmt->num_rows == 1) {
-      if (password_verify($password, $db_password)) {
-        $user_browser = $_SERVER['HTTP_USER_AGENT'];
-        $user_id = preg_replace("/[^0-9]+/", "", $user_id);
-        $_SESSION['user_id'] = $user_id;
-        $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $email);
-        $_SESSION['username'] = $username;
-        $_SESSION['login_string'] = hash('sha512', $db_password . $user_browser);
-
-        return true;
-      } else {
-        return false;
-      }
-    } else {
+  // Check if email and password are not empty
+  if (empty($email) || empty($password)) {
       return false;
-    }
-  } else {
-    return false;
   }
+
+  // Check if user exists in the database
+  if ($stmt = $mysqli->prepare("SELECT user_id, password FROM users WHERE email = ? LIMIT 1")) {
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+      $stmt->store_result();
+
+      // If the user exists, get the user_id and hashed password
+      if ($stmt->num_rows == 1) {
+          $stmt->bind_result($user_id, $hashed_password);
+          $stmt->fetch();
+
+          // Check if the password is correct
+          if (password_verify($password, $hashed_password)) {
+              // Start a new session
+              session_start();
+
+              // Store the user_id and email in the session
+              $_SESSION['user_id'] = $user_id;
+              $_SESSION['email'] = $email;
+              $_SESSION['login_string'] = hash('sha512', $hashed_password . $_SERVER['HTTP_USER_AGENT']);
+
+              // Return true to indicate successful login
+              return true;
+          }
+      }
+  }
+  // Return false if login fails
+  return false;
 }

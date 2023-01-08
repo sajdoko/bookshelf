@@ -3,6 +3,13 @@
   require_once 'includes/header.php';
 ?>
 
+<?php
+// echo "<pre>";
+// print_r($_SESSION);
+// var_dump(login_check());
+// echo "</pre>";
+?>
+
 <main>
   <!-- Use Bootstrap grid system to display featured books in a grid -->
   <div class="container mt-5">

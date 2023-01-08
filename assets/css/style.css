@@ -1,0 +1,13 @@
+main {
+  min-height: 75vh;
+}
+
+.search-hero {
+  padding-top: 10em;
+  padding-bottom: 10em;
+}
+
+.search-hero-browse {
+  padding-top: 2em;
+  padding-bottom: 2em;
+}

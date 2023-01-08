@@ -77,7 +77,7 @@ if (isset($_POST['email'], $_POST['password'], $_POST['first_name'], $_POST['las
   <?php endif; ?>
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <form id="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" role="form" style="display: block;">
+      <form id="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" role="form" style="display: block;">
         <div class="form-group">
           <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
         </div>

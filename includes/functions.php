@@ -171,35 +171,88 @@ function login($email, $password) {
 
   // Check if email and password are not empty
   if (empty($email) || empty($password)) {
-      return false;
+    return false;
   }
 
   // Check if user exists in the database
   if ($stmt = $mysqli->prepare("SELECT user_id, password FROM users WHERE email = ? LIMIT 1")) {
-      $stmt->bind_param('s', $email);
-      $stmt->execute();
-      $stmt->store_result();
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-      // If the user exists, get the user_id and hashed password
-      if ($stmt->num_rows == 1) {
-          $stmt->bind_result($user_id, $hashed_password);
-          $stmt->fetch();
+    // If the user exists, get the user_id and hashed password
+    if ($stmt->num_rows == 1) {
+      $stmt->bind_result($user_id, $hashed_password);
+      $stmt->fetch();
 
-          // Check if the password is correct
-          if (password_verify($password, $hashed_password)) {
-              // Start a new session
-              session_start();
+      // Check if the password is correct
+      if (password_verify($password, $hashed_password)) {
+        // Start a new session
+        session_start();
 
-              // Store the user_id and email in the session
-              $_SESSION['user_id'] = $user_id;
-              $_SESSION['email'] = $email;
-              $_SESSION['login_string'] = hash('sha512', $hashed_password . $_SERVER['HTTP_USER_AGENT']);
+        // Store the user_id and email in the session
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['email'] = $email;
+        $_SESSION['login_string'] = hash('sha512', $hashed_password . $_SERVER['HTTP_USER_AGENT']);
 
-              // Return true to indicate successful login
-              return true;
-          }
+        // Return true to indicate successful login
+        return true;
       }
+    }
   }
   // Return false if login fails
+  return false;
+}
+
+// Get a user's info from the database
+function get_user_info($user_id) {
+  global $mysqli;
+
+  $query = "SELECT first_name, last_name, email, address, city, country, zipcode, phone FROM users WHERE user_id = ?";
+  if ($stmt = $mysqli->prepare($query)) {
+    $stmt->bind_param('i', $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+    $stmt->bind_result($first_name, $last_name, $email, $address, $city, $country, $zipcode, $phone);
+    $stmt->fetch();
+    return array(
+      'first_name' => $first_name,
+      'last_name' => $last_name,
+      'email' => $email,
+      'address' => $address,
+      'city' => $city,
+      'country' => $country,
+      'zipcode' => $zipcode,
+      'phone' => $phone
+    );
+  }
+}
+
+// Check if an email is already in use
+function email_exists($email) {
+  global $mysqli;
+
+  $query = "SELECT user_id FROM users WHERE email = ?";
+  if ($stmt = $mysqli->prepare($query)) {
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Update a user's info in the database
+function update_user_info($user_id, $first_name, $last_name, $address, $city, $country, $zipcode, $phone) {
+  global $mysqli;
+
+  $query = "UPDATE users SET first_name = ?, last_name = ?, address = ?, city = ?, country = ?, zipcode = ?, phone = ? WHERE user_id = ?";
+  if ($stmt = $mysqli->prepare($query)) {
+    $stmt->bind_param('sssssssi', $first_name, $last_name,  $address, $city, $country, $zipcode, $phone, $user_id);
+    $stmt->execute();
+    return true;
+  }
   return false;
 }

@@ -15,7 +15,7 @@
     }
   }
 ?>
-<main>
+
   <div class="container mt-5">
     <h2 class="text-center mb-5">Log In</h2>
     <div class="row">
@@ -35,10 +35,10 @@
           </div>
           <input type="submit" name="submit" value="Log In" class="btn btn-primary btn-block">
         </form>
-        <p class="text-center mt-5">Don't have an account? <a href="register">Sign up</a></p>
+        <p class="text-center mt-5">Don't have an account? <a href="/register">Sign up</a></p>
       </div>
     </div>
   </div>
-</main>
+
 <!-- Include footer -->
 <?php include 'includes/footer.php'; ?>

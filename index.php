@@ -10,9 +10,22 @@
 // echo "</pre>";
 ?>
 
-<main>
-  <!-- Use Bootstrap grid system to display featured books in a grid -->
-  <div class="container mt-5">
+  <section class="container text-center search-hero">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form action="/pages/browse" method="post">
+          <div class="input-group mb-3">
+            <input type="text" name="title" class="form-control" placeholder="Which title are you looking for?" required aria-label="Which title are you looking for?" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-outline-primary" type="button" id="button-addon2">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
     <h2 class="text-center mb-5">Featured Books</h2>
     <div class="row">
       <!-- Display a list of featured books here -->
@@ -35,6 +48,6 @@
       ?>
     </div>
   </div>
-</main>
+
 
 <?php require_once 'includes/footer.php'; ?>

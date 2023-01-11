@@ -20,7 +20,7 @@
 
 
 <header>
-  <div class="d-flex flex-column flex-md-row align-items-center p-x3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+  <div class="d-flex flex-column flex-md-row align-items-center p-x3 px-md-4 bg-white border-bottom box-shadow">
     <a class="mr-md-auto navbar-brand" href="/"><img src="/assets/img/logo.png" width="300" alt="The Bookshelf"></a>
     <!-- Use Bootstrap navbar component -->
     <nav class="navbar navbar-expand-lg navbar-light">

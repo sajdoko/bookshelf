@@ -3,11 +3,19 @@ main {
 }
 
 .search-hero {
-  padding-top: 10em;
-  padding-bottom: 10em;
+  padding: 6em 0;
+  background-image: url('../img/open-book-hero.jpg');
+  width: 100%;
+  height: auto;
+  background-size: cover;
 }
 
 .search-hero-browse {
   padding-top: 2em;
   padding-bottom: 2em;
+}
+
+.featured-categories .col-md-2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
 }

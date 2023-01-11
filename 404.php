@@ -9,7 +9,7 @@
       <h1>404 Page Not Found</h1>
       <p>We're sorry, but the page you were looking for could not be found.</p>
       <p>Please check the URL and try again.</p>
-      <p><a href=".">Return to the homepage</a></p>
+      <p><a href="/">Return to the homepage</a></p>
     </div>
   </div>
 </div>

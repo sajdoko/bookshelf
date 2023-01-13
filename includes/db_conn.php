@@ -2,7 +2,7 @@
   // Database connection constants
   define('DB_HOST', 'localhost');
   define('DB_USER', 'root');
-  define('DB_PASSWORD', '');
+  define('DB_PASSWORD', '061191');
   define('DB_NAME', 'bookshelf');
 
   // Connect to database

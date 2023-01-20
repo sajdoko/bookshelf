@@ -13,7 +13,7 @@
 
     // Check for empty fields
     if (empty($title) && empty($author) && empty($language) && empty($publisher)) {
-      array_push($errors, "At least one search field is required.");
+      $errors[] = "At least one search field is required.";
     }
 
     // If no errors, search for books in the database

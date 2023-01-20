@@ -11,7 +11,7 @@ if (isset($_GET['err'])) {
   $error_msg .= '<p class="text-danger">' . filter_input(INPUT_GET, 'err', FILTER_SANITIZE_STRING) . '</p>';
 }
 
-if (login_check() == false) {
+if (!login_check()) {
   $error_msg .= '<p class="text-danger">You are not authorized to access this page.</p>';
 }
 

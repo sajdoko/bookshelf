@@ -1,15 +1,25 @@
 <?php
-  // Database connection constants
-  define('DB_HOST', 'localhost');
-  define('DB_USER', 'root');
-  define('DB_PASSWORD', '061191');
-  define('DB_NAME', 'bookshelf');
+  function FormatErrors($errors): void
+  {
+    /* Display errors. */
+    echo 'Error information: <br/>';
 
-  // Connect to database
-  $mysqli = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-  // Check connection
-  if (!$mysqli) {
-    die('Connection failed: ' . mysqli_connect_error());
+    foreach ($errors as $error) {
+      echo 'SQLSTATE: '.$error['SQLSTATE'].'<br/>';
+      echo 'Code: '.$error['code'].'<br/>';
+      echo 'Message: '.$error['message'].'<br/>';
+    }
   }
-?>
+
+  $serverName = 'SAJDOKO-PC-PUNA\SQLEXPRESS';
+  $connectionOptions = [
+    'Database' => 'bookshelf',
+    'Uid' => 'bookshelf',
+    'PWD' => '061191'
+  ];
+
+  //Establishes the connection
+  $conn = sqlsrv_connect($serverName, $connectionOptions);
+  if ($conn === false) {
+    die(FormatErrors(sqlsrv_errors()));
+  }

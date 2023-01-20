@@ -16,3 +16,10 @@
     <script src="/assets/js/script.js"></script>
   </body>
 </html>
+<?php
+
+  /** @var $conn $conn */
+  if ($conn) {
+    sqlsrv_close($conn);
+  }
+?>

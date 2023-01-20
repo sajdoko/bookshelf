@@ -1,5 +1,4 @@
 <?php
-include_once 'includes/db_conn.php';
 include_once 'includes/functions.php';
 
 sec_session_start();

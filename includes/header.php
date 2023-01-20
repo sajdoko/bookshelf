@@ -1,10 +1,11 @@
 <?php
-  include_once 'db_conn.php';
-  include_once 'functions.php';
+    // Include database connection
+  require_once 'db_conn.php';
+  require_once 'functions.php';
   sec_session_start();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">

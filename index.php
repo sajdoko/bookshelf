@@ -3,13 +3,6 @@ $page_title = "Home";
 require_once 'includes/header.php';
 ?>
 
-<?php
-// echo "<pre>";
-// print_r($_SESSION);
-// var_dump(login_check());
-// echo "</pre>";
-?>
-
 <section class="search-hero text-center">
   <div class="container">
     <div class="row">
@@ -18,7 +11,7 @@ require_once 'includes/header.php';
           <div class="input-group mb-3">
             <input type="text" name="title" class="form-control" placeholder="Which title are you looking for?" required aria-label="Which title are you looking for?" aria-describedby="button-addon2">
             <div class="input-group-append">
-              <button type="submit" class="btn btn-primary" type="button" id="button-addon2">Search</button>
+              <button type="submit" class="btn btn-primary" id="button-addon2">Search</button>
             </div>
           </div>
         </form>
@@ -79,11 +72,11 @@ require_once 'includes/header.php';
       // Display book information and a "Buy Now" button
       echo '<div class="col">';
       echo '<div class="card shadow-sm">';
-      echo '<img src="' . $book['image_url'] . '" class="bd-placeholder-img card-img-top" alt="Book cover">';
+//      echo '<img src="' . $book['image_url'] . '" class="bd-placeholder-img card-img-top" alt="Book cover">';
       echo '<div class="card-body">';
-      echo '<h5 class="card-title">' . $book['title'] . '</h5>';
-      echo '<p class="card-text">' . $book['author'] . '</p>';
-      echo '<p class="card-text">' . $book['price'] . '</p>';
+      echo '<h5 class="card-title">' . $book['Title'] . '</h5>';
+      echo '<p class="card-text">' . $book['Author'] . '</p>';
+      echo '<p class="card-text">' . $book['Price'] . '</p>';
       echo '<a href="#" class="btn btn-primary">Buy Now</a>';
       echo '</div>';
       echo '</div>';

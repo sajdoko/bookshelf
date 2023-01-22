@@ -39,7 +39,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/pages/cart">Cart</a>
           </li>
-          <?php if (login_check()) : ?>
+          <?php if (login_check_customer()) : ?>
             <li class="nav-item">
               <a class="nav-link btn btn-sm btn-outline-warning" href="/logout">Sign out</a>
             </li>

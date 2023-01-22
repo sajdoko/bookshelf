@@ -11,12 +11,33 @@
     }
   }
 
-  $serverName = 'SAJDOKO-PC-PUNA\SQLEXPRESS';
+  $serverName = '';
   $connectionOptions = [
-    'Database' => 'bookshelf',
-    'Uid' => 'bookshelf',
-    'PWD' => '061191'
+    'Database' => '',
+    'Uid' => '',
+    'PWD' => ''
   ];
+
+  $env = file(dirname(__FILE__, 2).'/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+  foreach ($env as $line) {
+    $line = trim($line);
+    if (str_starts_with($line, '#')) {
+      continue;
+    }
+    $variable = explode('=', $line);
+    if ($variable[0] == 'DB_HOST') {
+      $serverName = $variable[1];
+    }
+    elseif ($variable[0] == 'DB_USER') {
+      $connectionOptions['Uid'] = $variable[1];
+    }
+    elseif ($variable[0] == 'DB_PASSWORD') {
+      $connectionOptions['PWD'] = $variable[1];
+    }
+    elseif ($variable[0] == 'DB_NAME') {
+      $connectionOptions['Database'] = $variable[1];
+    }
+  }
 
   //Establishes the connection
   $conn = sqlsrv_connect($serverName, $connectionOptions);

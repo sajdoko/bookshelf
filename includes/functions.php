@@ -93,55 +93,35 @@
   function get_featured_books(): array
   {
     // Select featured books
-    $query = "SELECT TOP (10) * FROM Books";
+    $query = "
+              SELECT TOP (3) *
+                FROM BOOK
+                JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
+                JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
+                LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
+                LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
+                LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
+                LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
+            ";
 
     return retrieveAllRows($query);
   }
 
   /**
-   * Get a book by its ID.
+   * Get a book by its isbn.
    *
-   * @param  int  $id  The ID of the book.
+   * @param  string  $isbn  The isbn of the book.
    *
    * @return array An array containing the book's data.
    */
-  function get_book_by_id(int $id): array
+  function get_book_by_isbn(string $isbn): array
   {
-    // Select book by ID
-    $query = "SELECT * FROM books WHERE book_id = ?";
+    // Select book by isbn
+    $query = "SELECT * FROM BOOK WHERE Boo_ISBN = ?";
 
-    return retrieveOneRow($query, [$id]);
+    return retrieveOneRow($query, [$isbn]);
   }
 
-  /**
-   * Get a user by their ID.
-   *
-   * @param  int  $id  The ID of the user.
-   *
-   * @return array An array containing the user's data.
-   */
-  function get_user_by_id(int $id): array
-  {
-    // Select user by ID
-    $query = "SELECT * FROM users WHERE user_id = ?";
-
-    return retrieveOneRow($query, [$id]);
-  }
-
-  /**
-   * Get a user's orders by their ID.
-   *
-   * @param  int  $id  The ID of the user.
-   *
-   * @return array An array of orders.
-   */
-  function get_orders_by_user_id(int $id): array
-  {
-    // Select orders by user ID
-    $query = "SELECT * FROM orders WHERE user_id = ?";
-
-    return retrieveAllRows($query, [$id]);
-  }
 
   /**
    * Add a new order to the database.
@@ -180,26 +160,25 @@
   }
 
   /**
-   * Check of the user is logged in by controlling the session.
+   * Check of the customer is logged in by controlling the session.
    *
    * @return bool
    */
-  function login_check(): bool
+  function login_check_customer(): bool
   {
     // Check if all session variables are set
-    if (isset($_SESSION['user_id'], $_SESSION['email'], $_SESSION['login_string'])) {
-      $user_id = $_SESSION['user_id'];
+    if (isset($_SESSION['Cus_Id'], $_SESSION['Cus_Email'], $_SESSION['login_string'])) {
+      $Cus_Id = $_SESSION['Cus_Id'];
       $login_string = $_SESSION['login_string'];
-      $email = $_SESSION['email'];
 
       // Get the user-agent string of the user
       $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-      $query = 'SELECT * FROM Users WHERE UserID = ?';
-      $user = retrieveOneRow($query, [$user_id]);
+      $query = 'SELECT Cus_Pass FROM CUSTOMER WHERE Cus_Id = ?';
+      $user = retrieveOneRow($query, [$Cus_Id]);
 
       if ($user) {
-        $login_check = hash('sha512', $user['Password'].$user_browser);
+        $login_check = hash('sha512', $user['Cus_Pass'].$user_browser);
         if ($login_check == $login_string) {
           // Logged In!!!!
           return true;
@@ -224,33 +203,33 @@
   /**
    * Perform the login operation.
    *
-   * @param  string  $email  The email of the user.
-   * @param  string  $password  The password of the user.
+   * @param  string  $Cus_Email  The email of the user.
+   * @param  string  $Cus_Pass  The password of the user.
    *
    * @return bool True if the login was successfully, false otherwise.
    */
-  function login(string $email, string $password): bool
+  function login_customer(string $Cus_Email, string $Cus_Pass): bool
   {
     // Check if email and password are not empty
-    if (empty($email) || empty($password)) {
+    if (empty($Cus_Email) || empty($Cus_Pass)) {
       return false;
     }
 
-    $query = 'SELECT TOP 1 * FROM Users WHERE Email = ?';
-    $user = retrieveOneRow($query, [$email]);
+    $query = 'SELECT Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
+    $user = retrieveOneRow($query, [$Cus_Email]);
 
     // Check if user exists in the database
     if ($user) {
 
       // Check if the password is correct
-      if (password_verify($password, $user['Password'])) {
+      if (password_verify($Cus_Pass, $user['Cus_Pass'])) {
         // Start a new session
         session_start();
 
         // Store the user_id and email in the session
-        $_SESSION['user_id'] = $user['UserID'];
-        $_SESSION['email'] = $email;
-        $_SESSION['login_string'] = hash('sha512', $user['Password'].$_SERVER['HTTP_USER_AGENT']);
+        $_SESSION['Cus_Id'] = $user['Cus_Id'];
+        $_SESSION['Cus_Email'] = $Cus_Email;
+        $_SESSION['login_string'] = hash('sha512', $user['Cus_Pass'].$_SERVER['HTTP_USER_AGENT']);
 
         // Return true to indicate successful login
         return true;

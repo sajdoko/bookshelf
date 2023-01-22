@@ -7,7 +7,7 @@
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-    if (login($email, $password)) {
+    if (login_customer($email, $password)) {
       header("Location: /");
       exit();
     } else {

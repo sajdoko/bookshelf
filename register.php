@@ -3,14 +3,14 @@
   $page_title = "Register";
   require_once 'includes/header.php';
 
-  if (login_check()) {
+  if (login_check_customer()) {
     header("Location: /");
     exit;
   }
 
   $error_msg = "";
 
-  if (isset($_POST['email'], $_POST['password'], $_POST['username'], $_POST['first_name'], $_POST['last_name'], $_POST['address'], $_POST['city'], $_POST['country'], $_POST['zipcode'])) {
+  if (isset($_POST['email'], $_POST['password'], $_POST['first_name'], $_POST['last_name'], $_POST['address'], $_POST['city'], $_POST['country'], $_POST['zipcode'])) {
     // Sanitize and validate the data passed in
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $email = filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -29,7 +29,6 @@
       }
       else {
 
-        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
         $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
 //        $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_STRING);
@@ -37,12 +36,12 @@
 //        $country = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
 //        $zipcode = filter_input(INPUT_POST, 'zipcode', FILTER_SANITIZE_STRING);
 
-        $user = retrieveOneRow('SELECT TOP 1 * FROM Users WHERE Email = ?', [$email]);
+        $user = retrieveOneRow('SELECT TOP 1 * FROM CUSTOMER WHERE Email = ?', [$email]);
         // Check if email already exists
         if (!$user) {
 
-          $query = 'INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?)';
-          if (!insertOrUpdateRows($query, [$username, $email, $first_name, $last_name, 4, $password])) {
+          $query = 'INSERT INTO CUSTOMER VALUES (?, ?, ?, ?, ?, ?)';
+          if (!insertOrUpdateRows($query, [$email, $first_name, $last_name, 4, $password])) {
             $error_msg .= '<p class="text-danger">Registration failure: INSERT</p>';
           } else {
               header('Location: login');
@@ -70,9 +69,6 @@
             <div class="col-md-6 offset-md-3">
                 <form id="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" role="form"
                       style="display: block;">
-                    <div class="form-group">
-                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
-                    </div>
                     <div class='form-group'>
                         <input type='email' name='email' id='email' tabindex='1' class='form-control' placeholder='Email' value=''>
                     </div>

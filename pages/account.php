@@ -3,7 +3,7 @@
   require_once '../includes/header.php';
 
   // Check if the user is logged in
-  if (!login_check()) {
+  if (!login_check_customer()) {
     header("Location: /login");
     exit;
   }

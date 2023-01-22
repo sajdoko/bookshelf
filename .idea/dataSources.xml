@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlserver://SAJDOKO-PC-PUNA\SQLEXPRESS;database=bookshelf</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="bookshelf@SAJDOKO-DESKTOP" uuid="48e62721-0f8d-44f6-8c3c-e38cb488f3e9">
+      <driver-ref>sqlserver.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://SAJDOKO-DESKTOP\SQLEXPRESS;database=bookshelf</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

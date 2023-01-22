@@ -64,19 +64,24 @@ require_once 'includes/header.php';
 
 <div class="container pt-5">
   <h2 class="text-center mb-5">Featured Books</h2>
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+  <div class="row">
     <!-- Display a list of featured books here -->
     <?php
     $featured_books = get_featured_books();
     foreach ($featured_books as $book) {
+//        echo "<pre>";
+//            print_r($book);
+//          echo '</pre>';
       // Display book information and a "Buy Now" button
-      echo '<div class="col">';
+      echo '<div class="col-4">';
       echo '<div class="card shadow-sm">';
-//      echo '<img src="' . $book['image_url'] . '" class="bd-placeholder-img card-img-top" alt="Book cover">';
+      echo '<img src="' . $book['Boo_Img_url'] . '" class="bd-placeholder-img card-img-top" alt="Book cover">';
       echo '<div class="card-body">';
-      echo '<h5 class="card-title">' . $book['Title'] . '</h5>';
-      echo '<p class="card-text">' . $book['Author'] . '</p>';
-      echo '<p class="card-text">' . $book['Price'] . '</p>';
+      echo '<h5 class="card-title">Title: ' . $book['Boo_Title'] . '</h5>';
+      echo '<p class="card-text">Author: ' . $book['Aut_Name'] . '</p>';
+      echo '<p class="card-text">Language: ' . $book['BoL_Name'] . '</p>';
+      echo '<p class="card-text">Description: ' . $book['Boo_Description'] . '</p>';
+      echo '<p class="card-text">Price: ' . $book['Boo_Price'] . '</p>';
       echo '<a href="#" class="btn btn-primary">Buy Now</a>';
       echo '</div>';
       echo '</div>';

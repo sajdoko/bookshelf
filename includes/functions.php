@@ -190,9 +190,9 @@
   /**
    * Check of the customer is logged in by controlling the session.
    *
-   * @return bool
+   * @return array|bool Returns array if customer is logged in, false if not.
    */
-  function login_check_customer(): bool
+  function login_check_customer(): array|bool
   {
     // Check if all session variables are set
     if (isset($_SESSION['Cus_Id'], $_SESSION['Cus_Email'], $_SESSION['login_string'])) {
@@ -202,14 +202,14 @@
       // Get the user-agent string of the user
       $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-      $query = 'SELECT Cus_Pass FROM CUSTOMER WHERE Cus_Id = ?';
+      $query = 'SELECT * FROM CUSTOMER WHERE Cus_Id = ?';
       $user = retrieveOneRow($query, [$Cus_Id]);
 
       if ($user) {
         $login_check = hash('sha512', $user['Cus_Pass'].$user_browser);
         if ($login_check == $login_string) {
           // Logged In!!!!
-          return true;
+          return $user;
         }
         else {
           // Not logged in

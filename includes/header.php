@@ -3,6 +3,7 @@
   require_once 'db_conn.php';
   require_once 'functions.php';
   sec_session_start();
+  $logged_in_customer = login_check_customer();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,8 +34,8 @@
         </ul>
 
         <div class='col-md-3 text-end'>
-          <?php if (login_check_customer()) : ?>
-            <a href='/logout' class='btn btn-outline-primary me-2'>Sign out</a>
+          <?php if ($logged_in_customer) : ?>
+            Hi <?php echo $logged_in_customer['Cus_FirstName']; ?><a href='/logout' class='btn btn-link me-2'>Sign out</a>
           <?php else : ?>
             <a href='../pages/login' class='btn btn-outline-primary me-2'>Sign in</a>
             <a href='../pages/register' class='btn btn-primary'>Register</a>

@@ -1,10 +1,14 @@
+body {
+  margin: 0 15px;
+}
+
 main {
-  min-height: 75vh;
+  min-height: 70vh;
 }
 
 .search-hero {
   padding: 6em 0;
-  background-image: url('../img/open-book-hero.jpg');
+  background-image: url('../images/open-book-hero.jpg');
   width: 100%;
   height: auto;
   background-size: cover;
@@ -18,4 +22,17 @@ main {
 .featured-categories .col-md-2 {
   margin-bottom: 1.5rem;
   text-align: center;
+}
+
+.form-signin {
+  max-width: 450px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input {
+  margin: 10px 0;
 }

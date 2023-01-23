@@ -23,71 +23,67 @@ require_once 'includes/header.php';
 
 <div class="container featured-categories my-5">
   <div class="row">
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
-    <div class="col-md-2">
-      <a href="#">
-        <img src="https://via.placeholder.com/150x150?text=150x150" alt="Image" class="rounded-circle mx-auto d-block">
-      </a>
-      <h4 class="pt-2">Heading</h4>
-    </div>
+    <?php foreach (get_top_genres_list(6) as $genre): ?>
+        <div class="col-sm-6 col-md-2">
+        <a href='/genre/<?php echo create_url_string($genre['Gen_Name']); ?>' title="<?php echo $genre['Gen_Name']; ?>" class='text-decoration-none'>
+            <img src="/assets/images/genres/<?php echo lcfirst($genre['Gen_Name']); ?> book.png" width="150" alt="Image" class="rounded mx-auto d-block">
+          <h4 class='display-6'><?php echo $genre['Gen_Name']; ?>(<?php echo $genre['NrBooks']; ?>)</h4>
+          </a>
+
+        </div>
+    <?php endforeach; ?>
   </div>
 </div>
 
+<div class="container-fluid pt-1 px-5">
+    <h2 class='display-3 text-center my-5'>Best Sellers</h2>
+    <div class='row'>
+    <?php foreach (get_featured_books(2) as $book): ?>
+        <div class='col-sm-12 col-md-6'>
+            <div class="container">
+            <div class='row shadow'>
+                <div class='col p-4'>
+                    <strong class='d-inline-block text-primary'><?php echo $book['Gen_Name']; ?></strong>
+                    <h3 class='card-title mb-0' style='min-height: 50px;'><a href='/book/<?php echo create_url_string($book['Boo_Title']); ?>' title="<?php echo $book['Boo_Title']; ?>"><?php echo $book['Boo_Title']; ?></a></h3>
+                    <p class="m-0">Author: <?php echo $book['Aut_Name']; ?></p>
+                    <p class="p-0">Language: <?php echo $book['BoL_Name']; ?></p>
+                    <p class="card-text mb-auto">Description: <?php echo substr($book['Boo_Description'], 0, 100); ?> ...</p>
+                    <p class='card-text'><small class='text-muted'>Published: <?php echo $book['Boo_Pub_Date']->format('Y-m-d'); ?>
+                            by <?php echo $book['Pub_Name']; ?></small></p>
+                    <p class="card-text">Price: <?php echo $book['Boo_Price']; ?></p>
+                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                </div>
+                <div class='col-auto px-0'>
+                    <a href='/book/<?php echo create_url_string($book['Boo_Title']); ?>' title="<?php echo $book['Boo_Title']; ?>"><img src="<?php echo $book['Boo_Img_url']; ?>" height="350" class='bd-placeholder-img card-img-top' alt='Book cover'></a>
+                </div>
+            </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+</div>
+
 <div class="container pt-5">
-  <h2 class="text-center mb-5">Featured Books</h2>
+  <h2 class="display-3 my-5">Featured Books</h2>
   <div class="row">
     <!-- Display a list of featured books here -->
-    <?php
-    $featured_books = get_featured_books();
-    foreach ($featured_books as $book) {
-//        echo "<pre>";
-//            print_r($book);
-//          echo '</pre>';
-      // Display book information and a "Buy Now" button
-      echo '<div class="col-4">';
-      echo '<div class="card shadow-sm">';
-      echo '<img src="' . $book['Boo_Img_url'] . '" class="bd-placeholder-img card-img-top" alt="Book cover">';
-      echo '<div class="card-body">';
-      echo '<h5 class="card-title">Title: ' . $book['Boo_Title'] . '</h5>';
-      echo '<p class="card-text">Author: ' . $book['Aut_Name'] . '</p>';
-      echo '<p class="card-text">Language: ' . $book['BoL_Name'] . '</p>';
-      echo '<p class="card-text">Description: ' . $book['Boo_Description'] . '</p>';
-      echo '<p class="card-text">Price: ' . $book['Boo_Price'] . '</p>';
-      echo '<a href="#" class="btn btn-primary">Buy Now</a>';
-      echo '</div>';
-      echo '</div>';
-      echo '</div>';
-    }
-    ?>
+    <?php foreach (get_featured_books() as $book): ?>
+        <?php //print_r($book); ?>
+      <div class="col-sm-12 col-md-4">
+          <div class="card shadow-sm">
+              <a href='/book/<?php echo create_url_string($book['Boo_Title']); ?>' title="<?php echo $book['Boo_Title']; ?>"><img src="<?php echo $book['Boo_Img_url']; ?>" class="bd-placeholder-img card-img-top" alt="Book cover"></a>
+              <div class="card-body">
+                  <h5 class="card-title" style="min-height: 50px;">Title: <?php echo $book['Boo_Title']; ?></h5>
+                  <p class="card-text">Author: <?php echo $book['Aut_Name']; ?></p>
+                  <p class="card-text">Language: <?php echo $book['BoL_Name']; ?></p>
+                  <p class="card-text">Description: <?php echo substr($book['Boo_Description'],0 , 100); ?> ...</p>
+                  <p class='card-text'><small class='text-muted'>Published: <?php echo $book['Boo_Pub_Date']->format('Y-m-d'); ?> by  <?php echo $book['Pub_Name']; ?></small></p>
+                  <p class="card-text">Price: <?php echo $book['Boo_Price']; ?></p>
+                  <a href="#" class="btn btn-primary">Add to Cart</a>
+              </div>
+          </div>
+      </div>
+    <?php endforeach; ?>
   </div>
 </div>
 

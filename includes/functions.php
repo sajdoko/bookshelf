@@ -55,7 +55,7 @@
 
     sqlsrv_free_stmt($stmt);
 
-    return $row;
+    return $row??[];
   }
 
   /**
@@ -70,31 +70,36 @@
   {
     global $conn;
 
+    $error = true;
     $stmt = sqlsrv_prepare($conn, $query, $params);
     if (!$stmt) {
       FormatErrors(sqlsrv_errors());
+      $error = false;
     } else {
       if( !sqlsrv_execute( $stmt ) ) {
         FormatErrors(sqlsrv_errors());
+        $error = false;
       }
     }
 
     sqlsrv_free_stmt($stmt);
 
-    return !$stmt??true;
+    return $error;
   }
 
 
   /**
    * Get a list of the featured books.
    *
+   * @param  int  $quantity
+   *
    * @return array An array of books.
    */
-  function get_featured_books(): array
+  function get_featured_books(int $quantity = 3): array
   {
     // Select featured books
     $query = "
-              SELECT TOP (3) *
+              SELECT TOP (?) *
                 FROM BOOK
                 JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
                 JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
@@ -102,9 +107,32 @@
                 LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
                 LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
                 LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
+                WHERE Boo_Featured = 1;
             ";
 
-    return retrieveAllRows($query);
+    return retrieveAllRows($query, [$quantity]);
+  }
+
+  /**
+   * Get a list of top genre names.
+   *
+   * @param  int  $quantity
+   *
+   * @return array An array of genre names and book counts.
+   */
+  function get_top_genres_list(int $quantity = 5): array
+  {
+    // Select featured books
+    $query = '
+              SELECT TOP (?) COUNT(B.Boo_ISBN) AS NrBooks, GENRE.Gen_Name FROM GENRE
+                  LEFT JOIN BOOK_GENRE BG on GENRE.Gen_Id = BG.Gen_Id
+                  LEFT JOIN BOOK B on B.Boo_ISBN = BG.Boo_ISBN
+                  GROUP BY GENRE.Gen_Name
+              ORDER BY NrBooks
+              DESC;
+             ';
+
+    return retrieveAllRows($query, [$quantity]);
   }
 
   /**
@@ -215,7 +243,7 @@
       return false;
     }
 
-    $query = 'SELECT Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
+    $query = 'SELECT Cus_Id, Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
     $user = retrieveOneRow($query, [$Cus_Email]);
 
     // Check if user exists in the database
@@ -240,15 +268,15 @@
   }
 
   /**
-   * Get a user's info from the database
+   * Get a customer's info from the database
    *
    * @param $user_id
    *
    * @return array
    */
-  function get_user_info($user_id): array
+  function get_customer_info($user_id): array
   {
-    $query = 'SELECT * FROM Users WHERE UserID = ?';
+    $query = 'SELECT * FROM CUSTOMER WHERE Cus_Id = ?';
     return retrieveOneRow($query, [$user_id]);
   }
 
@@ -261,7 +289,7 @@
    */
   function email_exists($email): bool
   {
-    $query = 'SELECT * FROM Users WHERE Email = ?';
+    $query = 'SELECT * FROM CUSTOMER WHERE Cus_Email = ?';
     $user = retrieveOneRow($query, [$email]);
 
     if ($user) {
@@ -276,13 +304,14 @@
    * @param $user_id
    * @param $first_name
    * @param $last_name
+   * @param $phone
    *
    * @return bool
    */
-  function update_user_info($user_id, $first_name, $last_name): bool
+  function update_user_info($user_id, $first_name, $last_name, $phone): bool
   {
-    $query = "UPDATE users SET FirstName = ?, LastName = ? WHERE UserID = ?";
-    return insertOrUpdateRows($query, [$user_id, $first_name, $last_name]);
+    $query = "UPDATE CUSTOMER SET Cus_FirstName = ?, Cus_LastName = ?, Cus_Phone = ? WHERE Cus_Id = ?";
+    return insertOrUpdateRows($query, [$first_name, $last_name, $phone, $user_id]);
   }
 
   function insertInvoice($orderID, $customerID, $invoiceDate, $totalAmount, $paid)
@@ -314,4 +343,17 @@
               WHERE InvoiceID = ?';
 
     return insertOrUpdateRows($query, [$orderID, $customerID, $invoiceDate, $totalAmount, $paid, $invoiceID]);
+  }
+
+  /**
+   * @param $title
+   *
+   * @return string
+   */
+  function create_url_string($title): string
+  {
+    $string = preg_replace('/[^a-zA-Z0-9\s]/', '', $title); // remove all non-alphanumeric characters
+    $string = preg_replace('/\s/', '-', $string); // replace spaces with dashes
+    // convert to lowercase
+    return strtolower($string);
   }

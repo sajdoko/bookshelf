@@ -4,12 +4,12 @@
 
   // Check if the user is logged in
   if (!login_check_customer()) {
-    header("Location: /login");
+    header("Location: /pages/login");
     exit;
   }
 
   // Get the user's information
-  $user_id = $_SESSION['user_id'];
+  $user_id = $_SESSION['Cus_Id'];
   $errors = array();
 
   // Process form data when form is submitted
@@ -33,16 +33,17 @@
   }
 
   // Get the user's info from the database
-  $user = get_user_info($user_id);
+  $user = get_customer_info($user_id);
 
   if (empty($user)) {
-    header("Location: /login");
+    header("Location: /pages/login");
     exit;
   }
 ?>
 
-  <!-- Use Bootstrap grid system to display featured books in a grid -->
-  <div class="container mt-5">
+
+<div class='form-signin w-100 m-auto'>
+    <!-- Display error message if there is one -->
     <?php if (!empty($errors)) : ?>
       <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -52,28 +53,34 @@
         </div>
       </div>
     <?php endif; ?>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+        <h1 class='h3 mb-3 fw-normal'>My Details</h1>
 
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <form id="register-form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" role="form" style="display: block;">
-          <div class="form-group">
-            <input type="text" name="first_name" id="first-name" tabindex="4" class="form-control" placeholder="First Name" value="<?php echo $user['FirstName']; ?>">
-          </div>
-          <div class="form-group">
-            <input type="text" name="last_name" id="last-name" tabindex="5" class="form-control" placeholder="Last Name" value="<?php echo $user['LastName']; ?>">
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <input type="submit" name="register-submit" id="register-submit" tabindex="10" class="form-control btn btn-primary" value="Update Info">
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+        <div class='form-floating'>
+            <input type='email' name='email' class='form-control' id='email' value='<?php echo $user['Cus_Email']; ?>' required>
+            <label for='email'>Email address</label>
+        </div>
+        <div class='form-floating'>
+            <input type='password' name='password' class='form-control' id='password'>
+            <label for='password'>Password</label>
+        </div>
 
-  </div>
+        <div class='form-floating'>
+            <input type='text' name='first_name' class='form-control' id='first_name' value='<?php echo $user['Cus_FirstName']; ?>' required>
+            <label for='first_name'>First Name</label>
+        </div>
+        <div class='form-floating'>
+            <input type='text' name='last_name' class='form-control' id='last_name' value='<?php echo $user['Cus_LastName']; ?>' required>
+            <label for='last_name'>Last Name</label>
+        </div>
 
+        <div class='form-floating'>
+            <input type='text' name='phone' class='form-control' id='phone' value='<?php echo $user['Cus_Phone']; ?>' required>
+            <label for='phone'>Phone</label>
+        </div>
+
+        <button class='w-100 btn btn-lg btn-primary' type='submit'>Update</button>
+    </form>
+</div>
 
 <?php require_once '../includes/footer.php'; ?>

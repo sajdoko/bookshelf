@@ -1,6 +1,6 @@
 <?php
 
-$page_title = "Register";
+$page_title = "Error";
 require_once 'includes/header.php';
 
 sec_session_start();

@@ -1,0 +1,11 @@
+INSERT INTO ORDER_STATUS (OrS_Name)
+VALUES ('Pending');
+
+INSERT INTO ORDER_STATUS (OrS_Name)
+VALUES ('Processing');
+
+INSERT INTO ORDER_STATUS (OrS_Name)
+VALUES ('Shipped');
+
+INSERT INTO ORDER_STATUS (OrS_Name)
+VALUES ('Completed');

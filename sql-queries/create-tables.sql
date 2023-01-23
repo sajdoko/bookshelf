@@ -32,6 +32,7 @@ CREATE TABLE BOOK
     Boo_Price       DECIMAL(10, 2) NOT NULL,
     Boo_Pub_Date    DATE,
     Boo_Img_url     varchar(max),
+    Boo_Featured    BIT,
     FOREIGN KEY (Pub_Id) REFERENCES PUBLISHER (Pub_Id),
     FOREIGN KEY (BoL_Id) REFERENCES BOOK_LANGUAGE (BoL_Id)
     ON DELETE CASCADE

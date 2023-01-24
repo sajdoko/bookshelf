@@ -34,7 +34,7 @@
     <section class='py-5 text-center container'>
         <div class='row py-lg-5'>
             <div class='col-lg-6 col-md-8 mx-auto'>
-                <h1 class='fw-light'>Books in <?php echo ucfirst($genre_url_string); ?></h1>
+                <h1 class='fw-light'>Books in <?= ucfirst($genre_url_string); ?></h1>
             </div>
         </div>
     </section>
@@ -46,16 +46,16 @@
                 <?php foreach ($genres as $genre) : ?>
                       <div class='col-sm-12 col-md-4'>
                           <div class='card shadow-sm'>
-                              <a href='/book/<?php echo create_url_string($genre['Boo_Title']); ?>' title="<?php echo $genre['Boo_Title']; ?>"><img
-                                          src="<?php echo $genre['Boo_Img_url']; ?>" class='bd-placeholder-img card-img-top' alt='Book cover'></a>
+                              <a href='/book/<?= create_url_string($genre['Boo_Title']); ?>' title="<?= $genre['Boo_Title']; ?>"><img
+                                          src="<?= $genre['Boo_Img_url']; ?>" class='bd-placeholder-img card-img-top' alt='Book cover'></a>
                               <div class='card-body'>
-                                  <h5 class='card-title' style='min-height: 50px;'>Title: <?php echo $genre['Boo_Title']; ?></h5>
-                                  <p class="card-text">Author: <?php echo $genre['Aut_Name']; ?></p>
-                                  <p class="card-text">Language: <?php echo $genre['BoL_Name']; ?></p>
-                                  <p class="card-text">Description: <?php echo substr($genre['Boo_Description'], 0, 100); ?> ...</p>
-                                  <p class='card-text'><small class='text-muted'>Published: <?php echo $genre['Boo_Pub_Date']->format('Y-m-d'); ?>
-                                          by <?php echo $genre['Pub_Name']; ?></small></p>
-                                  <p class="card-text">Price: <?php echo $genre['Boo_Price']; ?></p>
+                                  <h5 class='card-title' style='min-height: 50px;'>Title: <?= $genre['Boo_Title']; ?></h5>
+                                  <p class="card-text">Author: <?= $genre['Aut_Name']; ?></p>
+                                  <p class="card-text">Language: <?= $genre['BoL_Name']; ?></p>
+                                  <p class="card-text">Description: <?= substr($genre['Boo_Description'], 0, 100); ?> ...</p>
+                                  <p class='card-text'><small class='text-muted'>Published: <?= $genre['Boo_Pub_Date']->format('Y-m-d'); ?>
+                                          by <?= $genre['Pub_Name']; ?></small></p>
+                                  <p class="card-text">Price: <?= $genre['Boo_Price']; ?></p>
                                   <a href="#" class="btn btn-primary">Add to Cart</a>
                               </div>
                           </div>
@@ -63,7 +63,7 @@
                 <?php endforeach; ?>
               <?php else : ?>
                   <div class='col-12 text-center'>
-                      <p class='card-text'>No books found in genre: <?php echo $genre_url_string; ?></p>
+                      <p class='card-text'>No books found in genre: <?= $genre_url_string; ?></p>
                   </div>
               <?php endif; ?>
             </div>

@@ -13,7 +13,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title><?php echo $page_title??''; ?> - The Bookshelf</title>
+  <title><?= $page_title??''; ?> - The Bookshelf</title>
   <meta name="description" content="Find your next favorite read with The Bookshelf.">
   <!-- Include Bootstrap CSS -->
   <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
@@ -40,7 +40,7 @@
         <div class='col-md-3 text-end'>
           <?php if ($logged_in_customer) : ?>
             <ul class='nav col-12 col-md-auto mb-2 justify-content-end mb-md-0'>
-                <li><span class="nav-link">Hi <?php echo $logged_in_customer['Cus_FirstName']; ?> <i class='bi bi-emoji-smile'></i></span></li>
+                <li><span class="nav-link">Hi <?= $logged_in_customer['Cus_FirstName']; ?> <i class='bi bi-emoji-smile'></i></span></li>
                 <li><a href='/pages/account' class='nav-link px-2 link-dark'>Your Account</a></li>
                 <li><a href='/logout' class="nav-link px-2 link-dark">Sign out?</a></li>
             </ul>

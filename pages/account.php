@@ -54,11 +54,11 @@
         </div>
       </div>
     <?php endif; ?>
-    <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
+    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
         <h1 class='h3 mb-3 fw-normal'>My Details</h1>
 
         <div class='form-floating'>
-            <input type='email' name='email' class='form-control' id='email' value='<?php echo $user['Cus_Email']; ?>' required>
+            <input type='email' name='email' class='form-control' id='email' value='<?= $user['Cus_Email']; ?>' required>
             <label for='email'>Email address</label>
         </div>
         <div class='form-floating'>
@@ -67,16 +67,16 @@
         </div>
 
         <div class='form-floating'>
-            <input type='text' name='first_name' class='form-control' id='first_name' value='<?php echo $user['Cus_FirstName']; ?>' required>
+            <input type='text' name='first_name' class='form-control' id='first_name' value='<?= $user['Cus_FirstName']; ?>' required>
             <label for='first_name'>First Name</label>
         </div>
         <div class='form-floating'>
-            <input type='text' name='last_name' class='form-control' id='last_name' value='<?php echo $user['Cus_LastName']; ?>' required>
+            <input type='text' name='last_name' class='form-control' id='last_name' value='<?= $user['Cus_LastName']; ?>' required>
             <label for='last_name'>Last Name</label>
         </div>
 
         <div class='form-floating'>
-            <input type='text' name='phone' class='form-control' id='phone' value='<?php echo $user['Cus_Phone']; ?>' required>
+            <input type='text' name='phone' class='form-control' id='phone' value='<?= $user['Cus_Phone']; ?>' required>
             <label for='phone'>Phone</label>
         </div>
 

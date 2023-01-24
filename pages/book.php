@@ -51,30 +51,31 @@
                 <div class='row'>
                     <div class='col-sm-12 col-md-4'>
                         <div class='card shadow'>
-                            <img src="<?php echo $book['Boo_Img_url']; ?>" class='bd-placeholder-img card-img-top'
-                                 alt='<?php echo $book['Boo_Title']; ?>'>
+                            <img src="<?= $book['Boo_Img_url']; ?>" class='bd-placeholder-img card-img-top'
+                                 alt='<?= $book['Boo_Title']; ?>'>
                             <div class='card-body'>
-                                <p class='card-text'>ISBN: <?php echo $book['Boo_ISBN']; ?></p>
+                                <p class='card-text'>ISBN: <?= $book['Boo_ISBN']; ?></p>
                             </div>
                         </div>
                     </div>
                     <div class='col-sm-12 col-md-8'>
                         <div class='card shadow'>
                             <div class='card-body'>
-                                <h5 class='card-title' style='min-height: 50px;'>Title: <?php echo $book['Boo_Title']; ?></h5>
-                                <p class="m-0">Author: <?php echo $book['Aut_Name']; ?></p>
-                                <p class="m-0">Language: <?php echo $book['BoL_Name']; ?></p>
-                                <p class='p-0'>Genre: <?php echo $book['Gen_Name']; ?></p>
-                                <p class="card-text">Description: <?php echo $book['Boo_Description']; ?></p>
-                                <p class='card-text'><small class='text-muted'>Published: <?php echo $book['Boo_Pub_Date']->format('Y-m-d'); ?>
-                                        by <?php echo $book['Pub_Name']; ?></small></p>
-                                <p class="card-text">Price: <?php echo $book['Boo_Price']; ?></p>
+                                <h5 class='card-title' style='min-height: 50px;'>Title: <?= $book['Boo_Title']; ?></h5>
+                                <p class="m-0">Author: <?= $book['Aut_Name']; ?></p>
+                                <p class="m-0">Language: <?= $book['BoL_Name']; ?></p>
+                                <p class='p-0'>Genre: <?= $book['Gen_Name']; ?></p>
+                                <p class="card-text">Description: <?= $book['Boo_Description']; ?></p>
+                                <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>
+                                        by <?= $book['Pub_Name']; ?></small></p>
+                                <p class='card-text mb-auto'>Price: <?= $book['Boo_Price']; ?></p>
+                                <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>
 
                                 <form action='../pages/cart' method='post' class="add-book-to-cart">
                                     <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                     <div class='input-group mb-3'>
                                         <label>
-                                            <input type='number' name='quantity' class='form-control' value='1' min='1' max="<?= $book['Boo_QOH'] ?>"
+                                            <input type='number' name='quantity' class='form-control' value='1' min='1' max="<?= $book['Boo_QOH']??0 ?>"
                                                    placeholder='0'
                                                    required>
                                         </label>
@@ -85,8 +86,8 @@
                         </div>
                         <div class='card shadow mt-4'>
                             <div class='card-body'>
-                                <p class="card-text">About <?php echo $book['Aut_Name']; ?></p>
-                                <p class="card-text"><?php echo $book['Aut_Bio']; ?></p>
+                                <p class="card-text">About <?= $book['Aut_Name']; ?></p>
+                                <p class="card-text"><?= $book['Aut_Bio']; ?></p>
                             </div>
                         </div>
                     </div>
@@ -99,8 +100,8 @@
                       <?php if (count($genres) > 0) : ?>
                           <ol class='list-unstyled mb-0'>
                             <?php foreach ($genres as $genre) : ?>
-                                <li><a href='/book/<?php echo create_url_string($genre['Boo_Title']); ?>'
-                                       title="<?php echo $genre['Boo_Title']; ?>"><?php echo $genre['Boo_Title']; ?></a></li>
+                                <li><a href='/book/<?= create_url_string($genre['Boo_Title']); ?>'
+                                       title="<?= $genre['Boo_Title']; ?>"><?= $genre['Boo_Title']; ?></a></li>
                             <?php endforeach; ?>
                           </ol>
                       <?php else : ?>

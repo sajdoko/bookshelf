@@ -66,7 +66,7 @@
       echo '<div class="alert alert-danger">' . $error_msg . '</div>';
     }
       ?>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
         <h1 class='h3 mb-3 fw-normal'>Register</h1>
 
         <div class='form-floating'>

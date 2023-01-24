@@ -100,7 +100,7 @@
                                     <label>
                                         <input type="number" class='form-control form-control-sm' name="quantity-<?= $book['Boo_ISBN'] ?>"
                                                value="<?= $products_in_cart[$book['Boo_ISBN']] ?>" min="1"
-                                               max="<?= $book['Boo_QOH'] ?>" placeholder="Quantity" required>
+                                               max="<?= $book['Boo_QOH']??0 ?>" placeholder="Quantity" required>
                                     </label>
                                 </td>
                                 <td class="price">&euro;<?= $book['Boo_Price'] * $products_in_cart[$book['Boo_ISBN']] ?></td>

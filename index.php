@@ -73,13 +73,13 @@ require_once 'includes/header.php';
           <div class="card shadow-sm">
               <a href='/book/<?php echo create_url_string($book['Boo_Title']); ?>' title="<?php echo $book['Boo_Title']; ?>"><img src="<?php echo $book['Boo_Img_url']; ?>" class="bd-placeholder-img card-img-top" alt="Book cover"></a>
               <div class="card-body">
-                  <h5 class="card-title" style="min-height: 50px;">Title: <?php echo $book['Boo_Title']; ?></h5>
+                  <h5 class='card-title mb-0' style='min-height: 50px;'><a href='/book/<?php echo create_url_string($book['Boo_Title']); ?>' title="<?php echo $book['Boo_Title']; ?>"><?php echo $book['Boo_Title']; ?></a></h5>
                   <p class="card-text">Author: <?php echo $book['Aut_Name']; ?></p>
                   <p class="card-text">Language: <?php echo $book['BoL_Name']; ?></p>
                   <p class="card-text">Description: <?php echo substr($book['Boo_Description'],0 , 100); ?> ...</p>
                   <p class='card-text'><small class='text-muted'>Published: <?php echo $book['Boo_Pub_Date']->format('Y-m-d'); ?> by  <?php echo $book['Pub_Name']; ?></small></p>
                   <p class="card-text">Price: <?php echo $book['Boo_Price']; ?></p>
-                  <a href="#" class="btn btn-primary">Add to Cart</a>
+                  <a href="#" class="btn btn-success">Add to Cart</a>
               </div>
           </div>
       </div>

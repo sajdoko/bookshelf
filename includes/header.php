@@ -4,6 +4,8 @@
   require_once 'functions.php';
   sec_session_start();
   $logged_in_customer = login_check_customer();
+
+  $num_items_in_cart = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,15 +29,21 @@
         </a>
 
         <ul class='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
-            <li><a href='/' class='nav-link px-2 link-secondary'>Home</a></li>
+            <li><a href='/' class='nav-link px-2 link-dark'>Home</a></li>
             <li><a href='/pages/browse' class='nav-link px-2 link-dark'>Browse Books</a></li>
-            <li><a href='/pages/account' class='nav-link px-2 link-dark'>My Account</a></li>
-            <li><a href='/pages/cart' class='nav-link px-2 link-dark'>Cart</a></li>
+            <li><a href='../pages/cart' title='go to cart' class='nav-link px-2 link-dark position-relative'>
+                    <i class='bi bi-cart3'></i><span
+                            class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success'><?= $num_items_in_cart; ?></span>
+                </a></li>
         </ul>
 
         <div class='col-md-3 text-end'>
           <?php if ($logged_in_customer) : ?>
-            Hi <?php echo $logged_in_customer['Cus_FirstName']; ?><a href='/logout' class='btn btn-link me-2'>Sign out</a>
+            <ul class='nav col-12 col-md-auto mb-2 justify-content-end mb-md-0'>
+                <li><span class="nav-link">Hi <?php echo $logged_in_customer['Cus_FirstName']; ?> <i class='bi bi-emoji-smile'></i></span></li>
+                <li><a href='/pages/account' class='nav-link px-2 link-dark'>Your Account</a></li>
+                <li><a href='/logout' class="nav-link px-2 link-dark">Sign out?</a></li>
+            </ul>
           <?php else : ?>
             <a href='../pages/login' class='btn btn-outline-primary me-2'>Sign in</a>
             <a href='../pages/register' class='btn btn-primary'>Register</a>

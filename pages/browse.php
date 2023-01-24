@@ -122,10 +122,17 @@
                               <td><?php echo $book['Pub_Name']; ?></td>
                               <td>$<?php echo number_format($book['Boo_Price'], 2); ?></td>
                               <td>
-                                  <form action="add_to_cart.php" method="post">
-                                      <input type="hidden" name="book_id" value="<?php echo $book['Boo_ISBN']; ?>">
-                                      <input type="hidden" name="quantity" value="1">
-                                      <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                                  <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                                      <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
+                                      <div class='input-group'>
+                                          <label>
+                                              <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
+                                                     max="<?= $book['Boo_QOH'] ?>"
+                                                     placeholder='0'
+                                                     required>
+                                          </label>
+                                          <input type='submit' class='btn btn-sm btn-success' value='Add To Cart'>
+                                      </div>
                                   </form>
                               </td>
                           </tr>

@@ -43,7 +43,7 @@
 ?>
 
 
-<div class='form-signin w-100 m-auto'>
+<div class='container'>
     <!-- Display error message if there is one -->
     <?php if (!empty($errors)) : ?>
       <div class="row">
@@ -54,33 +54,79 @@
         </div>
       </div>
     <?php endif; ?>
-    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method="post">
-        <h1 class='h3 mb-3 fw-normal'>My Details</h1>
+    <form action="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>" method='post' class='row g-2'>
+        <div class='col-md me-4'>
+            <h1 class='h3 mb-3 fw-normal'>My Details</h1>
+            <hr class='mt-3'>
+            <div class='row g-2'>
+                <div class='col-md'>
+                    <div class='form-floating'>
+                        <input type='email' name='email' class='form-control' id='email' value='<?= $user['Cus_Email']; ?>' required>
+                        <label for='email'>Email address</label>
+                    </div>
+                </div>
+                <div class='col-md'>
+                    <div class='form-floating'>
+                        <input type='password' name='password' class='form-control' id='password'>
+                        <label for='password'>Password</label>
+                    </div>
+                </div>
+            </div>
+            <div class='row g-2'>
+                <div class='col-md'>
+                    <div class='form-floating'>
+                        <input type='text' name='first_name' class='form-control' id='first_name' value='<?= $user['Cus_FirstName']; ?>' required>
+                        <label for='first_name'>First Name</label>
+                    </div>
+                </div>
+                <div class='col-md'>
+                    <div class='form-floating'>
+                        <input type='text' name='last_name' class='form-control' id='last_name' value='<?= $user['Cus_LastName']; ?>' required>
+                        <label for='last_name'>Last Name</label>
+                    </div>
+                </div>
+            </div>
 
-        <div class='form-floating'>
-            <input type='email' name='email' class='form-control' id='email' value='<?= $user['Cus_Email']; ?>' required>
-            <label for='email'>Email address</label>
+            <div class='form-floating'>
+                <input type='text' name='phone' class='form-control' id='phone' value='<?= $user['Cus_Phone']; ?>' required>
+                <label for='phone'>Phone</label>
+            </div>
         </div>
-        <div class='form-floating'>
-            <input type='password' name='password' class='form-control' id='password'>
-            <label for='password'>Password</label>
+        <div class='col-md border-start ps-4'>
+            <h1 class='h3 mb-3 fw-normal'>My Address</h1>
+            <hr class='my-3'>
+            <div class='row'>
+                <div class='col-12'>
+                    <label for='address' class='form-label'>Address</label>
+                    <input type='text' class='form-control' id='address' placeholder='1234 Main St' required>
+                </div>
+                <div class='col-12'>
+                    <label for='address2' class='form-label'>Address 2 <span class='text-muted'>(Optional)</span></label>
+                    <input type='text' class='form-control' id='address2' placeholder='Apartment or suite'>
+                </div>
+                <div class='col-md-4'>
+                    <label for='state' class='form-label'>City</label>
+                    <select class='form-select' name='city' id='city' required>
+                        <option value=''>Choose...</option>
+                        <option>California</option>
+                    </select>
+                </div>
+                <div class='col-md-5'>
+                    <label for='country' class='form-label'>Country</label>
+                    <select class='form-select' id='country' required>
+                        <option value=''>Choose...</option>
+                        <option>United States</option>
+                    </select>
+                </div>
+                <div class='col-md-3'>
+                    <label for='zip' class='form-label'>Zip</label>
+                    <input type='text' class='form-control' id='zip' placeholder='' required>
+                </div>
+            </div>
         </div>
-
-        <div class='form-floating'>
-            <input type='text' name='first_name' class='form-control' id='first_name' value='<?= $user['Cus_FirstName']; ?>' required>
-            <label for='first_name'>First Name</label>
+        <div class='col-12 text-center mt-4'>
+            <button class='w-50 btn btn-lg btn-primary' type='submit'>Update</button>
         </div>
-        <div class='form-floating'>
-            <input type='text' name='last_name' class='form-control' id='last_name' value='<?= $user['Cus_LastName']; ?>' required>
-            <label for='last_name'>Last Name</label>
-        </div>
-
-        <div class='form-floating'>
-            <input type='text' name='phone' class='form-control' id='phone' value='<?= $user['Cus_Phone']; ?>' required>
-            <label for='phone'>Phone</label>
-        </div>
-
-        <button class='w-100 btn btn-lg btn-primary' type='submit'>Update</button>
     </form>
 </div>
 

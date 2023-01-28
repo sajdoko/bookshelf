@@ -26,15 +26,15 @@ main {
 
 .form-signin {
   max-width: 450px;
-  padding: 15px;
+  padding: 5px;
 }
 
 .form-signin .form-floating:focus-within {
   z-index: 2;
 }
 
-.form-signin input {
-  margin: 10px 0;
+input, select, textarea {
+  margin: 0 0 15px 0;
 }
 header .link-icons {
 	display: flex;

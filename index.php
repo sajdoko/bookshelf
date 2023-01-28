@@ -52,7 +52,18 @@ require_once 'includes/header.php';
                             by <?= $book['Pub_Name']; ?></small></p>
                     <p class="card-text mb-auto">Price: <?= $book['Boo_Price']; ?></p>
                     <p class='text-muted'>In Stock: <?= $book['Boo_QOH']??0; ?></p>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                  <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                      <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
+                      <div class='input-group'>
+                          <label>
+                              <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
+                                     max="<?= $book['Boo_QOH']??0; ?>"
+                                     placeholder='0'
+                                     required>
+                          </label>
+                          <input type='submit' class='btn btn-sm btn-success' value='Add To Cart'>
+                      </div>
+                  </form>
                 </div>
                 <div class='col-auto px-0'>
                     <a href='/book/<?= create_url_string($book['Boo_Title']); ?>' title="<?= $book['Boo_Title']; ?>"><img src="<?= $book['Boo_Img_url']; ?>" height="350" class='bd-placeholder-img card-img-top' alt='Book cover'></a>
@@ -80,7 +91,18 @@ require_once 'includes/header.php';
                   <p class="card-text">Description: <?= substr($book['Boo_Description'],0 , 100); ?> ...</p>
                   <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?> by  <?= $book['Pub_Name']; ?></small></p>
                   <p class="card-text">Price: <?= $book['Boo_Price']; ?></p>
-                  <a href="#" class="btn btn-success">Add to Cart</a>
+                  <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                      <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
+                      <div class='input-group'>
+                          <label>
+                              <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
+                                     max="<?= $book['Boo_QOH']??0; ?>"
+                                     placeholder='0'
+                                     required>
+                          </label>
+                          <input type='submit' class='btn btn-sm btn-success' value='Add To Cart'>
+                      </div>
+                  </form>
               </div>
           </div>
       </div>

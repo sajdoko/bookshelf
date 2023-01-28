@@ -66,7 +66,7 @@
    *
    * @return bool
    */
-  function insertOrUpdateRows(string $query, array $params = []): bool
+  function executeQuery(string $query, array $params = []): bool
   {
     global $conn;
 
@@ -311,7 +311,7 @@
   function update_user_info($user_id, $first_name, $last_name, $phone): bool
   {
     $query = "UPDATE CUSTOMER SET Cus_FirstName = ?, Cus_LastName = ?, Cus_Phone = ? WHERE Cus_Id = ?";
-    return insertOrUpdateRows($query, [$first_name, $last_name, $phone, $user_id]);
+    return executeQuery($query, [$first_name, $last_name, $phone, $user_id]);
   }
 
   function insertInvoice($orderID, $customerID, $invoiceDate, $totalAmount, $paid)
@@ -342,7 +342,7 @@
     $query = 'UPDATE Invoices SET OrderID = ?, CustomerID = ?, InvoiceDate = ?, TotalAmount = ?, Paid = ?
               WHERE InvoiceID = ?';
 
-    return insertOrUpdateRows($query, [$orderID, $customerID, $invoiceDate, $totalAmount, $paid, $invoiceID]);
+    return executeQuery($query, [$orderID, $customerID, $invoiceDate, $totalAmount, $paid, $invoiceID]);
   }
 
   /**

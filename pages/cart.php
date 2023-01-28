@@ -6,7 +6,7 @@
   $errors = [];
   // Process form data when form is submitted
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['Boo_ISBN'], $_POST['quantity']) && is_numeric($_POST['quantity'])) {
+    if (isset($_POST['Boo_ISBN'], $_POST['quantity'])) {
 
       $Boo_ISBN = $_POST['Boo_ISBN'];
       $quantity = (int) $_POST['quantity'];
@@ -25,7 +25,6 @@
           $_SESSION['cart'] = [$Boo_ISBN => $quantity];
         }
       }
-
     }
     else {
       if (isset($_POST['update']) && isset($_SESSION['cart'])) {
@@ -116,7 +115,7 @@
                 <div class="text-end">
                     <h4 class="pb-3">Subtotal: &euro;<?= $subtotal ?></h4>
                     <input type="submit" class='btn btn-outline-secondary' value="Update Cart" name="update">
-                    <a href="../pages/checkout" class="btn btn-success" title="">Go to Checkout</a>
+                    <a href="../pages/checkout" class="btn btn-success mb-3" title="">Go to Checkout</a>
                 </div>
             </form>
         </div>

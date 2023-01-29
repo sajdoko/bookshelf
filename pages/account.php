@@ -8,28 +8,34 @@
     exit;
   }
 
-  // Get the user's information
-  $user_id = $_SESSION['Cus_Id'];
-  $errors = [];
+  $user_id = $_SESSION['Cus_Id'] ?? 0;
+  $alerts = [];
 
   // Process form data when form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate form data
-    $new_first_name = trim($_POST["first_name"]);
-    $new_last_name = trim($_POST["last_name"]);
-    $phone = trim($_POST['phone']);
+    $new_first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
+    $new_last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
+    $new_phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+
+    $new_street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
+    $new_zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
+    $new_city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+    $new_country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
 
     // Check for empty fields
     if (empty($new_first_name)) {
-      $errors[] = "First name is required.";
+      $alerts[] = ["danger","First name is required."];
     }
     if (empty($new_last_name)) {
-      $errors[] = "Last name is required.";
+      $alerts[] = ["danger","Last name is required."];
     }
 
-    // If no errors, update the user's info in the database
-    if (count($errors) == 0) {
-      update_user_info($user_id, $new_first_name, $new_last_name, $phone);
+    // If no alerts, update the user's info in the database
+    if (count($alerts) == 0) {
+      if (update_user_info($user_id, $new_first_name, $new_last_name, $new_phone, $new_street, $new_zip, $new_city, $new_country_id)) {
+        $alerts[] = ['success', 'Your profile was updated successfully!'];
+      }
     }
   }
 
@@ -40,16 +46,18 @@
     header("Location: /pages/login");
     exit;
   }
+
+  $countries = retrieveAllRows('SELECT * FROM COUNTRY ORDER BY Cou_Name');
 ?>
 
 
     <div class='container'>
         <!-- Display error message if there is one -->
-      <?php if (!empty($errors)) : ?>
+      <?php if (!empty($alerts)) : ?>
           <div class="row">
               <div class="col-md-6 offset-md-3">
-                <?php foreach ($errors as $error): ?>
-                  <?php echo '<div class="alert alert-danger">'.$error.'</div>'; ?>
+                <?php foreach ($alerts as $alert): ?>
+                  <?php echo '<div class="alert alert-'.$alert[0].'">'.$alert[1].'</div>'; ?>
                 <?php endforeach; ?>
               </div>
           </div>
@@ -61,7 +69,7 @@
                 <div class='row g-2'>
                     <div class='col-md'>
                         <div class='form-floating'>
-                            <input type='email' name='email' class='form-control' id='email' value='<?= $user['Cus_Email']; ?>' required>
+                            <input type='email' name='email' class='form-control' id='email' value='<?= $user['Cus_Email']; ?>' disabled>
                             <label for='email'>Email address</label>
                         </div>
                     </div>
@@ -98,31 +106,32 @@
                 <div class='row'>
                     <div class='col-12'>
                         <div class='form-floating'>
-                            <input type='text' class='form-control' id='address' placeholder='1234 Main St' required>
-                            <label for='address' class='form-label'>Address</label>
+                            <input type='text' name='street' class='form-control' id='street' value="<?= $user['Add_Street_Name']; ?>" placeholder='1234 Main St'
+                                   required>
+                            <label for='street' class='form-label'>Address</label>
                         </div>
                     </div>
                     <div class='col-md-4'>
                         <div class='form-floating'>
-                            <select class='form-select' name='city' id='city' required>
-                                <option value=''>Choose...</option>
-                                <option>California</option>
-                            </select>
-                            <label for='state' class='form-label'>City</label>
+                            <input type='text' name='city' class='form-control' id='city' value="<?= $user['Add_City']; ?>" placeholder='Tirane'
+                                   required>
+                            <label for='city' class='form-label'>City</label>
                         </div>
                     </div>
                     <div class='col-md-5'>
                         <div class='form-floating'>
-                            <select class='form-select' id='country' required>
+                            <select name='country' class='form-select' id='country' required>
                                 <option value=''>Choose...</option>
-                                <option>United States</option>
+                              <?php foreach ($countries as $country) : ?>
+                                  <option value="<?= $country['Cou_Alpha2Code']; ?>" <?= $country['Cou_Alpha2Code'] == $user['Cou_Alpha2Code'] ? 'selected' : ''; ?>><?= $country['Cou_Name']; ?></option>
+                              <?php endforeach; ?>
                             </select>
                             <label for='country' class='form-label'>Country</label>
                         </div>
                     </div>
                     <div class='col-md-3'>
                         <div class='form-floating'>
-                            <input type='text' class='form-control' id='zip' placeholder='Zip' required>
+                            <input type='number' name='zip' class='form-control w-75' id='zip' value="<?= $user['Add_Zip']; ?>" placeholder='Zip' required>
                             <label for='zip' class='form-label'>Zip</label>
                         </div>
                     </div>

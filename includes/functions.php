@@ -6,7 +6,7 @@
    * Get all the rows from the database for the given query.
    *
    * @param  string  $query
-   * @param  array  $params An array of params
+   * @param  array  $params  An array of params
    *
    * @return array
    */
@@ -19,7 +19,8 @@
 
     if (!$stmt) {
       FormatErrors(sqlsrv_errors());
-    } else {
+    }
+    else {
       // Fetch all orders as an array
       while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $results[] = $row;
@@ -35,7 +36,7 @@
    * Get one row from the database for the given query.
    *
    * @param  string  $query
-   * @param  array  $params An array of params
+   * @param  array  $params  An array of params
    *
    * @return array
    */
@@ -48,14 +49,15 @@
 
     if (!$stmt) {
       FormatErrors(sqlsrv_errors());
-    } else {
+    }
+    else {
       // Fetch one orders as an array
       $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
     }
 
     sqlsrv_free_stmt($stmt);
 
-    return $row??[];
+    return $row ?? [];
   }
 
   /**
@@ -75,8 +77,9 @@
     if (!$stmt) {
       FormatErrors(sqlsrv_errors());
       $error = false;
-    } else {
-      if( !sqlsrv_execute( $stmt ) ) {
+    }
+    else {
+      if (!sqlsrv_execute($stmt)) {
         FormatErrors(sqlsrv_errors());
         $error = false;
       }
@@ -85,6 +88,37 @@
     sqlsrv_free_stmt($stmt);
 
     return $error;
+  }
+
+  /**
+   * Insert one row on the database for the given query and return inserted row if successful.
+   *
+   * @param  string  $query
+   * @param  array  $params  An array of params
+   *
+   * @return bool|array
+   */
+  function insertQuery(string $query, array $params = []): bool|array
+  {
+    global $conn;
+
+    $no_error = true;
+    $stmt = sqlsrv_prepare($conn, $query, $params);
+    if (!$stmt) {
+      FormatErrors(sqlsrv_errors());
+      $no_error = false;
+    }
+    else {
+      if (!sqlsrv_execute($stmt)) {
+        FormatErrors(sqlsrv_errors());
+        $no_error = false;
+      }
+    }
+    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+    sqlsrv_free_stmt($stmt);
+
+    return ($no_error && $row) ? $row : false;
   }
 
 
@@ -150,27 +184,6 @@
     return retrieveOneRow($query, [$isbn]);
   }
 
-
-  /**
-   * Add a new order to the database.
-   *
-   * @param  int  $user_id  The ID of the user.
-   * @param  int  $book_id  The ID of the book.
-   * @param  int  $quantity  The quantity of books being ordered.
-   * @param  float  $total_price  The total price of the order.
-   *
-   * @return false|resource resource if the order was successfully added, false otherwise.
-   */
-  function add_order(int $user_id, int $book_id, int $quantity, float $total_price)
-  {
-    global $conn;
-
-    // Insert order into database
-    $query = "INSERT INTO orders (user_id, book_id, quantity, total_price) VALUES (?, ?, ?, ?)";
-    $params = [$user_id, $book_id, $quantity, $total_price];
-    return sqlsrv_query($conn, $query, $params);
-  }
-
   function sec_session_start(): void
   {
     $session_name = 'sec_session_id';
@@ -202,7 +215,10 @@
       // Get the user-agent string of the user
       $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-      $query = 'SELECT * FROM CUSTOMER WHERE Cus_Id = ?';
+      $query = 'SELECT * FROM CUSTOMER 
+                  JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id 
+                  JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
+                    WHERE CUSTOMER.Cus_Id = ?';
       $user = retrieveOneRow($query, [$Cus_Id]);
 
       if ($user) {
@@ -226,7 +242,6 @@
       return false;
     }
   }
-
 
   /**
    * Perform the login operation.
@@ -276,26 +291,8 @@
    */
   function get_customer_info($user_id): array
   {
-    $query = 'SELECT * FROM CUSTOMER WHERE Cus_Id = ?';
+    $query = 'SELECT * FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code WHERE CUSTOMER.Cus_Id = ?';
     return retrieveOneRow($query, [$user_id]);
-  }
-
-  /**
-   * Check if an email is already in use
-   *
-   * @param $email
-   *
-   * @return bool
-   */
-  function email_exists($email): bool
-  {
-    $query = 'SELECT * FROM CUSTOMER WHERE Cus_Email = ?';
-    $user = retrieveOneRow($query, [$email]);
-
-    if ($user) {
-      return true;
-    }
-    return false;
   }
 
   /**
@@ -305,44 +302,20 @@
    * @param $first_name
    * @param $last_name
    * @param $phone
+   * @param $street
+   * @param $zip
+   * @param $city
+   * @param $country_id
    *
    * @return bool
    */
-  function update_user_info($user_id, $first_name, $last_name, $phone): bool
+  function update_user_info($user_id, $first_name, $last_name, $phone, $street, $zip, $city, $country_id): bool
   {
     $query = "UPDATE CUSTOMER SET Cus_FirstName = ?, Cus_LastName = ?, Cus_Phone = ? WHERE Cus_Id = ?";
-    return executeQuery($query, [$first_name, $last_name, $phone, $user_id]);
-  }
+    executeQuery($query, [$first_name, $last_name, $phone, $user_id]);
 
-  function insertInvoice($orderID, $customerID, $invoiceDate, $totalAmount, $paid)
-  {
-    global $conn;
-    $query = 'INSERT INTO Invoices (OrderID, CustomerID, InvoiceDate, TotalAmount, Paid)
-              VALUES (?, ?, ?, ?, ?)';
-    $stmt = sqlsrv_query($conn, $query, [$orderID, $customerID, $invoiceDate, $totalAmount, $paid]);
-    if ($stmt === false) {
-      die(print_r(sqlsrv_errors(), true));
-    }
-    return $stmt;
-  }
-
-  /**
-   * @param $invoiceID
-   * @param $orderID
-   * @param $customerID
-   * @param $invoiceDate
-   * @param $totalAmount
-   * @param $paid
-   *
-   * @return bool
-   */
-  function updateInvoice($invoiceID, $orderID, $customerID, $invoiceDate, $totalAmount, $paid): bool
-  {
-    global $conn;
-    $query = 'UPDATE Invoices SET OrderID = ?, CustomerID = ?, InvoiceDate = ?, TotalAmount = ?, Paid = ?
-              WHERE InvoiceID = ?';
-
-    return executeQuery($query, [$orderID, $customerID, $invoiceDate, $totalAmount, $paid, $invoiceID]);
+    $query2 = 'UPDATE ADDRESS SET Add_Street_Name = ?, Add_Zip = ?, Add_City = ?, Cou_Alpha2Code = ? WHERE Cus_Id = ?';
+    return executeQuery($query2, [$street, $zip, $city, $country_id, $user_id]);
   }
 
   /**
@@ -356,4 +329,47 @@
     $string = preg_replace('/\s/', '-', $string); // replace spaces with dashes
     // convert to lowercase
     return strtolower($string);
+  }
+
+  /**
+   * @param $string
+   *
+   * @return string
+   */
+  function create_html_id($string): string
+  {
+    $string = preg_replace('/[^a-zA-Z0-9\s]/', '', $string); // remove all non-alphanumeric characters
+    $string = preg_replace('/\s/', '_', $string); // replace spaces with dashes
+    // convert to lowercase
+    return strtolower($string);
+  }
+
+  /**
+   * @param $Ord_Id
+   *
+   * @return array
+   */
+  function get_order_lines($Ord_Id): array
+  {
+    $query = 'SELECT ORDER_LINE.*, B.Boo_Title FROM ORDER_LINE
+         INNER JOIN BOOK B on B.Boo_ISBN = ORDER_LINE.Boo_ISBN
+         WHERE ORDER_LINE.Ord_Id = ?';
+
+    return retrieveAllRows($query, [$Ord_Id]);
+  }
+
+  /**
+   * @param $Boo_ISBN
+   * @param $quantity
+   *
+   * @return float
+   */
+  function calc_tot_book_price($Boo_ISBN, $quantity): float
+  {
+    $book = get_book_by_isbn($Boo_ISBN);
+    if (!$book) {
+      return 0.00;
+    }
+
+    return $book['Boo_Price'] * $quantity;
   }

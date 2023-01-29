@@ -11,7 +11,7 @@
     </footer>
 
     <!-- Toast container -->
-    <div class='toast-container position-fixed bottom-0 end-0 p-3'>
+    <div class='toast-container position-fixed top-0 end-0 p-3'>
         <div id='liveToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-bs-autohide='true'>
             <div class='toast-header'>
                 <strong class='me-auto' data-toast-title></strong>

@@ -1,5 +1,6 @@
 INSERT INTO COUNTRY ([Cou_Alpha2Code], [Cou_Name])
-VALUES ('US', 'United States'),
+VALUES ('AL', 'Albania'),
+        ('US', 'United States'),
        ('CA', 'Canada'),
        ('MX', 'Mexico'),
        ('GB', 'United Kingdom'),
@@ -97,7 +98,7 @@ VALUES
 (7890123456, 7, 1, 'The Grapes of Wrath', 'A novel by John Steinbeck', 19.99, '2022-07-01', 'https://covers.openlibrary.org/b/id/12715902-L.jpg', 1, 25),
 (8901234567, 8, 2, 'The Sun Also Rises', 'A novel by Ernest Hemingway', 20.99, '2022-08-01', 'https://covers.openlibrary.org/b/id/426184-L.jpg', 1, 30),
 (9012345678, 9, 3, '1984', 'A novel by George Orwell', 14.99, '2022-09-01', 'https://covers.openlibrary.org/b/id/12525678-L.jpg', 1, 15),
-(0123456789, 10, 1, 'The Odyssey', 'An epic poem by Homer', 22.99, '2022-10-01', 'https://covers.openlibrary.org/b/id/10792516-L.jpg', 1, 20);
+(9123456789, 10, 1, 'The Odyssey', 'An epic poem by Homer', 22.99, '2022-10-01', 'https://covers.openlibrary.org/b/id/10792516-L.jpg', 1, 20);
 
 INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Rol_Id)
 VALUES
@@ -107,24 +108,24 @@ VALUES
 
 INSERT INTO BOOK_GENRE (Boo_ISBN, Gen_Id)
 VALUES
-    ('9780910972321', 1),
+    ('9780910972321', 10),
     ('9788973062010', 2),
     ('3456789012', 3),
     ('4567890123', 4),
     ('5678901234', 5),
-    ('6789012345', 1),
+    ('6789012345', 10),
     ('7890123456', 7),
     ('8901234567', 3),
     ('9012345678', 9),
-    ('123456789', 1);
+    ('9123456789', 10);
 
-INSERT INTO CUS_ORDER (Ord_Id, Cus_Id, ShM_Id, Ord_Date)
+INSERT INTO CUS_ORDER (Ord_Id, Cus_Id, ShM_Id, Ord_Date, Ord_Tot_Val)
 VALUES
-  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2022-12-01 12:00:00'),
-  (NEXT VALUE FOR SEQ_ORD_ID, 2, 2, '2022-12-02 14:00:00'),
-  (NEXT VALUE FOR SEQ_ORD_ID, 3, 1, '2022-12-03 16:00:00'),
-  (NEXT VALUE FOR SEQ_ORD_ID, 1, 2, '2022-12-04 18:00:00'),
-  (NEXT VALUE FOR SEQ_ORD_ID, 2, 3, '2022-12-05 20:00:00');
+  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2022-12-01 12:00:00', 2.5),
+  (NEXT VALUE FOR SEQ_ORD_ID, 2, 2, '2022-12-02 14:00:00', 2.5),
+  (NEXT VALUE FOR SEQ_ORD_ID, 3, 1, '2022-12-03 16:00:00', 2.5),
+  (NEXT VALUE FOR SEQ_ORD_ID, 1, 2, '2022-12-04 18:00:00', 2.5),
+  (NEXT VALUE FOR SEQ_ORD_ID, 2, 3, '2022-12-05 20:00:00', 2.5);
 
 INSERT INTO ORDER_HISTORY (OrS_Id, Ord_Id, OrH_Description, OrH_Date)
 VALUES
@@ -148,20 +149,20 @@ VALUES
   ('7890123456', 7),
   ('8901234567', 8),
   ('9012345678', 9),
-  ('123456789', 10);
+  ('9123456789', 10);
 
-INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity)
+INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity, OrL_Tot_Price)
 VALUES
-  ('9780910972321', 1, 2),
-  ('9788973062010', 2, 1),
-  ('3456789012', 3, 5),
-  ('4567890123', 4, 3),
-  ('5678901234', 5, 2),
-  ('6789012345', 1, 4),
-  ('7890123456', 2, 1),
-  ('8901234567', 3, 5),
-  ('9012345678', 4, 3),
-  ('123456789', 5, 2);
+  ('9780910972321', 1, 2, 2.5),
+  ('9788973062010', 2, 1, 2.5),
+  ('3456789012', 3, 5, 2.5),
+  ('4567890123', 4, 3, 2.5),
+  ('5678901234', 5, 2, 2.5),
+  ('6789012345', 1, 4, 2.5),
+  ('7890123456', 2, 1, 2.5),
+  ('8901234567', 3, 5, 2.5),
+  ('9012345678', 4, 3, 2.5),
+  ('9123456789', 5, 2, 2.5);
 
 INSERT INTO ADDRESS (Cus_Id, Add_Id, Add_Street_Name, Add_Zip, Add_City, Cou_Alpha2Code)
 VALUES

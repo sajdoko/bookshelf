@@ -68,7 +68,7 @@
                                 <p class="card-text">Description: <?= $book['Boo_Description']; ?></p>
                                 <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>
                                         by <?= $book['Pub_Name']; ?></small></p>
-                                <p class='card-text mb-auto'>Price: <?= $book['Boo_Price']; ?></p>
+                                <p class='card-text mb-auto'>Price: $<?= number_format($book['Boo_Price'], 2); ?></p>
                                 <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>
 
                                 <form action='../pages/cart' method='post' class="add-book-to-cart">

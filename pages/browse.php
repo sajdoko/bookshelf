@@ -126,12 +126,12 @@
                                       <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                       <div class='input-group'>
                                           <label>
-                                              <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
+                                              <input type='number' name='quantity' class='form-control form-control-sm mb-0' value='1' min='1'
                                                      max="<?= $book['Boo_QOH']??0; ?>"
                                                      placeholder='0'
                                                      required>
                                           </label>
-                                          <input type='submit' class='btn btn-sm btn-success' value='Add To Cart'>
+                                          <input type='submit' class='btn btn-sm btn-success mb-0' value='Add To Cart'>
                                       </div>
                                   </form>
                               </td>

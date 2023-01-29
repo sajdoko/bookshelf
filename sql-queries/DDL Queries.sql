@@ -110,10 +110,11 @@ CREATE TABLE BOOK_GENRE
 
 CREATE TABLE CUS_ORDER
 (
-    Ord_Id   INT PRIMARY KEY,
-    Cus_Id   INT      NOT NULL,
-    ShM_Id   INT      NOT NULL,
-    Ord_Date DATETIME NOT NULL,
+    Ord_Id      INT PRIMARY KEY,
+    Cus_Id      INT      NOT NULL,
+    ShM_Id      INT      NOT NULL,
+    Ord_Date    DATETIME NOT NULL,
+    Ord_Tot_Val DECIMAL  NOT NULL,
     FOREIGN KEY (Cus_Id) REFERENCES CUSTOMER (Cus_Id),
     FOREIGN KEY (ShM_Id) REFERENCES SHIPPING_METHOD (ShM_Id)
 );
@@ -141,9 +142,10 @@ CREATE TABLE BOOK_AUTHOR
 
 CREATE TABLE ORDER_LINE
 (
-    Boo_ISBN     VARCHAR(255),
-    Ord_Id       INT,
-    OrL_Quantity INT NOT NULL,
+    Boo_ISBN      VARCHAR(255),
+    Ord_Id        INT,
+    OrL_Quantity  INT     NOT NULL,
+    OrL_Tot_Price DECIMAL NOT NULL,
     PRIMARY KEY (Boo_ISBN, Ord_Id),
     FOREIGN KEY (Boo_ISBN) REFERENCES BOOK (Boo_ISBN),
     FOREIGN KEY (Ord_Id) REFERENCES CUS_ORDER (Ord_Id)

@@ -56,7 +56,18 @@
                                   <p class='card-text'><small class='text-muted'>Published: <?= $genre['Boo_Pub_Date']->format('Y-m-d'); ?>
                                           by <?= $genre['Pub_Name']; ?></small></p>
                                   <p class="card-text">Price: <?= $genre['Boo_Price']; ?></p>
-                                  <a href="#" class="btn btn-primary">Add to Cart</a>
+                                  <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                                      <input type='hidden' name='Boo_ISBN' value="<?= $genre['Boo_ISBN'] ?>">
+                                      <div class='input-group'>
+                                          <label>
+                                              <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
+                                                     max="<?= $genre['Boo_QOH']??0; ?>"
+                                                     placeholder='0'
+                                                     required>
+                                          </label>
+                                          <input type='submit' class='btn btn-sm btn-success' value='Add To Cart'>
+                                      </div>
+                                  </form>
                               </div>
                           </div>
                       </div>

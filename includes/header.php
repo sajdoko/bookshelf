@@ -33,7 +33,7 @@
             <li><a href='/pages/browse' class='nav-link px-2 link-dark'>Browse Books</a></li>
             <li><a href='../pages/cart' title='go to cart' class='nav-link px-2 link-dark position-relative'>
                     <i class='bi bi-cart3'></i><span
-                            class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success'><?= $num_items_in_cart; ?></span>
+                            class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success'><span id="cartItems"><?= $num_items_in_cart; ?></span></span>
                 </a></li>
         </ul>
 

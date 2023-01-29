@@ -36,6 +36,10 @@ main {
 input, select, textarea {
   margin: 0 0 15px 0;
 }
+input[type=number] {
+width: 50px;
+}
+
 header .link-icons {
 	display: flex;
 	flex-grow: 1;

@@ -1,8 +1,0 @@
-INSERT INTO SHIPPING_METHOD (ShM_Name, ShM_Price)
-VALUES ('Standard', 4.99);
-
-INSERT INTO SHIPPING_METHOD (ShM_Name, ShM_Price)
-VALUES ('Express', 9.99);
-
-INSERT INTO SHIPPING_METHOD (ShM_Name, ShM_Price)
-VALUES ('Next Day', 14.99);

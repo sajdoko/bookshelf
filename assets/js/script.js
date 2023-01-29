@@ -1,4 +1,7 @@
-
+function increaseCartItemValue() {
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = parseInt(cartItems.innerHTML) + 1;
+}
 
 const toastLiveExample = document.getElementById('liveToast')
 
@@ -24,6 +27,9 @@ for (let i = 0; i < addBookToCartForms.length; i++) {
                 const toast = new bootstrap.Toast(toastLiveExample)
                 toastLiveExample.classList.add(`bg-${data.status}-subtle`, `border`, `border-${data.status}-subtle`);
                 toast.show()
+                if (data.status === 'success') {
+                    increaseCartItemValue();
+                }
             })
             .catch((error) => {
                 document.querySelector('main').insertAdjacentHTML('afterbegin', `<div class="alert alert-danger" role="alert">${error}</div>`);

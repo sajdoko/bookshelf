@@ -17,6 +17,7 @@
     <meta name="description" content="Find your next favorite read with The Bookshelf.">
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css'>
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 

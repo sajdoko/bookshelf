@@ -47,7 +47,7 @@
                                   <p class="card-text">Description: <?= substr($genre['Boo_Description'], 0, 100); ?> ...</p>
                                   <p class='card-text'><small class='text-muted'>Published: <?= $genre['Boo_Pub_Date']->format('Y-m-d'); ?>
                                           by <?= $genre['Pub_Name']; ?></small></p>
-                                  <p class="card-text">Price: $<?= number_format($genre['Boo_Price'], 2); ?></p>
+                                  <p class="card-text">Price: &euro;<?= number_format($genre['Boo_Price'], 2); ?></p>
                                   <form action='../pages/cart' method='post' class='add-book-to-cart'>
                                       <input type='hidden' name='Boo_ISBN' value="<?= $genre['Boo_ISBN'] ?>">
                                       <div class='input-group'>

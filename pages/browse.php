@@ -120,7 +120,7 @@
                               <td><?= $book['Gen_Name']; ?></td>
                               <td><?= $book['BoL_Name']; ?></td>
                               <td><?= $book['Pub_Name']; ?></td>
-                              <td>$<?= number_format($book['Boo_Price'], 2); ?></td>
+                              <td>&euro;<?= number_format($book['Boo_Price'], 2); ?></td>
                               <td>
                                   <form action='../pages/cart' method='post' class='add-book-to-cart'>
                                       <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
@@ -143,5 +143,15 @@
             </div>
         </div>
     </section>
+  <div class="container">
+      <div class='row'>
+          <div class='col-12'>
+              <h4>TODO</h4>
+              <ul>
+                  <li>Add Pagination</li>
+              </ul>
+          </div>
+      </div>
+  </div>
 
 <?php require_once '../includes/footer.php'; ?>

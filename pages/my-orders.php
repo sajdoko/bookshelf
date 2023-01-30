@@ -56,7 +56,7 @@
                               <th scope='row'><?= $cus_order['Ord_Id']; ?></th>
                               <td><?= $cus_order['Ord_Date']->format('Y-m-d H:i:s'); ?></td>
                               <td><?= $cus_order['ShM_Name']; ?></td>
-                              <td>$<?= number_format($cus_order['Ord_Tot_Val'], 2); ?></td>
+                              <td>&euro;<?= number_format($cus_order['Ord_Tot_Val'], 2); ?></td>
                           </tr>
                         <?php $lines = get_order_lines($cus_order['Ord_Id']); ?>
                         <?php if (!empty($lines)) : ?>
@@ -77,7 +77,7 @@
                                                   <th scope='row'><a href='/book/<?= create_url_string($line['Boo_Title']); ?>'
                                                                      title="<?= $line['Boo_Title']; ?>"><?= $line['Boo_Title']; ?></a></th>
                                                   <td><?= $line['OrL_Quantity']; ?></td>
-                                                  <td>$<?= number_format($line['OrL_Tot_Price'], 2); ?></td>
+                                                  <td>&euro;<?= number_format($line['OrL_Tot_Price'], 2); ?></td>
                                               </tr>
                                           <?php endforeach; ?>
                                           </tbody>

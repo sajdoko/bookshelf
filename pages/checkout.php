@@ -81,7 +81,7 @@
                     <div class='row g-3'>
                         <div class='col-sm-6'>
                             <label for='firstName' class='form-label'>First name</label>
-                            <input type='text' name="firstName" class='form-control' id='firstName' placeholder=''
+                            <input type='text' name="first_name" class='form-control' id='firstName' placeholder=''
                                    value='<?= $logged_in_customer['Cus_FirstName'] ?? ''; ?>' required>
                             <div class='invalid-feedback'>
                                 Valid first name is required.
@@ -90,7 +90,7 @@
 
                         <div class='col-sm-6'>
                             <label for='lastName' class='form-label'>Last name</label>
-                            <input type='text' name="lastName" class='form-control' id='lastName' placeholder=''
+                            <input type='text' name="last_name" class='form-control' id='lastName' placeholder=''
                                    value='<?= $logged_in_customer['Cus_LastName'] ?? ''; ?>' required>
                             <div class='invalid-feedback'>
                                 Valid last name is required.
@@ -115,16 +115,23 @@
                           </div>
                       <?php endif; ?>
 
-                        <div class='col-12'>
+                        <div class='col-6'>
+                            <label for='phone' class='form-label'>Phone</label>
+                            <input type='text' name='phone' class='form-control' id='phone' value="<?= $logged_in_customer['Cus_Phone'] ?? ''; ?>"
+                                   placeholder='123456789'
+                                   required>
+                        </div>
+
+                        <div class='col-6'>
                             <label for='street' class='form-label'>Address</label>
-                            <input type='text' name='street' class='form-control' id='street' value="<?= $logged_in_customer['Add_Street_Name']; ?>"
+                            <input type='text' name='street' class='form-control' id='street' value="<?= $logged_in_customer['Add_Street_Name'] ?? ''; ?>"
                                    placeholder='1234 Main St'
                                    required>
                         </div>
 
                         <div class='col-md-4'>
                             <label for='city' class='form-label'>City</label>
-                            <input type='text' name='city' class='form-control' id='city' value="<?= $logged_in_customer['Add_City']; ?>"
+                            <input type='text' name='city' class='form-control' id='city' value="<?= $logged_in_customer['Add_City'] ?? ''; ?>"
                                    placeholder='Tirane'
                                    required>
                         </div>
@@ -134,7 +141,7 @@
                             <select name='country' class='form-select' id='country' required>
                                 <option value=''>Choose...</option>
                               <?php foreach ($countries as $country) : ?>
-                                  <option value="<?= $country['Cou_Alpha2Code']; ?>" <?= $country['Cou_Alpha2Code'] == $logged_in_customer['Cou_Alpha2Code'] ? 'selected' : ''; ?>><?= $country['Cou_Name']; ?></option>
+                                  <option value="<?= $country['Cou_Alpha2Code']; ?>" <?= $country['Cou_Alpha2Code'] == ($logged_in_customer['Cou_Alpha2Code']??'') ? 'selected' : ''; ?>><?= $country['Cou_Name']; ?></option>
                               <?php endforeach; ?>
                             </select>
                         </div>
@@ -142,7 +149,7 @@
                         <div class='col-md-3'>
                             <label for='zip' class='form-label'>Zip</label>
                             <input type='text' name="zip" class='form-control' id='zip' value="<?= $logged_in_customer['Add_Zip'] ?? ''; ?>"
-                                   placeholder='' required>
+                                   placeholder='1001' required>
                             <div class='invalid-feedback'>
                                 Zip code required.
                             </div>
@@ -156,7 +163,7 @@
                                   <input id="<?= create_html_id($sh_p['ShM_Name']); ?>" name='shippingMethod' type='radio'
                                          value="<?= $sh_p['ShM_Id']; ?>" class='form-check-input' required>
                                   <label class='form-check-label' for='<?= create_html_id($sh_p['ShM_Name']); ?>'><?= $sh_p['ShM_Name']; ?> -
-                                      $<?= number_format($sh_p['ShM_Price'], 2); ?></label>
+                                      &euro;<?= number_format($sh_p['ShM_Price'], 2); ?></label>
                               </div>
                           <?php endforeach; ?>
                         </div>

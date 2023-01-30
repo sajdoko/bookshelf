@@ -117,13 +117,15 @@
 
                         <div class='col-12'>
                             <label for='street' class='form-label'>Address</label>
-                            <input type='text' name='street' class='form-control' id='street' value="<?= $logged_in_customer['Add_Street_Name']; ?>" placeholder='1234 Main St'
+                            <input type='text' name='street' class='form-control' id='street' value="<?= $logged_in_customer['Add_Street_Name']; ?>"
+                                   placeholder='1234 Main St'
                                    required>
                         </div>
 
                         <div class='col-md-4'>
                             <label for='city' class='form-label'>City</label>
-                            <input type='text' name='city' class='form-control' id='city' value="<?= $logged_in_customer['Add_City']; ?>" placeholder='Tirane'
+                            <input type='text' name='city' class='form-control' id='city' value="<?= $logged_in_customer['Add_City']; ?>"
+                                   placeholder='Tirane'
                                    required>
                         </div>
 
@@ -139,7 +141,8 @@
 
                         <div class='col-md-3'>
                             <label for='zip' class='form-label'>Zip</label>
-                            <input type='text' name="zip" class='form-control' id='zip' value="<?= $logged_in_customer['Add_Zip'] ?? ''; ?>" placeholder='' required>
+                            <input type='text' name="zip" class='form-control' id='zip' value="<?= $logged_in_customer['Add_Zip'] ?? ''; ?>"
+                                   placeholder='' required>
                             <div class='invalid-feedback'>
                                 Zip code required.
                             </div>
@@ -149,10 +152,12 @@
 
                         <div class='my-3'>
                           <?php foreach ($shipping_methods as $sh_p) : ?>
-                            <div class='form-check'>
-                                <input id="<?= create_html_id($sh_p['ShM_Name']); ?>" name='shippingMethod' type='radio' value="<?= $sh_p['ShM_Id']; ?>" class='form-check-input' required>
-                                <label class='form-check-label' for='<?= create_html_id($sh_p['ShM_Name']); ?>'><?= $sh_p['ShM_Name']; ?> - $<?= number_format($sh_p['ShM_Price'], 2); ?></label>
-                            </div>
+                              <div class='form-check'>
+                                  <input id="<?= create_html_id($sh_p['ShM_Name']); ?>" name='shippingMethod' type='radio'
+                                         value="<?= $sh_p['ShM_Id']; ?>" class='form-check-input' required>
+                                  <label class='form-check-label' for='<?= create_html_id($sh_p['ShM_Name']); ?>'><?= $sh_p['ShM_Name']; ?> -
+                                      $<?= number_format($sh_p['ShM_Price'], 2); ?></label>
+                              </div>
                           <?php endforeach; ?>
                         </div>
                     </div>

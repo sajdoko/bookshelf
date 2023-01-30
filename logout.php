@@ -1,12 +1,12 @@
 <?php
-include_once 'includes/functions.php';
+  include_once 'includes/functions.php';
 
-sec_session_start();
+  sec_session_start();
 
-if (login_check_customer()) {
-  session_unset();
-  session_destroy();
-}
+  if (login_check_customer()) {
+    session_unset();
+    session_destroy();
+  }
 
-header('Location: /');
-exit();
+  header('Location: /');
+  exit();

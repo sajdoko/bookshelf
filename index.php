@@ -36,7 +36,7 @@
     <div class="container-fluid pt-1 px-5">
         <h2 class='display-3 text-center my-5'>Best Sellers</h2>
         <div class='row'>
-          <?php foreach (get_featured_books(2) as $book): ?>
+          <?php foreach (get_best_sellers(2) as $book): ?>
               <div class='col-sm-12 col-md-6'>
                   <div class="container">
                       <div class='row shadow'>

@@ -21,14 +21,6 @@
             ";
 
   $genres = retrieveAllRows($query, [$genre_url_string]);
-//  if (!$genres) {
-//    http_response_code(404);
-//    include_once '404.php';
-//    die(404);
-//  }
-//  echo "<pre>";
-//print_r($genres);
-//  echo '</pre>';
 ?>
 
     <section class='py-5 text-center container'>
@@ -61,7 +53,7 @@
                                       <div class='input-group'>
                                           <label>
                                               <input type='number' name='quantity' class='form-control form-control-sm' value='1' min='1'
-                                                     max="<?= $genre['Boo_QOH']??0; ?>"
+                                                     max="<?= $genre['Boo_QOH'] ?? 0; ?>"
                                                      placeholder='0'
                                                      required>
                                           </label>

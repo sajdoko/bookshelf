@@ -147,6 +147,34 @@
     return retrieveAllRows($query, [$quantity]);
   }
 
+
+  /**
+   * Get a list of the most sold books.
+   *
+   * @param  int  $quantity
+   *
+   * @return array An array of books.
+   */
+  function get_best_sellers(int $quantity = 3): array
+  {
+    // Select most sold books
+    $query = 'SELECT TOP (?) *
+FROM BOOK
+         JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
+         JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
+         LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
+         LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
+         LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
+         LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
+WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
+                        FROM BOOK
+                                 INNER JOIN ORDER_LINE ON BOOK.Boo_ISBN = ORDER_LINE.Boo_ISBN
+                        GROUP BY BOOK.Boo_ISBN
+                        ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC)';
+
+    return retrieveAllRows($query, [$quantity, $quantity]);
+  }
+
   /**
    * Get a list of top genre names.
    *

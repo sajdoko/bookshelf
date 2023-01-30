@@ -75,7 +75,8 @@
                                     <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                     <div class='input-group mb-3'>
                                         <label>
-                                            <input type='number' name='quantity' class='form-control' value='1' min='1' max="<?= $book['Boo_QOH']??0 ?>"
+                                            <input type='number' name='quantity' class='form-control' value='1' min='1'
+                                                   max="<?= $book['Boo_QOH'] ?? 0 ?>"
                                                    placeholder='0'
                                                    required>
                                         </label>

@@ -25,10 +25,10 @@
 
     // Check for empty fields
     if (empty($new_first_name)) {
-      $alerts[] = ["danger","First name is required."];
+      $alerts[] = ["danger", "First name is required."];
     }
     if (empty($new_last_name)) {
-      $alerts[] = ["danger","Last name is required."];
+      $alerts[] = ["danger", "Last name is required."];
     }
 
     // If no alerts, update the user's info in the database
@@ -106,7 +106,8 @@
                 <div class='row'>
                     <div class='col-12'>
                         <div class='form-floating'>
-                            <input type='text' name='street' class='form-control' id='street' value="<?= $user['Add_Street_Name']; ?>" placeholder='1234 Main St'
+                            <input type='text' name='street' class='form-control' id='street' value="<?= $user['Add_Street_Name']; ?>"
+                                   placeholder='1234 Main St'
                                    required>
                             <label for='street' class='form-label'>Address</label>
                         </div>
@@ -131,7 +132,8 @@
                     </div>
                     <div class='col-md-3'>
                         <div class='form-floating'>
-                            <input type='number' name='zip' class='form-control w-75' id='zip' value="<?= $user['Add_Zip']; ?>" placeholder='Zip' required>
+                            <input type='number' name='zip' class='form-control w-75' id='zip' value="<?= $user['Add_Zip']; ?>" placeholder='Zip'
+                                   required>
                             <label for='zip' class='form-label'>Zip</label>
                         </div>
                     </div>

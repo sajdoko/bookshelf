@@ -12,7 +12,8 @@
     if (login_customer($email, $password)) {
       header("Location: /");
       exit();
-    } else {
+    }
+    else {
       $error_msg .= '<p class="text-danger">Invalid email or password</p>';
     }
   }
@@ -20,9 +21,9 @@
 
 <div class='form-signin w-100 m-auto'>
     <!-- Display error message if there is one -->
-    <?php if ($error_msg) {
-      echo '<div class="alert alert-danger">' . $error_msg . '</div>';
-    } ?>
+  <?php if ($error_msg) {
+    echo '<div class="alert alert-danger">'.$error_msg.'</div>';
+  } ?>
     <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
         <h1 class='h3 mb-3 fw-normal'>Please sign in</h1>
 

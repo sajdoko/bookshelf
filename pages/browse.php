@@ -127,7 +127,7 @@
                                       <div class='input-group'>
                                           <label>
                                               <input type='number' name='quantity' class='form-control form-control-sm mb-0' value='1' min='1'
-                                                     max="<?= $book['Boo_QOH']??0; ?>"
+                                                     max="<?= $book['Boo_QOH'] ?? 0; ?>"
                                                      placeholder='0'
                                                      required>
                                           </label>

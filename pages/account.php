@@ -33,7 +33,7 @@
 
     // If no alerts, update the user's info in the database
     if (count($alerts) == 0) {
-      if (update_user_info($user_id, $new_first_name, $new_last_name, $new_phone, $new_street, $new_zip, $new_city, $new_country_id)) {
+      if (update_customer_info($user_id, $new_first_name, $new_last_name, $new_phone, $new_street, $new_zip, $new_city, $new_country_id)) {
         $alerts[] = ['success', 'Your profile was updated successfully!'];
       }
     }

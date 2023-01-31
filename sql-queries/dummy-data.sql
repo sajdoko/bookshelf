@@ -100,11 +100,11 @@ VALUES
 (9012345678, 9, 3, '1984', 'A novel by George Orwell', 14.99, '2022-09-01', 'https://covers.openlibrary.org/b/id/12525678-L.jpg', 1, 15),
 (9123456789, 10, 1, 'The Odyssey', 'An epic poem by Homer', 22.99, '2022-10-01', 'https://covers.openlibrary.org/b/id/10792516-L.jpg', 1, 20);
 
-INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Rol_Id)
+INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Rol_Id, Cus_Reg_Date)
 VALUES
-    (NEXT VALUE FOR SEQ_CUS_ID, 'John', 'Doe', 'johndoe@email.com', 'pass123', '555-555-5555', 1),
-    (NEXT VALUE FOR SEQ_CUS_ID, 'Jane', 'Doe', 'janedoe@email.com', 'pass456', '555-555-5556', 1),
-    (NEXT VALUE FOR SEQ_CUS_ID, 'Jim', 'Smith', 'jimsmith@email.com', 'pass789', '555-555-5557', 2);
+    (NEXT VALUE FOR SEQ_CUS_ID, 'John', 'Doe', 'johndoe@email.com', 'pass123', '555-555-5555', 1, '2022-12-01 12:00:00'),
+    (NEXT VALUE FOR SEQ_CUS_ID, 'Jane', 'Doe', 'janedoe@email.com', 'pass456', '555-555-5556', 1, '2022-11-01 12:00:00'),
+    (NEXT VALUE FOR SEQ_CUS_ID, 'Jim', 'Smith', 'jimsmith@email.com', 'pass789', '555-555-5557', 2, '2022-11-01 12:00:00');
 
 INSERT INTO BOOK_GENRE (Boo_ISBN, Gen_Id)
 VALUES
@@ -151,18 +151,18 @@ VALUES
   ('9012345678', 9),
   ('9123456789', 10);
 
-INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity, OrL_Tot_Price)
+INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity, OrL_Tot_Price, OrL_Price)
 VALUES
-  ('9780910972321', 1, 2, 2.5),
-  ('9788973062010', 2, 1, 2.5),
-  ('3456789012', 3, 5, 2.5),
-  ('4567890123', 4, 3, 2.5),
-  ('5678901234', 5, 2, 2.5),
-  ('6789012345', 1, 4, 2.5),
-  ('7890123456', 2, 1, 2.5),
-  ('8901234567', 3, 5, 2.5),
-  ('9012345678', 4, 3, 2.5),
-  ('9123456789', 5, 2, 2.5);
+  ('9780910972321', 1, 2, 2.5, 1.2),
+  ('9788973062010', 2, 1, 2.5, 1.2),
+  ('3456789012', 3, 5, 2.5, 1.2),
+  ('4567890123', 4, 3, 2.5, 1.2),
+  ('5678901234', 5, 2, 2.5, 1.2),
+  ('6789012345', 1, 4, 2.5, 1.2),
+  ('7890123456', 2, 1, 2.5, 1.2),
+  ('8901234567', 3, 5, 2.5, 1.2),
+  ('9012345678', 4, 3, 2.5, 1.2),
+  ('9123456789', 5, 2, 2.5, 1.2);
 
 INSERT INTO ADDRESS (Cus_Id, Add_Id, Add_Street_Name, Add_Zip, Add_City, Cou_Alpha2Code)
 VALUES

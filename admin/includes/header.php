@@ -2,6 +2,7 @@
   // Include database connection
   require_once dirname(__FILE__, 3).'/includes/db_conn.php';
   require_once dirname(__FILE__, 3).'/includes/functions.php';
+  require_once dirname(__FILE__, 1).'/admin_functions.php';
   sec_session_start();
   $logged_in_employee = login_check_employee();
 
@@ -20,69 +21,68 @@
     <meta name="description" content="Find your next favorite read with The Bookshelf.">
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css'>
     <link href='/assets/css/dashboard.css' rel='stylesheet'>
 </head>
 
 <body>
 
 
-<header class='navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow'>
-    <a class='navbar-brand col-md-2 col-lg-1 me-0 px-3 fs-6' href='/admin/dashboard'>The Bookshelf</a>
-    <button class='navbar-toggler position-absolute d-md-none collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#sidebarMenu'
-            aria-controls='sidebarMenu' aria-expanded='false' aria-label='Toggle navigation'>
-        <span class='navbar-toggler-icon'></span>
-    </button>
-    <div class='navbar-nav'>
-        <div class='nav-item text-nowrap'>
-            <span class='nav-link px-3'>Hi <?= $logged_in_employee['Emp_FirstName']; ?> <i class='bi bi-emoji-smile'></i></span>
+<main class='d-flex flex-nowrap'>
+    <h1 class='visually-hidden'>The Bookshelf</h1>
+
+    <div class='d-flex flex-column flex-shrink-0 p-3 bg-light' style='width: 280px;'>
+        <a href='/admin/dashboard' class='d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none'>
+            <img src='/assets/images/logo.png' width='200' alt='The Bookshelf'>
+        </a>
+        <hr>
+        <ul class='nav nav-pills flex-column mb-auto'>
+            <li>
+                <a href='/admin/dashboard' class='nav-link text-dark'>
+                    <i class='bi bi-speedometer2'></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href='/admin/orders' class='nav-link text-dark'>
+                    <i class='bi bi-table'></i>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a href='/admin/books' class='nav-link text-dark'>
+                    <i class='bi bi-book'></i>
+                    Books
+                </a>
+            </li>
+            <li>
+                <a href='/admin/customers' class='nav-link text-dark'>
+                    <i class='bi bi-people'></i>
+                    Customers
+                </a>
+            </li>
+            <li>
+                <a href='/admin/reports' class='nav-link text-dark'>
+                    <i class='bi bi-graph-up'></i>
+                    Reports
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class='dropdown'>
+            <a href='#' class='d-flex align-items-center text-dark text-decoration-none dropdown-toggle' data-bs-toggle='dropdown'
+               aria-expanded='false'>
+              <?= get_gravatar($logged_in_employee['Emp_Email'], 32, 'mp', 'g', true, ['class' => 'rounded-circle me-2']); ?>
+                <span>Hi <?= $logged_in_employee['Emp_FirstName']; ?></span>
+            </a>
+            <ul class='dropdown-menu dropdown-menu text-small shadow'>
+                <li><a class='dropdown-item' href='#'>Profile</a></li>
+                <li>
+                    <hr class='dropdown-divider'>
+                </li>
+                <li><a class='dropdown-item' href='../../logout.php'>Sign out</a></li>
+            </ul>
         </div>
     </div>
-    <div class='navbar-nav'>
-        <div class='nav-item text-nowrap'>
-            <a class='nav-link px-3' href='../../logout.php'>Sign out</a>
-        </div>
-    </div>
-</header>
 
-<div class='container-fluid mt-3'>
-    <div class='row'>
-        <nav id='sidebarMenu' class='col-md-2 col-lg-1 d-md-block bg-light sidebar collapse'>
-            <div class='position-sticky pt-3 sidebar-sticky'>
-                <ul class='nav flex-column'>
-                    <li class='nav-item'>
-                        <a class='nav-link active' aria-current='page' href='/admin/dashboard'>
-                            <span data-feather='home' class='align-text-bottom'></span>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' href='/admin/orders'>
-                            <span data-feather='file' class='align-text-bottom'></span>
-                            Orders
-                        </a>
-                    </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' href='/admin/books'>
-                            <span data-feather='shopping-cart' class='align-text-bottom'></span>
-                            Books
-                        </a>
-                    </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' href='/admin/customers'>
-                            <span data-feather='users' class='align-text-bottom'></span>
-                            Customers
-                        </a>
-                    </li>
-                    <li class='nav-item'>
-                        <a class='nav-link' href='/admin/reports'>
-                            <span data-feather='bar-chart-2' class='align-text-bottom'></span>
-                            Reports
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <main class='col-md-10 ms-sm-auto col-lg-11 px-md-4'>
-
-            <div class='container-fluid'>
+    <div class="container-fluid">

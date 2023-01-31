@@ -61,8 +61,8 @@
             $_SESSION['checkout_errors'][] = '<p class="text-danger">You are allready registered with this email: '.$email.'</p>';
           }
           else {
-            $query = 'INSERT INTO CUSTOMER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?)';
-            $customer = insertQuery($query, [$first_name, $last_name, $email, $password, $phone, 3]);
+            $query = 'INSERT INTO CUSTOMER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?, ?)';
+            $customer = insertQuery($query, [$first_name, $last_name, $email, $password, $phone, 3, date('Y-m-d H:i:s')]);
             if (!isset($customer['Cus_Id'])) {
               $_SESSION['checkout_errors'][] = '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
             }
@@ -82,8 +82,9 @@
                   }
 
                   foreach ($ordered_books as $Boo_ISBN => $quantity) {
-                    executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?)',
-                      [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, calc_tot_book_price($Boo_ISBN, $quantity)]);
+                    $Boo_Price = get_book_price($Boo_ISBN);
+                    executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',
+                      [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, $Boo_Price * $quantity, $Boo_Price]);
                   }
 
                   $self_url = strtok($_SERVER['REQUEST_URI'], '?');
@@ -112,8 +113,9 @@
       }
 
       foreach ($ordered_books as $Boo_ISBN => $quantity) {
-        executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?)',
-          [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, calc_tot_book_price($Boo_ISBN, $quantity)]);
+          $Boo_Price = get_book_price($Boo_ISBN);
+        executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',
+          [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, $Boo_Price * $quantity, $Boo_Price]);
       }
 
       $self_url = strtok($_SERVER['REQUEST_URI'], '?');

@@ -2,6 +2,7 @@
   // Include database connection
   require_once dirname(__FILE__, 2).'/includes/db_conn.php';
   require_once dirname(__FILE__, 2).'/includes/functions.php';
+  require_once 'includes/admin_functions.php';
   sec_session_start();
   $logged_in_employee = login_check_employee();
 
@@ -65,12 +66,6 @@
         </form>
     </div>
 </main>
-
-<footer class='text-muted py-5'>
-    <div class='container'>
-        <p class='mb-1'>Copyright The Bookshelf!</p>
-    </div>
-</footer>
 
 <!-- Toast container -->
 <div class='toast-container position-fixed top-0 end-0 p-3'>

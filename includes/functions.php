@@ -72,22 +72,22 @@
   {
     global $conn;
 
-    $error = true;
+    $no_error = true;
     $stmt = sqlsrv_prepare($conn, $query, $params);
     if (!$stmt) {
       FormatErrors(sqlsrv_errors());
-      $error = false;
+      $no_error = false;
     }
     else {
       if (!sqlsrv_execute($stmt)) {
         FormatErrors(sqlsrv_errors());
-        $error = false;
+        $no_error = false;
       }
     }
 
     sqlsrv_free_stmt($stmt);
 
-    return $error;
+    return $no_error;
   }
 
   /**
@@ -311,85 +311,6 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
-   * Perform the login operation.
-   *
-   * @param  string  $Emp_Email  The email of the user.
-   * @param  string  $Emp_Pass  The password of the user.
-   *
-   * @return bool True if the login was successfully, false otherwise.
-   */
-  function login_employee(string $Emp_Email, string $Emp_Pass): bool
-  {
-    // Check if email and password are not empty
-    if (empty($Emp_Email) || empty($Emp_Pass)) {
-      return false;
-    }
-
-    $query = 'SELECT Emp_Id, Emp_Email, Emp_Pass FROM EMPLOYEE WHERE Emp_Email = ?';
-    $user = retrieveOneRow($query, [$Emp_Email]);
-
-    // Check if user exists in the database
-    if ($user) {
-
-      // Check if the password is correct
-      if (password_verify($Emp_Pass, $user['Emp_Pass'])) {
-        // Start a new session
-        session_start();
-
-        // Store the user_id and email in the session
-        $_SESSION['Emp_Id'] = $user['Emp_Id'];
-        $_SESSION['Emp_Email'] = $Emp_Email;
-        $_SESSION['login_string'] = hash('sha512', $user['Emp_Pass'].$_SERVER['HTTP_USER_AGENT']);
-
-        // Return true to indicate successful login
-        return true;
-      }
-    }
-    // Return false if login fails
-    return false;
-  }
-
-  /**
-   * Check of the employee is logged in by controlling the session.
-   *
-   * @return array|bool Returns array if employee is logged in, false if not.
-   */
-  function login_check_employee(): array|bool
-  {
-    // Check if all session variables are set
-    if (isset($_SESSION['Emp_Id'], $_SESSION['Emp_Email'], $_SESSION['login_string'])) {
-      $Emp_Id = $_SESSION['Emp_Id'];
-      $login_string = $_SESSION['login_string'];
-
-      // Get the user-agent string of the user
-      $user_browser = $_SERVER['HTTP_USER_AGENT'];
-
-      $query = 'SELECT * FROM EMPLOYEE WHERE EMPLOYEE.Emp_Id = ?';
-      $user = retrieveOneRow($query, [$Emp_Id]);
-
-      if ($user) {
-        $login_check = hash('sha512', $user['Emp_Pass'].$user_browser);
-        if ($login_check == $login_string) {
-          // Logged In!!!!
-          return $user;
-        }
-        else {
-          // Not logged in
-          return false;
-        }
-      }
-      else {
-        // Not logged in
-        return false;
-      }
-    }
-    else {
-      // Not logged in
-      return false;
-    }
-  }
-
-  /**
    * Get a customer's info from the database
    *
    * @param $user_id
@@ -398,7 +319,8 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    */
   function get_customer_info($user_id): array
   {
-    $query = 'SELECT * FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code WHERE CUSTOMER.Cus_Id = ?';
+    $query = 'SELECT * FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
+         WHERE CUSTOMER.Cus_Id = ?';
     return retrieveOneRow($query, [$user_id]);
   }
 
@@ -416,7 +338,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    *
    * @return bool
    */
-  function update_user_info($user_id, $first_name, $last_name, $phone, $street, $zip, $city, $country_id): bool
+  function update_customer_info($user_id, $first_name, $last_name, $phone, $street, $zip, $city, $country_id): bool
   {
     $query = "UPDATE CUSTOMER SET Cus_FirstName = ?, Cus_LastName = ?, Cus_Phone = ? WHERE Cus_Id = ?";
     executeQuery($query, [$first_name, $last_name, $phone, $user_id]);
@@ -426,6 +348,8 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
+   * This function returns an alphanumeric string separated by - that can be used as a URL .
+   *
    * @param $title
    *
    * @return string
@@ -439,6 +363,8 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
+   * This function returns an alphanumeric string separated by _ that can be used as a html class or id.
+   *
    * @param $string
    *
    * @return string
@@ -452,6 +378,8 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
+   * Get the order lines of the order.
+   *
    * @param $Ord_Id
    *
    * @return array
@@ -466,17 +394,18 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
+   * Get the book price.
+   *
    * @param $Boo_ISBN
-   * @param $quantity
    *
    * @return float
    */
-  function calc_tot_book_price($Boo_ISBN, $quantity): float
+  function get_book_price($Boo_ISBN): float
   {
     $book = get_book_by_isbn($Boo_ISBN);
     if (!$book) {
-      return 0.00;
+      return 0;
     }
 
-    return $book['Boo_Price'] * $quantity;
+    return $book['Boo_Price'];
   }

@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteRule ^admin/book/([^/]*)/?$ /admin/book.php?title=$1 [L]
 RewriteRule ^book/([^/]*)/?$ /pages/book.php?title=$1 [L]
 RewriteRule ^genre/([^/]*)/?$ /pages/genre.php?name=$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f

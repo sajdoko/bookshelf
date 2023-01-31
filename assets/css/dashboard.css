@@ -15,6 +15,10 @@ main {
     overflow-x: auto;
     overflow-y: hidden;
 }
+main .container, main .container-fluid {
+    overflow-y: auto;
+}
+
 
 .dropdown-toggle {
     outline: 0;

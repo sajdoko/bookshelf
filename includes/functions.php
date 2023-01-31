@@ -356,7 +356,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    */
   function create_url_string($title): string
   {
-    $string = preg_replace('/[^a-zA-Z0-9\s]/', '', $title); // remove all non-alphanumeric characters
+    $string = preg_replace('/[^a-zA-Z0-9-\s]/', '', $title); // remove all non-alphanumeric characters
     $string = preg_replace('/\s/', '-', $string); // replace spaces with dashes
     // convert to lowercase
     return strtolower($string);

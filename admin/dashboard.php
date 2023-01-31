@@ -1,6 +1,5 @@
 <?php
   $page_title = "Dashboard";
-  require_once 'includes/dashboard_functions.php';
   require_once 'includes/header.php';
 
   $customers_growth = get_customers_growth();

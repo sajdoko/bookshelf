@@ -81,7 +81,7 @@ VALUES
 
 INSERT INTO EMPLOYEE (Emp_Id, Emp_FirstName, Emp_LastName, Emp_Email, Emp_Pass, Emp_Phone, Rol_Id)
 VALUES
-    (NEXT VALUE FOR SEQ_EMP_ID, 'John', 'Doe', 'johndoe@email.com', 'password1', '555-555-1212', 2),
+    (NEXT VALUE FOR SEQ_EMP_ID, 'John', 'Doe', 'johndoe@email.com', '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-1212', 2),
     (NEXT VALUE FOR SEQ_EMP_ID, 'Jane', 'Smith', 'janesmith@email.com', 'password2', '555-555-1213', 2),
     (NEXT VALUE FOR SEQ_EMP_ID, 'Bob', 'Johnson', 'bobjohnson@email.com', 'password3', '555-555-1214', 2),
     (NEXT VALUE FOR SEQ_EMP_ID, 'Amy', 'Williams', 'amywilliams@email.com', 'password4', '555-555-1215', 2),
@@ -102,8 +102,8 @@ VALUES
 
 INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Rol_Id, Cus_Reg_Date)
 VALUES
-    (NEXT VALUE FOR SEQ_CUS_ID, 'John', 'Doe', 'johndoe@email.com', 'pass123', '555-555-5555', 1, '2022-12-01 12:00:00'),
-    (NEXT VALUE FOR SEQ_CUS_ID, 'Jane', 'Doe', 'janedoe@email.com', 'pass456', '555-555-5556', 1, '2022-11-01 12:00:00'),
+    (NEXT VALUE FOR SEQ_CUS_ID, 'John', 'Doe', 'johndoe@email.com', '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5555', 1, '2022-12-01 12:00:00'),
+    (NEXT VALUE FOR SEQ_CUS_ID, 'Jane', 'Doe', 'janedoe@email.com', '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5556', 1, '2022-11-01 12:00:00'),
     (NEXT VALUE FOR SEQ_CUS_ID, 'Jim', 'Smith', 'jimsmith@email.com', 'pass789', '555-555-5557', 2, '2022-11-01 12:00:00');
 
 INSERT INTO BOOK_GENRE (Boo_ISBN, Gen_Id)

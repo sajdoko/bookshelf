@@ -46,7 +46,7 @@
                               <td><?= $book['Pub_Name']; ?></td>
                               <td>&euro;<?= number_format($book['Boo_Price'], 2); ?></td>
                               <td>
-                                  <a href="/admin/book/<?= create_url_string($book['Boo_Title']); ?>" class="btn btn-sm btn-primary"><i class='bi bi-pencil-square mx-2'></i></a>
+                                  <a href="/admin/book/edit/<?= create_url_string($book['Boo_Title']); ?>" class="btn btn-sm btn-primary"><i class='bi bi-pencil-square mx-2'></i></a>
                                   <a class='btn btn-sm btn-outline-danger'><i class='bi bi-trash mx-2' data-bs-toggle='tooltip' data-bs-placement='left' data-bs-title='Delete the book?'></i></a>
                               </td>
                           </tr>

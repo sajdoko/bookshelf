@@ -1,6 +1,13 @@
 function increaseCartItemValue() {
-  const cartItems = document.getElementById("cartItems");
-  cartItems.innerHTML = parseInt(cartItems.innerHTML) + 1;
+    const cartItems = document.getElementById("cartItems");
+    cartItems.innerHTML = parseInt(cartItems.innerHTML) + 1;
+}
+function showToast(data) {
+    document.querySelector('[data-toast-title]').innerHTML = data.status.charAt(0).toUpperCase() + data.status.substring(1);
+    document.querySelector('[data-toast-body]').innerHTML = data.message;
+    const toast = new bootstrap.Toast(toastLiveExample)
+    toastLiveExample.classList.add(`bg-${data.status}-subtle`, `border`, `border-${data.status}-subtle`);
+    toast.show();
 }
 
 const toastLiveExample = document.getElementById('liveToast')
@@ -22,11 +29,7 @@ for (let i = 0; i < addBookToCartForms.length; i++) {
         })
             .then((response) => response.json())
             .then((data) => {
-                document.querySelector('[data-toast-title]').innerHTML = data.status.charAt(0).toUpperCase() + data.status.substring(1);
-                document.querySelector('[data-toast-body]').innerHTML = data.message;
-                const toast = new bootstrap.Toast(toastLiveExample)
-                toastLiveExample.classList.add(`bg-${data.status}-subtle`, `border`, `border-${data.status}-subtle`);
-                toast.show()
+                showToast(data)
                 if (data.status === 'success') {
                     increaseCartItemValue();
                 }

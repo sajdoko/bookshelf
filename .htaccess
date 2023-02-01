@@ -1,5 +1,6 @@
 RewriteEngine On
-RewriteRule ^admin/book/([^/]*)/?$ /admin/book.php?title=$1 [L]
+RewriteRule ^admin/book/edit/([^/]*)/?$ /admin/edit-book.php?title=$1 [L]
+RewriteRule ^admin/book/add/?$ /admin/add-book.php [L]
 RewriteRule ^book/([^/]*)/?$ /pages/book.php?title=$1 [L]
 RewriteRule ^genre/([^/]*)/?$ /pages/genre.php?name=$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f

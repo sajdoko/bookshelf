@@ -46,7 +46,7 @@ CREATE TABLE SHIPPING_METHOD
 (
     ShM_Id    INT PRIMARY KEY,
     ShM_Name  VARCHAR(255) NOT NULL,
-    ShM_Price DECIMAL      NOT NULL
+    ShM_Price FLOAT        NOT NULL
 );
 CREATE SEQUENCE SEQ_SHM_ID START WITH 1 INCREMENT BY 1 NO CACHE;
 
@@ -77,7 +77,7 @@ CREATE TABLE BOOK
     BoL_Id          INT          NOT NULL,
     Boo_Title       VARCHAR(255) NOT NULL,
     Boo_Description VARCHAR(MAX) NOT NULL,
-    Boo_Price       DECIMAL      NOT NULL,
+    Boo_Price       FLOAT        NOT NULL,
     Boo_Pub_Date    DATE         NOT NULL,
     Boo_Img_url     VARCHAR(255) NOT NULL,
     Boo_Featured    BIT          NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE CUS_ORDER
     Cus_Id      INT      NOT NULL,
     ShM_Id      INT      NOT NULL,
     Ord_Date    DATETIME NOT NULL,
-    Ord_Tot_Val DECIMAL  NOT NULL,
+    Ord_Tot_Val FLOAT    NOT NULL,
     FOREIGN KEY (Cus_Id) REFERENCES CUSTOMER (Cus_Id),
     FOREIGN KEY (ShM_Id) REFERENCES SHIPPING_METHOD (ShM_Id)
 );
@@ -145,9 +145,9 @@ CREATE TABLE ORDER_LINE
 (
     Boo_ISBN      VARCHAR(255),
     Ord_Id        INT,
-    OrL_Quantity  INT     NOT NULL,
-    OrL_Tot_Price DECIMAL NOT NULL,
-    OrL_Price     DECIMAL NOT NULL,
+    OrL_Quantity  INT   NOT NULL,
+    OrL_Tot_Price FLOAT NOT NULL,
+    OrL_Price     FLOAT NOT NULL,
     PRIMARY KEY (Boo_ISBN, Ord_Id),
     FOREIGN KEY (Boo_ISBN) REFERENCES BOOK (Boo_ISBN),
     FOREIGN KEY (Ord_Id) REFERENCES CUS_ORDER (Ord_Id)

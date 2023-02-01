@@ -18,25 +18,36 @@
     if (isset($data['form_action']) && in_array($data['form_action'], ['insert_book', 'update_book', 'delete_book'])) {
 
       $form_action = $data['form_action'];
-      $Aut_Id = (int) $data['Aut_Id'];
-      $Gen_Id = (int) $data['Gen_Id'];
-      $BoL_Id = (int) $data['BoL_Id'];
-      $Boo_QOH = (int) $data['Boo_QOH'];
-      $Pub_Id = (int) $data['Pub_Id'];
-      $Boo_Price = (float) $data['Boo_Price'];
-      $Boo_Title = filter_var($data['Boo_Title'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-      $Boo_ISBN = $data['Boo_ISBN'];
-      $Boo_Description = filter_var($data['Boo_Description'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-      $Boo_Pub_Date = $data['Boo_Pub_Date'];
-      $Boo_Img_url = $data['Boo_Img_url'];
-      $Boo_Featured = isset($data['Boo_Featured']) ? 1 : 0;
-
+      $Boo_ISBN = $data['Boo_ISBN']??false;
       if (!$Boo_ISBN) {
         $resp['status'] = 'danger';
         $resp['message'] = 'Please fill all the required fields!';
         $resp['post'] = $data;
         exit(json_encode($resp));
       }
+      if ($form_action == 'delete_book') {
+        if (executeQuery('DELETE FROM BOOK WHERE Boo_ISBN = ?', [$Boo_ISBN])) {
+          $resp['status'] = 'success';
+          $resp['message'] = 'Book deleted!';
+        }
+        else {
+          $resp['status'] = 'danger';
+          $resp['message'] = 'The Book could not be deleted!';
+        }
+        exit(json_encode($resp));
+      }
+      $Aut_Id = (int) $data['Aut_Id']??0;
+      $Gen_Id = (int) $data['Gen_Id']??0;
+      $BoL_Id = (int) $data['BoL_Id']??0;
+      $Boo_QOH = (int) $data['Boo_QOH']??0;
+      $Pub_Id = (int) $data['Pub_Id']??0;
+      $Boo_Price = (float) $data['Boo_Price']??0;
+      $Boo_Title = filter_var($data['Boo_Title']??false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+      $Boo_Description = filter_var($data['Boo_Description']??false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+      $Boo_Pub_Date = $data['Boo_Pub_Date']??false;
+      $Boo_Img_url = $data['Boo_Img_url']??false;
+      $Boo_Featured = isset($data['Boo_Featured']) ? 1 : 0;
+
       $exec_query = false;
 
       if ($form_action == 'update_book') {
@@ -51,19 +62,10 @@
             [$Boo_ISBN, $Boo_ISBN, $Pub_Id, $BoL_Id, $Boo_Title, $Boo_Description, $Boo_Price, $Boo_Pub_Date, $Boo_Img_url, $Boo_Featured, $Boo_QOH]);
         }
         else {
-          if ($form_action == 'delete_book') {
-            if (executeQuery('DELETE FROM BOOK WHERE Boo_ISBN = ?', [$Boo_ISBN])) {
-              $resp['status'] = 'success';
-              $resp['message'] = 'Book deleted!';
-              exit(json_encode($resp));
-            }
-          }
-          else {
-            $resp['status'] = 'danger';
-            $resp['message'] = 'Action not permitted!';
-            $resp['post'] = $data;
-            exit(json_encode($resp));
-          }
+          $resp['status'] = 'danger';
+          $resp['message'] = 'Action not permitted!';
+          $resp['post'] = $data;
+          exit(json_encode($resp));
         }
       }
 

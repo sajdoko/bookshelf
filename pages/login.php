@@ -4,6 +4,7 @@
   include '../includes/header.php';
 
   $error_msg = "";
+  $self_url = strtok($_SERVER['REQUEST_URI'], '?');
 
   if (isset($_POST['email'], $_POST['password'])) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -24,7 +25,7 @@
   <?php if ($error_msg) {
     echo '<div class="alert alert-danger">'.$error_msg.'</div>';
   } ?>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+    <form action="<?= $self_url; ?>" method="post">
         <h1 class='h3 mb-3 fw-normal'>Please sign in</h1>
 
         <div class='form-floating'>

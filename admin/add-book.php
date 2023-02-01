@@ -19,7 +19,7 @@
 
     <div class="row pb-4">
         <div class="col-6">
-            <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='post' class='row g-3 bookForm'>
+            <form class='row g-3 bookForm'>
                 <div class='col-12'>
                     <label for='Boo_Title' class='form-label'>Book Title</label>
                     <input type='text' name='Boo_Title' class='form-control' id='Boo_Title' required>
@@ -101,7 +101,7 @@
         </div>
         <div class="col-6">
             <div class='text-center'>
-                <img id="BookImgUrl" src='@' class='rounded' alt='Book Image'>
+                <img id="BookImgUrl" src="https://via.placeholder.com/300x450?text=Book" class='rounded' width="300" height="450" alt='Book Image'>
             </div>
         </div>
     </div>

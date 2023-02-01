@@ -24,9 +24,14 @@
                 <h5 class='text-muted fw-normal mt-0' title='Number of Customers'>Customers</h5>
                 <h3 class='mt-3 mb-3'><?= $customers_growth['Nr_Customers']; ?></h3>
                 <p class='mb-0 text-muted'>
+                    <?php if ($customers_growth['Nr_Customers']) : ?>
                         <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>
-                          <?= number_format($customers_growth['NewSinceLastMonth'] / $customers_growth['Nr_Customers'] * 100, 2); ?>%</span>
-                    <span class='text-nowrap'>From last month</span>
+                              <?= number_format($customers_growth['NewSinceLastMonth'] / $customers_growth['Nr_Customers'] * 100, 2); ?>%</span>
+                        <span class='text-nowrap'>From last month</span>
+                    <?php else: ?>
+                        <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>0%</span>
+                        <span class='text-nowrap'>From last month</span>
+                    <?php endif; ?>
                 </p>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
@@ -40,9 +45,14 @@
                 <h5 class='text-muted fw-normal mt-0' title='Number of Customers'>Orders</h5>
                 <h3 class='mt-3 mb-3'><?= $orders_growth['Nr_Orders']; ?></h3>
                 <p class='mb-0 text-muted'>
+                    <?php if ($orders_growth['Nr_Orders']) : ?>
                         <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>
-                        <?= number_format($orders_growth['NewSinceLastMonth'] / $orders_growth['Nr_Orders'] * 100, 2); ?>%</span>
-                    <span class='text-nowrap'>From last month</span>
+                            <?= number_format($orders_growth['NewSinceLastMonth'] / $orders_growth['Nr_Orders'] * 100, 2); ?>%</span>
+                        <span class='text-nowrap'>From last month</span>
+                    <?php else: ?>
+                        <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>0%</span>
+                        <span class='text-nowrap'>From last month</span>
+                    <?php endif; ?>
                 </p>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
@@ -54,13 +64,21 @@
                     <i class='bi bi-cash-coin fs-1'></i>
                 </div>
                 <h5 class='text-muted fw-normal mt-0' title='Number of Customers'>Revenue</h5>
-                <h3 class='mt-3 mb-3'>&euro;<?= $revenue_last_2_months[0]['Month_Revenue']; ?></h3>
-                <p class='mb-0 text-muted'>
+                <?php if (isset($revenue_last_2_months[1])) : ?>
+                    <h3 class='mt-3 mb-3'>&euro;<?= $revenue_last_2_months[0]['Month_Revenue']; ?></h3>
+                    <p class='mb-0 text-muted'>
                         <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>
                             <?= number_format($revenue_last_2_months[0]['Month_Revenue'] / $revenue_last_2_months[1]['Month_Revenue'] * 100,
                               2); ?>%</span>
-                    <span class='text-nowrap'>From last month</span>
-                </p>
+                        <span class='text-nowrap'>From last month</span>
+                    </p>
+                <?php else: ?>
+                    <h3 class='mt-3 mb-3'>&euro;0</h3>
+                    <p class='mb-0 text-muted'>
+                        <span class='text-success me-2'><i class='bi bi-arrow-bar-up'></i>0%</span>
+                        <span class='text-nowrap'>From last month</span>
+                    </p>
+                <?php endif; ?>
             </div> <!-- end card-body-->
         </div> <!-- end card-->
     </div>
@@ -125,7 +143,7 @@
         // Graphs
         const ctx = document.getElementById('myChart')
         // eslint-disable-next-line no-unused-vars
-        const myChart = new Chart(ctx, {
+        new Chart(ctx, {
             type: 'line',
             data: {
                 labels: [

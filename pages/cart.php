@@ -61,8 +61,7 @@
   if ($products_in_cart) {
     $array_to_question_marks = implode(',', array_fill(0, count($products_in_cart), '?'));
     $query = 'SELECT * FROM BOOK WHERE Boo_ISBN IN ('.$array_to_question_marks.')';
-    $cart_books = retrieveAllRows($query, array_keys($products_in_cart));
-
+    $cart_books = retrieveAllRows($query, array_map('strval', array_keys($products_in_cart)));
     foreach ($cart_books as $book) {
       $subtotal += (float) $book['Boo_Price'] * (int) $products_in_cart[$book['Boo_ISBN']];
     }

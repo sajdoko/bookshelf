@@ -22,7 +22,7 @@
 
     $array_to_question_marks = implode(',', array_fill(0, count($ordered_books), '?'));
     $query = 'SELECT * FROM BOOK WHERE Boo_ISBN IN ('.$array_to_question_marks.')';
-    $cart_books = retrieveAllRows($query, array_keys($ordered_books));
+    $cart_books = retrieveAllRows($query, array_map('strval', array_keys($ordered_books)));
 
     foreach ($cart_books as $book) {
       $order_tot_val += (float) $book['Boo_Price'] * (int) $ordered_books[$book['Boo_ISBN']];
@@ -113,7 +113,7 @@
       }
 
       foreach ($ordered_books as $Boo_ISBN => $quantity) {
-          $Boo_Price = get_book_price($Boo_ISBN);
+        $Boo_Price = get_book_price($Boo_ISBN);
         executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',
           [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, $Boo_Price * $quantity, $Boo_Price]);
       }

@@ -20,7 +20,7 @@
   if ($products_in_cart) {
     $array_to_question_marks = implode(',', array_fill(0, count($products_in_cart), '?'));
     $query = 'SELECT * FROM BOOK WHERE Boo_ISBN IN ('.$array_to_question_marks.')';
-    $cart_books = retrieveAllRows($query, array_keys($products_in_cart));
+    $cart_books = retrieveAllRows($query, array_map('strval', array_keys($products_in_cart)));
 
     foreach ($cart_books as $book) {
       $subtotal += (float) $book['Boo_Price'] * (int) $products_in_cart[$book['Boo_ISBN']];
@@ -124,7 +124,8 @@
 
                         <div class='col-6'>
                             <label for='street' class='form-label'>Address</label>
-                            <input type='text' name='street' class='form-control' id='street' value="<?= $logged_in_customer['Add_Street_Name'] ?? ''; ?>"
+                            <input type='text' name='street' class='form-control' id='street'
+                                   value="<?= $logged_in_customer['Add_Street_Name'] ?? ''; ?>"
                                    placeholder='1234 Main St'
                                    required>
                         </div>
@@ -141,7 +142,7 @@
                             <select name='country' class='form-select' id='country' required>
                                 <option value=''>Choose...</option>
                               <?php foreach ($countries as $country) : ?>
-                                  <option value="<?= $country['Cou_Alpha2Code']; ?>" <?= $country['Cou_Alpha2Code'] == ($logged_in_customer['Cou_Alpha2Code']??'') ? 'selected' : ''; ?>><?= $country['Cou_Name']; ?></option>
+                                  <option value="<?= $country['Cou_Alpha2Code']; ?>" <?= $country['Cou_Alpha2Code'] == ($logged_in_customer['Cou_Alpha2Code'] ?? '') ? 'selected' : ''; ?>><?= $country['Cou_Name']; ?></option>
                               <?php endforeach; ?>
                             </select>
                         </div>

@@ -99,12 +99,12 @@
                     <div class='p-4 mb-3 bg-light rounded'>
                         <h5 class='fst-italic'>Other Books in this Genre</h5>
                       <?php if (count($genres) > 0) : ?>
-                          <ol class='list-unstyled mb-0'>
+                          <ul class='mb-0'>
                             <?php foreach ($genres as $genre) : ?>
                                 <li><a href='/book/<?= create_url_string($genre['Boo_Title']); ?>'
                                        title="<?= $genre['Boo_Title']; ?>"><?= $genre['Boo_Title']; ?></a></li>
                             <?php endforeach; ?>
-                          </ol>
+                          </ul>
                       <?php else : ?>
                           <p class='mb-0'>There are no other books in this genre</p>
                       <?php endif; ?>

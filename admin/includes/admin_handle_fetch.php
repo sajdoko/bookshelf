@@ -31,7 +31,7 @@
       $Boo_Img_url = $data['Boo_Img_url'];
       $Boo_Featured = isset($data['Boo_Featured']) ? 1 : 0;
 
-      if (!$Aut_Id || !$Gen_Id || !$BoL_Id || !$Pub_Id || !$Boo_ISBN) {
+      if (!$Boo_ISBN) {
         $resp['status'] = 'danger';
         $resp['message'] = 'Please fill all the required fields!';
         $resp['post'] = $data;
@@ -46,16 +46,16 @@
       }
       else {
         if ($form_action == 'insert_book') {
-          $query = 'INSERT INTO BOOK VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+          $query = 'IF NOT EXISTS (SELECT 1 FROM BOOK WHERE Boo_ISBN = ?) INSERT INTO BOOK VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
           $exec_query = executeQuery($query,
-            [$Boo_ISBN, $Pub_Id, $BoL_Id, $Boo_Title, $Boo_Description, $Boo_Price, $Boo_Pub_Date, $Boo_Img_url, $Boo_Featured, $Boo_QOH]);
+            [$Boo_ISBN, $Boo_ISBN, $Pub_Id, $BoL_Id, $Boo_Title, $Boo_Description, $Boo_Price, $Boo_Pub_Date, $Boo_Img_url, $Boo_Featured, $Boo_QOH]);
         }
         else {
           if ($form_action == 'delete_book') {
             if (executeQuery('DELETE FROM BOOK WHERE Boo_ISBN = ?', [$Boo_ISBN])) {
-            $resp['status'] = 'success';
-            $resp['message'] = 'Book deleted!';
-            exit(json_encode($resp));
+              $resp['status'] = 'success';
+              $resp['message'] = 'Book deleted!';
+              exit(json_encode($resp));
             }
           }
           else {

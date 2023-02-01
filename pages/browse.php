@@ -55,9 +55,9 @@
 //  echo '</pre>';
 ?>
 
-    <section class="container text-center search-hero-browse">
+    <section class="container search-hero-browse">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
 
                 <h2>Browse Books</h2>
                 <p>Search books by title, author, language or publisher.</p>
@@ -86,7 +86,8 @@
                         <button type='submit' class='btn btn-primary'>Search</button>
                     </div>
                 </form>
-                <br>
+            </div>
+            <div class='col-12'>
               <?php
                 // Display errors if any
                 if (count($errors) > 0) {

@@ -244,8 +244,8 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
       $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
       $query = 'SELECT * FROM CUSTOMER 
-                  JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id 
-                  JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
+                  LEFT JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id 
+                  LEFT JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
                     WHERE CUSTOMER.Cus_Id = ?';
       $user = retrieveOneRow($query, [$Cus_Id]);
 
@@ -319,7 +319,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    */
   function get_customer_info($user_id): array
   {
-    $query = 'SELECT * FROM CUSTOMER JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
+    $query = 'SELECT * FROM CUSTOMER LEFT JOIN ADDRESS ON CUSTOMER.Cus_Id = ADDRESS.Cus_Id LEFT JOIN COUNTRY on COUNTRY.Cou_Alpha2Code = ADDRESS.Cou_Alpha2Code 
          WHERE CUSTOMER.Cus_Id = ?';
     return retrieveOneRow($query, [$user_id]);
   }

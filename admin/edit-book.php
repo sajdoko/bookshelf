@@ -44,7 +44,7 @@
 
     <div class="row pb-4">
         <div class="col-6">
-            <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method='post' class='row g-3 bookForm'>
+            <form class='row g-3 bookForm'>
                 <div class='col-md-6'>
                     <label for='Boo_Title' class='form-label'>Book Title</label>
                     <input type='text' name="Boo_Title" class='form-control' id='Boo_Title' value="<?= $book['Boo_Title']; ?>" required>

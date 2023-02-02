@@ -9,9 +9,9 @@
     })
 })()
 
-const bookForms = document.getElementsByClassName("bookForm");
-for (let i = 0; i < bookForms.length; i++) {
-    bookForms[i].addEventListener("submit", function (event) {
+const recordForms = document.getElementsByClassName("recordForm");
+for (let i = 0; i < recordForms.length; i++) {
+    recordForms[i].addEventListener("submit", function (event) {
         event.preventDefault();
         const formData = new FormData(this);
         const dataF = {};
@@ -19,8 +19,8 @@ for (let i = 0; i < bookForms.length; i++) {
             dataF[key] = value;
         }
 
-        if (dataF['form_action'] === 'delete_book') {
-            if (!confirm("Are you sure you want to delete this book?")) {
+        if (dataF['form_action'] === 'delete') {
+            if (!confirm(`Are you sure you want to delete this ${dataF['model']}?`)) {
                 return;
             }
         }
@@ -36,7 +36,7 @@ for (let i = 0; i < bookForms.length; i++) {
             .then((data) => {
                 showToast(data)
                 if (data.status === 'success') {
-                    if (dataF['form_action'] === 'insert_book') {
+                    if (dataF['form_action'] === 'insert') {
                         this.reset();
                     }
                 }

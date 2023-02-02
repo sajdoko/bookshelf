@@ -1,6 +1,6 @@
 <?php
   $page_title = "Books";
-  require_once 'includes/header.php';
+  require_once dirname(__FILE__, 2).'/includes/header.php';
 
   $books = retrieveAllRows(
     'SELECT *
@@ -16,7 +16,7 @@
     <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center me-5'>
         <h1 class='display-5 m-2'><?= $page_title; ?></h1>
         <div class='btn-toolbar'>
-            <a href="/admin/add-book" class='btn btn-sm btn-success'>Add Book</a>
+            <a href="/admin/books/add-book" class='btn btn-sm btn-success'>Add Book</a>
         </div>
     </div>
     <hr>
@@ -47,12 +47,13 @@
                           <td><?= $book['Pub_Name']; ?></td>
                           <td>&euro;<?= number_format($book['Boo_Price'], 2); ?></td>
                           <td>
-                              <a href="/admin/book/edit/<?= create_url_string($book['Boo_Title']); ?>" class="btn btn-sm btn-primary p-1">
+                              <a href="/admin/books/edit/<?= create_url_string($book['Boo_Title']); ?>" class="btn btn-sm btn-primary p-1">
                                   <i class='bi bi-pencil-square mx-2'></i>
                               </a>
-                            <form class='bookForm d-inline'>
-                                <input type='hidden' name='form_action' value='delete_book'>
+                            <form class='recordForm d-inline'>
+                                <input type='hidden' name='form_action' value='delete'>
                                 <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN']; ?>">
+                                <input type='hidden' name='model' value='book'>
                                   <button type="submit" class='btn btn-sm btn-outline-danger p-1'>
                                       <i class='bi bi-trash mx-2' data-bs-toggle='tooltip' data-bs-placement='left' data-bs-title='Delete the book?'></i>
                                   </button>
@@ -65,4 +66,4 @@
           <?php endif; ?>
         </div>
     </div>
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once dirname(__FILE__, 2).'/includes/footer.php'; ?>

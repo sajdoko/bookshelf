@@ -180,7 +180,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    *
    * @param  int  $quantity
    *
-   * @return array An array of genre names and book counts.
+   * @return array An array of genre names and books counts.
    */
   function get_top_genres_list(int $quantity = 5): array
   {
@@ -198,15 +198,15 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
-   * Get a book by its isbn.
+   * Get a books by its isbn.
    *
-   * @param  string  $isbn  The isbn of the book.
+   * @param  string  $isbn  The isbn of the books.
    *
-   * @return array An array containing the book's data.
+   * @return array An array containing the books's data.
    */
   function get_book_by_isbn(string $isbn): array
   {
-    // Select book by isbn
+    // Select books by isbn
     $query = "SELECT * FROM BOOK WHERE Boo_ISBN = ?";
 
     return retrieveOneRow($query, [$isbn]);
@@ -356,7 +356,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
    */
   function create_url_string($title): string
   {
-    $string = preg_replace('/[^a-zA-Z0-9-\s]/', '', $title); // remove all non-alphanumeric characters
+    $string = preg_replace('/[^a-zA-Z0-9-&\s]/', '', $title); // remove all non-alphanumeric characters
     $string = preg_replace('/\s/', '-', $string); // replace spaces with dashes
     // convert to lowercase
     return strtolower($string);
@@ -394,7 +394,7 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   }
 
   /**
-   * Get the book price.
+   * Get the books price.
    *
    * @param $Boo_ISBN
    *

@@ -82,7 +82,7 @@
         <div class="row">
             <!-- Display a list of featured books here -->
           <?php foreach (get_featured_books() as $book): ?>
-            <?php //print_r($book); ?>
+            <?php //print_r($books); ?>
               <div class="col-sm-12 col-md-4">
                   <div class="card shadow-sm">
                       <a href='/book/<?= create_url_string($book['Boo_Title']); ?>' title="<?= $book['Boo_Title']; ?>"><img

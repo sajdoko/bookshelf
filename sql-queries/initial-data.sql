@@ -212,7 +212,7 @@ VALUES ('978-0439136358', 6, 1, 'Harry Potter and the Prisoner of Azkaba',
         'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1657781256i/61439040.jpg',
         0, 63),
        ('9780679783268', 5, 1, 'Pride and Prejudice',
-        'Since its immediate success in 1813, Pride and Prejudice has remained one of the most popular novels in the English language. Jane Austen called this brilliant work &#34;her own darling child&#34; and its vivacious heroine, Elizabeth Bennet, &#34;as delightful a creature as ever appeared in print.&#34; The romantic clash between the opinionated Elizabeth and her proud beau, Mr. Darcy, is a splendid performance of civilized sparring. And Jane Austen&#39;s radiant wit sparkles as her characters dance a delicate quadrille of flirtation and intrigue, making this book the most superb comedy of manners of Regency England.',
+        'Since its immediate success in 1813, Pride and Prejudice has remained one of the most popular novels in the English language. Jane Austen called this brilliant work &#34;her own darling child&#34; and its vivacious heroine, Elizabeth Bennet, &#34;as delightful a creature as ever appeared in print.&#34; The romantic clash between the opinionated Elizabeth and her proud beau, Mr. Darcy, is a splendid performance of civilized sparring. And Jane Austen&#39;s radiant wit sparkles as her characters dance a delicate quadrille of flirtation and intrigue, making this books the most superb comedy of manners of Regency England.',
         13, '2000-10-10',
         'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1320399351i/1885.jpg', 0,
         54),
@@ -267,6 +267,17 @@ VALUES  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2023-02-01 22:33:12.000', 52),
         (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2022-11-05 22:38:04.000', 13),
         (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2023-01-02 22:38:46.000', 18),
         (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2023-01-03 22:38:46.000', 14.99);
+
+INSERT INTO ORDER_HISTORY (OrS_Id, Ord_Id, OrH_Description, OrH_Date)
+VALUES  (1, 1, 'Order placed', '2023-02-01 22:33:12.000'),
+        (1, 2, 'Order placed', '2022-08-05 22:33:47.000'),
+        (1, 3, 'Order placed', '2022-08-09 22:34:52.000'),
+        (1, 4, 'Order placed', '2022-08-24 22:35:13.000'),
+        (1, 5, 'Order placed', '2022-10-01 22:35:35.000'),
+        (1, 6, 'Order placed', '2022-10-02 22:37:49.000'),
+        (1, 7, 'Order placed', '2022-11-05 22:38:04.000'),
+        (1, 8, 'Order placed', '2023-01-02 22:38:46.000'),
+        (1, 9, 'Order placed', '2023-01-03 22:38:46.000');
 
 INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity, OrL_Tot_Price, OrL_Price)
 VALUES  ('978-0439136358', 3, 1, 14.6, 14.6),

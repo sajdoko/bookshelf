@@ -81,6 +81,9 @@
                     $_SESSION['checkout_errors'][] = '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
                   }
 
+                  $query = 'INSERT INTO ORDER_HISTORY VALUES (1, ?, ?, ?)';
+                  executeQuery($query, [$cus_order['Cus_Id'], 'Order placed', date('Y-m-d H:i:s')]);
+
                   foreach ($ordered_books as $Boo_ISBN => $quantity) {
                     $Boo_Price = get_book_price($Boo_ISBN);
                     executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',

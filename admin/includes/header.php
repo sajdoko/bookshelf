@@ -36,7 +36,7 @@
             <img src='/assets/images/logo.png' width='200' alt='The Bookshelf'>
         </a>
         <hr>
-        <ul class='nav nav-pills flex-column mb-auto'>
+        <ul class='nav nav-pills flex-column mb-auto fs-4'>
             <li>
                 <a href='/admin/dashboard' class='nav-link text-dark'>
                     <i class='bi bi-speedometer2'></i>
@@ -44,21 +44,21 @@
                 </a>
             </li>
             <li>
-                <a href='/admin/orders' class='nav-link text-dark'>
-                    <i class='bi bi-table'></i>
-                    Orders
-                </a>
-            </li>
-            <li>
-                <a href='/admin/books' class='nav-link text-dark'>
+                <a href='/admin/books/list-books' class='nav-link text-dark'>
                     <i class='bi bi-book'></i>
                     Books
                 </a>
             </li>
             <li>
-                <a href='/admin/customers' class='nav-link text-dark'>
+                <a href='/admin/customers/list-customers' class='nav-link text-dark'>
                     <i class='bi bi-people'></i>
                     Customers
+                </a>
+            </li>
+            <li>
+                <a href='/admin/orders/list-orders' class='nav-link text-dark'>
+                    <i class='bi bi-table'></i>
+                    Orders
                 </a>
             </li>
             <li>
@@ -76,7 +76,7 @@
                 <span>Hi <?= $logged_in_employee['Emp_FirstName']; ?></span>
             </a>
             <ul class='dropdown-menu dropdown-menu text-small shadow'>
-                <li><a class='dropdown-item' href='#'>Profile</a></li>
+                <li><a class='dropdown-item' href='/admin/my-account'>Profile</a></li>
                 <li>
                     <hr class='dropdown-divider'>
                 </li>

@@ -41,7 +41,7 @@
 
   $genres = retrieveAllRows($query, [$book['Gen_Id'], $book['Boo_ISBN']]);
 //  echo "<pre>";
-//print_r($book);
+//print_r($books);
 //  echo '</pre>';
 ?>
 

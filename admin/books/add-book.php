@@ -1,13 +1,13 @@
 <?php
-  $page_title = "Book";
-  require_once 'includes/header.php';
+  $page_title = "Add Book";
+  require_once dirname(__FILE__, 2).'/includes/header.php';
 
   $genres = retrieveAllRows('SELECT * FROM GENRE');
   $authors = retrieveAllRows('SELECT * FROM AUTHOR');
   $publishers = retrieveAllRows('SELECT * FROM PUBLISHER');
   $book_languages = retrieveAllRows('SELECT * FROM BOOK_LANGUAGE');
 //  echo "<pre>";
-//print_r($book);
+//print_r($books);
 //  echo '</pre>';
 ?>
     <div class='row'>
@@ -19,7 +19,7 @@
 
     <div class="row pb-4">
         <div class="col-6">
-            <form class='row g-3 bookForm'>
+            <form class='row g-3 recordForm'>
                 <div class='col-12'>
                     <label for='Boo_Title' class='form-label'>Book Title</label>
                     <input type='text' name='Boo_Title' class='form-control' id='Boo_Title' required>
@@ -94,7 +94,8 @@
                     </div>
                 </div>
                 <div class='col-12 mt-5'>
-                    <input type='hidden' name='form_action' value='insert_book'>
+                    <input type='hidden' name='form_action' value='insert'>
+                    <input type='hidden' name='model' value='book'>
                     <button type='submit' class='btn btn-primary w-50'>Add Book</button>
                 </div>
             </form>
@@ -112,4 +113,4 @@
         });
     </script>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once dirname(__FILE__, 2).'/includes/footer.php'; ?>

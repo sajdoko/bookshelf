@@ -1,6 +1,6 @@
 <?php
-  $page_title = "Book";
-  require_once 'includes/header.php';
+  $page_title = "Edit Book";
+  require_once dirname(__FILE__, 2).'/includes/header.php';
 
   $url = $_SERVER['REQUEST_URI'];
   $url_parts = explode('/', $url);
@@ -23,7 +23,7 @@
   $book = retrieveOneRow($query, [$book_url_string]);
   if (!$book) {
     http_response_code(404);
-    include_once dirname(__FILE__, 2).'/pages/404.php';
+    include_once dirname(__FILE__, 3).'/pages/404.php';
     die(404);
   }
 
@@ -32,7 +32,7 @@
   $publishers = retrieveAllRows('SELECT * FROM PUBLISHER');
   $book_languages = retrieveAllRows('SELECT * FROM BOOK_LANGUAGE');
 //  echo "<pre>";
-//print_r($book);
+//print_r($books);
 //  echo '</pre>';
 ?>
     <div class='row'>
@@ -44,7 +44,7 @@
 
     <div class="row pb-4">
         <div class="col-6">
-            <form class='row g-3 bookForm'>
+            <form class='row g-3 recordForm'>
                 <div class='col-md-6'>
                     <label for='Boo_Title' class='form-label'>Book Title</label>
                     <input type='text' name="Boo_Title" class='form-control' id='Boo_Title' value="<?= $book['Boo_Title']; ?>" required>
@@ -112,7 +112,8 @@
                     </div>
                 </div>
                 <div class='col-12 mt-5'>
-                    <input type="hidden" name="form_action" value="update_book">
+                    <input type="hidden" name="form_action" value="update">
+                    <input type='hidden' name='model' value='book'>
                     <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN']; ?>">
                     <button type='submit' class='btn btn-primary w-50'>Update Book</button>
                 </div>
@@ -131,4 +132,4 @@
         });
     </script>
 
-<?php require_once 'includes/footer.php'; ?>
+<?php require_once dirname(__FILE__, 2).'/includes/footer.php'; ?>

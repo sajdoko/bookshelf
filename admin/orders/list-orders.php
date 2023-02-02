@@ -2,13 +2,15 @@
   $page_title = "Orders List";
   require_once dirname(__FILE__, 2).'/includes/header.php';
 
-  $cus_orders = retrieveAllRows('SELECT CUS_ORDER.Cus_Id, CUS_ORDER.Ord_Id, CUS_ORDER.Ord_Date, CUS_ORDER.Ord_Tot_Val, SM.ShM_Name, OS.OrS_Name FROM CUS_ORDER 
-         JOIN SHIPPING_METHOD SM ON SM.ShM_Id = CUS_ORDER.ShM_Id
-         LEFT JOIN ORDER_HISTORY OH on CUS_ORDER.Ord_Id = OH.Ord_Id
-         LEFT JOIN ORDER_STATUS OS ON OH.OrS_Id = OS.OrS_Id
-         LEFT JOIN CUS_ORDER CO on CO.Ord_Id = OH.Ord_Id
-         GROUP BY CUS_ORDER.Cus_Id, CUS_ORDER.Ord_Id, CUS_ORDER.Ord_Date, CUS_ORDER.Ord_Tot_Val, SM.ShM_Name, OS.OrS_Name
-         ');
+  $cus_orders = retrieveAllRows('SELECT CUS_ORDER.Cus_Id, CUS_ORDER.Ord_Id, CUS_ORDER.Ord_Date, CUS_ORDER.Ord_Tot_Val, SM.ShM_Name, OS.OrS_Name 
+        FROM CUS_ORDER
+             JOIN SHIPPING_METHOD SM ON CUS_ORDER.ShM_Id = SM.ShM_Id
+             LEFT JOIN
+                (SELECT Ord_Id, MAX(OrH_Date) AS OrH_Date FROM ORDER_HISTORY GROUP BY Ord_Id) AS Order_History_Max
+                ON CUS_ORDER.Ord_Id = Order_History_Max.Ord_Id
+             LEFT JOIN ORDER_HISTORY OH ON CUS_ORDER.Ord_Id = OH.Ord_Id AND Order_History_Max.OrH_Date = OH.OrH_Date
+             LEFT JOIN ORDER_STATUS OS ON OH.OrS_Id = OS.OrS_Id
+             ');
 ?>
     <div class='row'>
         <div class='col-12'>

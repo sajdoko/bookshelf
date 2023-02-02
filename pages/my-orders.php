@@ -19,9 +19,15 @@
     exit;
   }
 
-  $cus_orders = retrieveAllRows('SELECT CUS_ORDER.Cus_Id, CUS_ORDER.Ord_Id, CUS_ORDER.Ord_Date, CUS_ORDER.Ord_Tot_Val, SM.ShM_Name FROM CUS_ORDER 
-         JOIN SHIPPING_METHOD SM on SM.ShM_Id = CUS_ORDER.ShM_Id
-         WHERE CUS_ORDER.Cus_Id = ?', [$user_id]);
+  $cus_orders = retrieveAllRows('SELECT CUS_ORDER.Cus_Id, CUS_ORDER.Ord_Id, CUS_ORDER.Ord_Date, CUS_ORDER.Ord_Tot_Val, SM.ShM_Name, OS.OrS_Name 
+        FROM CUS_ORDER
+             JOIN SHIPPING_METHOD SM ON CUS_ORDER.ShM_Id = SM.ShM_Id
+             LEFT JOIN
+                (SELECT Ord_Id, MAX(OrH_Date) AS OrH_Date FROM ORDER_HISTORY GROUP BY Ord_Id) AS Order_History_Max
+                ON CUS_ORDER.Ord_Id = Order_History_Max.Ord_Id
+             LEFT JOIN ORDER_HISTORY OH ON CUS_ORDER.Ord_Id = OH.Ord_Id AND Order_History_Max.OrH_Date = OH.OrH_Date
+             LEFT JOIN ORDER_STATUS OS ON OH.OrS_Id = OS.OrS_Id
+        WHERE CUS_ORDER.Cus_Id = ?', [$user_id]);
 ?>
 
 
@@ -46,6 +52,7 @@
                       <tr>
                           <th scope='col'>Order Id</th>
                           <th scope='col'>Order Date</th>
+                          <th scope='col'>Order Status</th>
                           <th scope='col'>Shipping Method</th>
                           <th scope='col'>Order Total</th>
                       </tr>
@@ -55,6 +62,7 @@
                           <tr>
                               <th scope='row'><?= $cus_order['Ord_Id']; ?></th>
                               <td><?= $cus_order['Ord_Date']->format('Y-m-d H:i:s'); ?></td>
+                              <td><?= $cus_order['OrS_Name']; ?></td>
                               <td><?= $cus_order['ShM_Name']; ?></td>
                               <td>&euro;<?= number_format($cus_order['Ord_Tot_Val'], 2); ?></td>
                           </tr>
@@ -62,7 +70,7 @@
                         <?php if (!empty($lines)) : ?>
                               <tr>
                                   <td></td>
-                                  <td colspan='3'>
+                                  <td colspan='4'>
                                       <table class='table mb-0'>
                                           <thead>
                                           <tr>

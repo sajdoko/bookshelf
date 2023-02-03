@@ -270,6 +270,8 @@ VALUES  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2023-02-01 22:33:12.000', 52),
 
 INSERT INTO ORDER_HISTORY (OrS_Id, Ord_Id, OrH_Description, OrH_Date)
 VALUES  (1, 1, 'Order placed', '2023-02-01 22:33:12.000'),
+        (2, 1, 'Order shipped', '2023-02-01 22:40:12.000'),
+        (3, 1, 'Order delivered', '2023-02-01 23:40:12.000'),
         (1, 2, 'Order placed', '2022-08-05 22:33:47.000'),
         (1, 3, 'Order placed', '2022-08-09 22:34:52.000'),
         (1, 4, 'Order placed', '2022-08-24 22:35:13.000'),

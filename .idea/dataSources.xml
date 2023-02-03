@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:sqlserver://SAJDOKO-DESKTOP\SQLEXPRESS;database=bookshelf</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="bookshelf@bookshelf-sajdoko.database.windows.net" uuid="427807eb-716b-4436-bf11-892ba4e0794c">
+      <driver-ref>azure.ms</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
+      <jdbc-url>jdbc:sqlserver://bookshelf-sajdoko.database.windows.net:1433;database=bookshelf</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

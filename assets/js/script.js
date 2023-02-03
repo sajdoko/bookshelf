@@ -12,7 +12,7 @@ function showToast(data) {
 
 const toastLiveExample = document.getElementById('liveToast')
 
-const addBookToCartForms = document.getElementsByClassName("add-books-to-cart");
+const addBookToCartForms = document.getElementsByClassName("add-book-to-cart");
 for (let i = 0; i < addBookToCartForms.length; i++) {
     addBookToCartForms[i].addEventListener("submit", function (event) {
         event.preventDefault();

@@ -4,13 +4,15 @@ The Bookshelf is a web-based application that stores and maintains information a
 
 ## Features
 
-- Maintain a database of books, authors, languages, and publishers
-- Register and log in as a customer
-- View and search for books
-- Place orders and view order history
-- Maintain customer information and address details
-- Process and track orders
-- Generate invoices for orders
+- Customer registration and login: Customers will be able to register for an account, which will allow them to log in to the system. This will give them access to additional features such as ordering books, viewing order history, and updating their account information.
+- Book browsing: Customers will be able to browse through the books that are available for purchase. They can filter the books by author, publisher, genre, and language, and search for books by title or keywords.
+- Book details: Customers will be able to view detailed information about a book, such as its cover image, title, author, publisher, publication date, price, and description.
+- Shopping cart: Customers will be able to add books to their shopping cart and update the quantity of each book. They will be able to view the books in their cart and the total cost of their order before checking out.
+- Ordering: Customers will be able to place an order for the books in their shopping cart. They will be able to select a shipping method and provide their billing and shipping address.
+- Order history: Customers will be able to view the history of their past orders and their order status.
+- Customer account management: Customers will be able to view and update their account information, such as their name, email address, and phone number.
+- Admin management: Admins will be able to manage books, authors, publishers, genres, languages, shipping methods, customers, and orders. They will also be able to view and update customer account information and manage employees and roles.
+
 
 ## Technologies
 

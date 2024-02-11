@@ -41,7 +41,7 @@ The Bookshelf Database system is engineered to cater to the diverse requirements
 ## Entity Relationship Design
 
 ### Entity-Relationship Diagram
-[![Crow's Foot ERD](/screenshots/Crows-Foot-ERD.png)]("Crow's Foot ERD")
+![Crow's Foot ERD](/screenshots/Crows-Foot-ERD.png)
 
 ### Database Entities
 - BOOK: Represents a book with attributes like ISBN, title, price, and publication date.
@@ -63,7 +63,7 @@ The project includes a set of files encompassing the database design documents, 
 The project also includes a web application prototype, designed to showcase the database's functionalities and user interactions. The web application is built using HTML, CSS, JavaScript, and PHP, providing a user-friendly interface for browsing books, placing orders, and managing user accounts.
 
 Browse Books
-[![Browse Books](/screenshots/browse-books.png)]("Browse Books")
+![Browse Books](/screenshots/browse-books.png)
 
 Admin Dashboard
-[![Admin Dashboard](/screenshots/admin-dash.png)]("Admin Dashboard")
+![Admin Dashboard](/screenshots/admin-dash.png)

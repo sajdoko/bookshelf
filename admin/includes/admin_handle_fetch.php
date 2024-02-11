@@ -139,9 +139,9 @@
         }
         else {
           if ($form_action == 'insert') {
-            $query = 'IF NOT EXISTS (SELECT 1 FROM CUSTOMER WHERE Cus_Email = ?) INSERT INTO CUSTOMER VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?, ?)';
+            $query = 'IF NOT EXISTS (SELECT 1 FROM CUSTOMER WHERE Cus_Email = ?) INSERT INTO CUSTOMER VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?)';
             $exec_query = executeQuery($query,
-              [ $Cus_Email, $Cus_FirstName, $Cus_LastName, $Cus_Email, $Cus_Pass, $Cus_Phone, 3, date('Y-m-d H:i:s') ]);
+              [ $Cus_Email, $Cus_FirstName, $Cus_LastName, $Cus_Email, $Cus_Pass, $Cus_Phone, date('Y-m-d H:i:s') ]);
           }
           else {
             $resp['status'] = 'danger';

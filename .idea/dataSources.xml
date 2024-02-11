@@ -8,19 +8,16 @@
       <jdbc-url>jdbc:sqlserver://SAJDOKO-PC-PUNA\SQLEXPRESS;database=bookshelf</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="bookshelf@SAJDOKO-DESKTOP" uuid="48e62721-0f8d-44f6-8c3c-e38cb488f3e9">
+    <data-source source="LOCAL" name="bookshelf@SAJDOKO-PC-SHPI" uuid="48e62721-0f8d-44f6-8c3c-e38cb488f3e9">
       <driver-ref>sqlserver.ms</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://SAJDOKO-DESKTOP\SQLEXPRESS;database=bookshelf</jdbc-url>
+      <jdbc-url>jdbc:sqlserver://SAJDOKO-PC-SHPI\SQLEXPRESS;database=bookshelf</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="bookshelf@bookshelf-sajdoko.database.windows.net" uuid="427807eb-716b-4436-bf11-892ba4e0794c">
-      <driver-ref>azure.ms</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
-      <jdbc-url>jdbc:sqlserver://bookshelf-sajdoko.database.windows.net:1433;database=bookshelf</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
+      <driver-properties>
+        <property name="trustServerCertificate" value="true" />
+        <property name="authentication" value="NotSpecified" />
+      </driver-properties>
     </data-source>
     <data-source source="LOCAL" name="bookshelf@SAJDOKO-LAPTOP" uuid="b606d96e-cadd-478b-828c-6ab12968c441">
       <driver-ref>sqlserver.ms</driver-ref>

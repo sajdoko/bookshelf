@@ -43,8 +43,8 @@
           $error_msg .= '<p class="text-danger">You are allready registered with this email: '.$email.'</p>';
         }
         else {
-          $query = 'INSERT INTO CUSTOMER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?, ?)';
-          $customer = insertQuery($query, [$first_name, $last_name, $email, $password, $phone, 3, date('Y-m-d H:i:s')]);
+          $query = 'INSERT INTO CUSTOMER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?)';
+          $customer = insertQuery($query, [$first_name, $last_name, $email, $password, $phone, date('Y-m-d H:i:s')]);
           if (!isset($customer['Cus_Id'])) {
             $error_msg .= '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
           }

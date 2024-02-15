@@ -44,13 +44,6 @@ VALUES (NEXT VALUE FOR SEQ_BOL_ID, 'English'),
        (NEXT VALUE FOR SEQ_BOL_ID, 'Turkish'),
        (NEXT VALUE FOR SEQ_BOL_ID, 'Indonesia');
 
-INSERT INTO ROLE (Rol_Id, Rol_Name)
-VALUES (NEXT VALUE FOR SEQ_ROL_ID, 'Administrator'),
-       (NEXT VALUE FOR SEQ_ROL_ID, 'Employee'),
-       (NEXT VALUE FOR SEQ_ROL_ID, 'Customer'),
-       (NEXT VALUE FOR SEQ_ROL_ID, 'Guest'),
-       (NEXT VALUE FOR SEQ_ROL_ID, 'Moderator');
-
 INSERT INTO PUBLISHER (Pub_Id, Pub_Name, Pub_Phone)
 VALUES (NEXT VALUE FOR SEQ_PUB_ID, 'Penguin Random House', '212-366-2000'),
        (NEXT VALUE FOR SEQ_PUB_ID, 'Hachette Book Group', '212-364-1100'),
@@ -141,18 +134,17 @@ VALUES (NEXT VALUE FOR SEQ_ORS_ID, 'Pending'),
        (NEXT VALUE FOR SEQ_ORS_ID, 'Cancelled'),
        (NEXT VALUE FOR SEQ_ORS_ID, 'Returned');
 
-INSERT INTO EMPLOYEE (Emp_Id, Emp_FirstName, Emp_LastName, Emp_Email, Emp_Pass, Emp_Phone, Rol_Id)
+INSERT INTO EMPLOYEE (Emp_Id, Emp_FirstName, Emp_LastName, Emp_Email, Emp_Pass, Emp_Phone)
 VALUES (NEXT VALUE FOR SEQ_EMP_ID, 'Joh', 'Doe', 'johndoe@email.com',
-        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-1212', 2);
+        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-1212');
 
-INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Rol_Id, Cus_Reg_Date)
+INSERT INTO CUSTOMER (Cus_Id, Cus_FirstName, Cus_LastName, Cus_Email, Cus_Pass, Cus_Phone, Cus_Reg_Date)
 VALUES (NEXT VALUE FOR SEQ_CUS_ID, 'Joh', 'Doe', 'johndoe@email.com',
-        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5555', 1, '2022-12-01 12:00:00'),
+        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5555', '2022-12-01 12:00:00'),
        (NEXT VALUE FOR SEQ_CUS_ID, 'Jane', 'Doe', 'janedoe@email.com',
-        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5556', 1, '2022-11-01 12:00:00'),
+        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5556', '2022-11-01 12:00:00'),
        (NEXT VALUE FOR SEQ_CUS_ID, 'Jim', 'Smith', 'jimsmith@email.com',
-        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5557', 2,
-        '2022-11-01 12:00:00');
+        '$2y$10$hHQ5JfkN916fVwc/ImJyOu6oz.oNLE05UnT1t.2aFsV7pjTga1aba', '555-555-5557', '2022-11-01 12:00:00');
 
 INSERT INTO ADDRESS (Cus_Id, Add_Id, Add_Street_Name, Add_Zip, Add_City, Cou_Alpha2Code)
 VALUES (1, NEXT VALUE FOR SEQ_ADD_ID, '123 Main St', 12345, 'New York', 'US'),

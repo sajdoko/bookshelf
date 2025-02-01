@@ -42,12 +42,12 @@
     try {
       $stmt = $conn->prepare($query);
       $stmt->execute($params);
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      $row = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
     } catch (PDOException $e) {
       FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);
     }
 
-    return $row ?? [];
+    return $row;
   }
 
   /**
@@ -86,7 +86,7 @@
     try {
       $stmt = $conn->prepare($query);
       if ($stmt->execute($params)) {
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
       }
     } catch (PDOException $e) {
       FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);

@@ -102,7 +102,7 @@
                         <div class='row g-md-3 align-items-center mb-8 mb-lg-10'>
                             <div class='col-12 col-md-auto d-flex'>
                                 <div class='text-end'>
-                                    <p class='fs--2 fw-semi-bold text-700 mb-0'><?= $history['OrH_Date']->format('Y-m-d H:i:s'); ?></p>
+                                    <p class='fs--2 fw-semi-bold text-700 mb-0'><?= $history['OrH_Date']; ?></p>
                                 </div>
                                 <div class='timeline-item-bar position-relative me-3 me-md-0 border-400'>
                                     <span class='timeline-bar border-end border-success'></span>

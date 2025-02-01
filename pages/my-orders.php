@@ -61,7 +61,7 @@
                       <?php foreach ($cus_orders as $cus_order) : ?>
                           <tr>
                               <th scope='row'><?= $cus_order['Ord_Id']; ?></th>
-                              <td><?= $cus_order['Ord_Date']->format('Y-m-d H:i:s'); ?></td>
+                              <td><?= $cus_order['Ord_Date']; ?></td>
                               <td><?= $cus_order['OrS_Name']; ?></td>
                               <td><?= $cus_order['ShM_Name']; ?></td>
                               <td>&euro;<?= number_format($cus_order['Ord_Tot_Val'], 2); ?></td>

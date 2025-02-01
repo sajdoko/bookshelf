@@ -48,7 +48,7 @@
                 </div>
                 <div class='col-md-4'>
                     <label for='Cus_Reg_Date' class='form-label'>Registration Date</label>
-                    <input type='date' name="Cus_Reg_Date" class='form-control' id='Cus_Reg_Date' value="<?= $customer['Cus_Reg_Date']->format('Y-m-d'); ?>" required>
+                    <input type='date' name="Cus_Reg_Date" class='form-control' id='Cus_Reg_Date' value="<?= $customer['Cus_Reg_Date']; ?>" required>
                 </div>
                 <div class='col-12 mt-5'>
                     <input type="hidden" name="form_action" value="update">

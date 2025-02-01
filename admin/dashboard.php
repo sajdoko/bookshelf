@@ -149,7 +149,7 @@
                 labels: [
                     <?php
                       foreach ($revenue_growth_all_months as $revenue_month) {
-                          echo "'".$revenue_month['month']->format('Y-m-d')."', ";
+                          echo "'".$revenue_month['month']."', ";
                         };
                   ?>
                 ],

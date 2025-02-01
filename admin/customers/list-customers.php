@@ -35,7 +35,7 @@
                           <td><?= $customer['Cus_LastName']; ?></td>
                           <td><?= $customer['Cus_Email']; ?></td>
                           <td><?= $customer['Cus_Phone']; ?></td>
-                          <td><?= $customer['Cus_Reg_Date']->format('Y-m-d'); ?></td>
+                          <td><?= $customer['Cus_Reg_Date']; ?></td>
                           <td>
                               <a href="/admin/customers/edit/<?= create_url_string($customer['Cus_Id']); ?>" class="btn btn-sm btn-primary p-1">
                                   <i class='bi bi-pencil-square mx-2'></i>

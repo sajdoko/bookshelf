@@ -78,7 +78,7 @@
                 </div>
                 <div class='col-md-3'>
                     <label for='Boo_Pub_Date' class='form-label'>Publishing Date</label>
-                    <input type='date' name="Boo_Pub_Date" class='form-control' id='Boo_Pub_Date' value="<?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>" required>
+                    <input type='date' name="Boo_Pub_Date" class='form-control' id='Boo_Pub_Date' value="<?= $book['Boo_Pub_Date']; ?>" required>
                 </div>
                 <div class='col-md-3'>
                     <label for='BoL_Id' class='form-label'>Language</label>

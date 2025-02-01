@@ -39,8 +39,13 @@
     }
   }
 
-  //Establishes the connection
-  $conn = sqlsrv_connect($serverName, $connectionOptions);
-  if ($conn === false) {
-    die(FormatErrors(sqlsrv_errors()));
+  // Establishes the connection using PDO for SQL Server
+  try {
+    $dsn = "sqlsrv:server=$serverName;Database=".$connectionOptions['Database'];
+    $conn = new PDO($dsn, $connectionOptions['Uid'], $connectionOptions['PWD']);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Set the connection as a global variable
+    $GLOBALS['conn'] = $conn;
+  } catch (PDOException $e) {
+    die(FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]));
   }

@@ -66,7 +66,7 @@
                                 <p class="m-0">Language: <?= $book['BoL_Name']; ?></p>
                                 <p class='p-0'>Genre: <?= $book['Gen_Name']; ?></p>
                                 <p class="card-text">Description: <?= $book['Boo_Description']; ?></p>
-                                <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>
+                                <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']; ?>
                                         by <?= $book['Pub_Name']; ?></small></p>
                                 <p class='card-text mb-auto'>Price: &euro;<?= number_format($book['Boo_Price'], 2); ?></p>
                                 <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>

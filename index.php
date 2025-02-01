@@ -48,7 +48,7 @@
                               <p class="m-0">Author: <?= $book['Aut_Name']; ?></p>
                               <p class="p-0 mb-auto">Language: <?= $book['BoL_Name']; ?></p>
                               <p class="card-text mb-auto">Description: <?= substr($book['Boo_Description'], 0, 100); ?> ...</p>
-                              <p class='card-text mb-auto'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>
+                              <p class='card-text mb-auto'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']; ?>
                                       by <?= $book['Pub_Name']; ?></small></p>
                               <p class="card-text mb-auto">Price: <?= $book['Boo_Price']; ?></p>
                               <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>
@@ -94,7 +94,7 @@
                           <p class="card-text">Author: <?= $book['Aut_Name']; ?></p>
                           <p class="card-text">Language: <?= $book['BoL_Name']; ?></p>
                           <p class="card-text">Description: <?= substr($book['Boo_Description'], 0, 100); ?> ...</p>
-                          <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']->format('Y-m-d'); ?>
+                          <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']; ?>
                                   by <?= $book['Pub_Name']; ?></small></p>
                           <p class="card-text">Price: <?= $book['Boo_Price']; ?></p>
                           <form action='../pages/cart' method='post' class='add-book-to-cart'>

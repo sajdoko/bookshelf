@@ -28,6 +28,6 @@
 
   /** @var $conn $conn */
   if ($conn) {
-    sqlsrv_close($conn);
+    $conn = null; // Close the PDO connection
   }
 ?>

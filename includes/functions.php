@@ -15,19 +15,13 @@
     global $conn;
     $results = [];
 
-    $stmt = sqlsrv_query($conn, $query, $params);
-
-    if (!$stmt) {
-      FormatErrors(sqlsrv_errors());
+    try {
+      $stmt = $conn->prepare($query);
+      $stmt->execute($params);
+      $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);
     }
-    else {
-      // Fetch all orders as an array
-      while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        $results[] = $row;
-      }
-    }
-
-    sqlsrv_free_stmt($stmt);
 
     return $results;
   }
@@ -45,17 +39,13 @@
     global $conn;
     $row = [];
 
-    $stmt = sqlsrv_query($conn, $query, $params);
-
-    if (!$stmt) {
-      FormatErrors(sqlsrv_errors());
+    try {
+      $stmt = $conn->prepare($query);
+      $stmt->execute($params);
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+      FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);
     }
-    else {
-      // Fetch one orders as an array
-      $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-    }
-
-    sqlsrv_free_stmt($stmt);
 
     return $row ?? [];
   }
@@ -72,22 +62,13 @@
   {
     global $conn;
 
-    $no_error = true;
-    $stmt = sqlsrv_prepare($conn, $query, $params);
-    if (!$stmt) {
-      FormatErrors(sqlsrv_errors());
-      $no_error = false;
+    try {
+      $stmt = $conn->prepare($query);
+      return $stmt->execute($params);
+    } catch (PDOException $e) {
+      FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);
+      return false;
     }
-    else {
-      if (!sqlsrv_execute($stmt)) {
-        FormatErrors(sqlsrv_errors());
-        $no_error = false;
-      }
-    }
-
-    sqlsrv_free_stmt($stmt);
-
-    return $no_error;
   }
 
   /**
@@ -102,23 +83,16 @@
   {
     global $conn;
 
-    $no_error = true;
-    $stmt = sqlsrv_prepare($conn, $query, $params);
-    if (!$stmt) {
-      FormatErrors(sqlsrv_errors());
-      $no_error = false;
-    }
-    else {
-      if (!sqlsrv_execute($stmt)) {
-        FormatErrors(sqlsrv_errors());
-        $no_error = false;
+    try {
+      $stmt = $conn->prepare($query);
+      if ($stmt->execute($params)) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
       }
+    } catch (PDOException $e) {
+      FormatErrors([['SQLSTATE' => $e->getCode(), 'code' => $e->getCode(), 'message' => $e->getMessage()]]);
     }
-    $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-    sqlsrv_free_stmt($stmt);
-
-    return ($no_error && $row) ? $row : false;
+    return false;
   }
 
 
@@ -133,7 +107,7 @@
   {
     // Select featured books
     $query = "
-              SELECT TOP (?) *
+              SELECT TOP $quantity *
                 FROM BOOK
                 JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
                 JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
@@ -144,7 +118,7 @@
                 WHERE Boo_Featured = 1;
             ";
 
-    return retrieveAllRows($query, [$quantity]);
+    return retrieveAllRows($query);
   }
 
 
@@ -158,7 +132,7 @@
   function get_best_sellers(int $quantity = 3): array
   {
     // Select most sold books
-    $query = 'SELECT TOP (?) *
+    $query = "SELECT TOP $quantity *
 FROM BOOK
          JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
          JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
@@ -166,13 +140,13 @@ FROM BOOK
          LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
          LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
          LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
-WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
+WHERE BOOK.Boo_ISBN IN (SELECT TOP $quantity BOOK.Boo_ISBN
                         FROM BOOK
                                  INNER JOIN ORDER_LINE ON BOOK.Boo_ISBN = ORDER_LINE.Boo_ISBN
                         GROUP BY BOOK.Boo_ISBN
-                        ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC)';
+                        ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC)";
 
-    return retrieveAllRows($query, [$quantity, $quantity]);
+    return retrieveAllRows($query);
   }
 
   /**
@@ -185,16 +159,16 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP (?) BOOK.Boo_ISBN
   function get_top_genres_list(int $quantity = 5): array
   {
     // Select featured books
-    $query = '
-              SELECT TOP (?) COUNT(B.Boo_ISBN) AS NrBooks, GENRE.Gen_Name FROM GENRE
+    $query = "
+              SELECT TOP $quantity COUNT(B.Boo_ISBN) AS NrBooks, GENRE.Gen_Name FROM GENRE
                   LEFT JOIN BOOK_GENRE BG on GENRE.Gen_Id = BG.Gen_Id
                   LEFT JOIN BOOK B on B.Boo_ISBN = BG.Boo_ISBN
                   GROUP BY GENRE.Gen_Name
               ORDER BY NrBooks
               DESC;
-             ';
+             ";
 
-    return retrieveAllRows($query, [$quantity]);
+    return retrieveAllRows($query);
   }
 
   /**

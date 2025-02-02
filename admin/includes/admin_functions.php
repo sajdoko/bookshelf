@@ -119,22 +119,22 @@
   function get_dash_best_sellers(int $quantity = 5): array
   {
     // Select most sold books
-    $query = 'SELECT TOP (?) BOOK.Boo_ISBN, BOOK.Boo_Title, A.Aut_Name, SUM(OL.OrL_Quantity) AS Quantity, SUM(OL.OrL_Tot_Price) AS Amount
+    $query = "SELECT TOP $quantity BOOK.Boo_ISBN, BOOK.Boo_Title, A.Aut_Name, SUM(OL.OrL_Quantity) AS Quantity, SUM(OL.OrL_Tot_Price) AS Amount
               FROM BOOK
-                       LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
-                       LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
-                       LEFT JOIN ORDER_LINE OL ON BOOK.Boo_ISBN = OL.Boo_ISBN
+              LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
+              LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
+              LEFT JOIN ORDER_LINE OL ON BOOK.Boo_ISBN = OL.Boo_ISBN
               WHERE BOOK.Boo_ISBN IN (
-                SELECT TOP (?) BOOK.Boo_ISBN
-                FROM BOOK
-                         INNER JOIN ORDER_LINE ON BOOK.Boo_ISBN = ORDER_LINE.Boo_ISBN
-                GROUP BY BOOK.Boo_ISBN
-                ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC
+                  SELECT TOP $quantity BOOK.Boo_ISBN
+                  FROM BOOK
+                  INNER JOIN ORDER_LINE ON BOOK.Boo_ISBN = ORDER_LINE.Boo_ISBN
+                  GROUP BY BOOK.Boo_ISBN
+                  ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC
               )
               GROUP BY BOOK.Boo_ISBN, BOOK.Boo_Title, A.Aut_Name
-              ORDER BY Quantity DESC';
+              ORDER BY Quantity DESC";
 
-    return retrieveAllRows($query, [$quantity, $quantity]);
+    return retrieveAllRows($query);
   }
 
   function get_customers_growth(): array
@@ -174,10 +174,10 @@
                      DATEPART(year, Ord_Date)  AS Year,
                      SUM(Ord_Tot_Val)          AS Month_Revenue
               FROM CUS_ORDER
-              WHERE Ord_Date >= DATEADD(month, -2, GETDATE())
+              WHERE Ord_Date >= DATEADD(month, -2, CAST(GETDATE() AS DATE))
               GROUP BY DATEPART(month, Ord_Date),
                        DATEPART(year, Ord_Date)
-              ORDER BY DATEPART(year, Ord_Date) DESC';
+              ORDER BY DATEPART(year, Ord_Date) DESC, DATEPART(month, Ord_Date) DESC';
     return retrieveAllRows($query);
   }
 

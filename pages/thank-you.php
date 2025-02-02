@@ -5,14 +5,19 @@
     sec_session_start();
     $ordered_books = [];
     $user_id = $_SESSION['Cus_Id'] ?? 0;
-    if (isset($_SESSION['cart'])) {
+    if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
       $ordered_books = $_SESSION['cart'];
       $_SESSION['cart'] = [];
+    } else {
+      $_SESSION['checkout_errors'][] = '<p class="text-danger">Your cart is empty!</p>';
+      header('Location: /pages/checkout');
+      exit;
     }
 
     $sh_m_id = filter_input(INPUT_POST, 'shippingMethod', FILTER_SANITIZE_NUMBER_INT);
+    $payment_method = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
 
-    if (empty($ordered_books) || !$sh_m_id) {
+    if (empty($ordered_books) || !$sh_m_id || !$payment_method) {
       $_SESSION['checkout_errors'][] = '<p class="text-danger">There seems to be an error!</p>';
       header('Location: /pages/checkout');
       exit;
@@ -27,6 +32,12 @@
     foreach ($cart_books as $book) {
       $order_tot_val += (float) $book['Boo_Price'] * (int) $ordered_books[$book['Boo_ISBN']];
     }
+
+    $paypal_email = 'sajdoko-facilitator@gmail.com';
+    $paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+    $return_url = 'https://bookshelf.test/pages/thank-you';
+    $cancel_url = 'https://bookshelf.test/pages/checkout';
+    $notify_url = 'https://bookshelf.test/includes/paypal_ipn.php';
 
     if (!$user_id) {
       // REGISTER Customer
@@ -58,7 +69,7 @@
           $user = retrieveOneRow('SELECT TOP 1 * FROM CUSTOMER WHERE Cus_Email = ?', [$email]);
           // Check if email already exists
           if ($user) {
-            $_SESSION['checkout_errors'][] = '<p class="text-danger">You are allready registered with this email: '.$email.'</p>';
+            $_SESSION['checkout_errors'][] = '<p class="text-danger">You are already registered with this email: '.$email.'</p>';
           }
           else {
             $query = 'INSERT INTO CUSTOMER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_CUS_ID, ?, ?, ?, ?, ?, ?)';
@@ -74,30 +85,12 @@
                 )
               ) {
                 if (login_customer($email, $password_str)) {
-
-                  $query = 'INSERT INTO CUS_ORDER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_ORD_ID, ?, ?, ?, ?)';
-                  $cus_order = insertQuery($query, [$customer['Cus_Id'], $sh_m_id, date('Y-m-d H:i:s'), $order_tot_val]);
-                  if (!isset($cus_order['Ord_Id'])) {
-                    $_SESSION['checkout_errors'][] = '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
-                  }
-
-                  $query = 'INSERT INTO ORDER_HISTORY VALUES (1, ?, ?, ?)';
-                  executeQuery($query, [$cus_order['Cus_Id'], 'Order placed', date('Y-m-d H:i:s')]);
-
-                  foreach ($ordered_books as $Boo_ISBN => $quantity) {
-                    $Boo_Price = get_book_price($Boo_ISBN);
-                    executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',
-                      [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, $Boo_Price * $quantity, $Boo_Price]);
-                  }
-
-                  $self_url = strtok($_SERVER['REQUEST_URI'], '?');
-                  header('Location: '.$self_url);
-                  exit;
+                  $user_id = $customer['Cus_Id'];
                 }
                 else {
                   header('Location: /pages/login');
+                  exit();
                 }
-                exit();
               }
               else {
                 $_SESSION['checkout_errors'][] = '<p class="text-danger">Your address could not be saved!</p>';
@@ -107,25 +100,48 @@
         }
       }
     }
-    else {
 
-      $query = 'INSERT INTO CUS_ORDER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_ORD_ID, ?, ?, ?, ?)';
-      $cus_order = insertQuery($query, [$user_id, $sh_m_id, date('Y-m-d H:i:s'), $order_tot_val]);
-      if (!isset($cus_order['Ord_Id'])) {
-        $_SESSION['checkout_errors'][] = '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
-      }
-
+    $query = 'INSERT INTO CUS_ORDER OUTPUT INSERTED.* VALUES (NEXT VALUE FOR SEQ_ORD_ID, ?, ?, ?, ?)';
+    $cus_order = insertQuery($query, [$user_id, $sh_m_id, date('Y-m-d H:i:s'), $order_tot_val]);
+    if (!isset($cus_order['Ord_Id'])) {
+      $_SESSION['checkout_errors'][] = '<p class="text-danger">Order creation failure: INSERT ORDER</p>';
+    } else {
       foreach ($ordered_books as $Boo_ISBN => $quantity) {
         $Boo_Price = get_book_price($Boo_ISBN);
         executeQuery('INSERT INTO ORDER_LINE VALUES (?, ?, ?, ?, ?)',
           [$Boo_ISBN, $cus_order['Ord_Id'], $quantity, $Boo_Price * $quantity, $Boo_Price]);
       }
 
-      $self_url = strtok($_SERVER['REQUEST_URI'], '?');
-      header('Location: '.$self_url);
-      exit;
+      if ($payment_method == 'paypal') {
+        echo '<form action="'.$paypal_url.'" method="post" id="paypalForm">
+                <input type="hidden" name="business" value="'.$paypal_email.'">
+                <input type="hidden" name="cmd" value="_cart">
+                <input type="hidden" name="upload" value="1">
+                <input type="hidden" name="currency_code" value="USD">';
+        $i = 1;
+        foreach ($ordered_books as $Boo_ISBN => $quantity) {
+          $Boo_Price = get_book_price($Boo_ISBN);
+          echo '<input type="hidden" name="item_name_'.$i.'" value="'.$Boo_ISBN.'">
+                <input type="hidden" name="amount_'.$i.'" value="'.$Boo_Price.'">
+                <input type="hidden" name="quantity_'.$i.'" value="'.$quantity.'">';
+          $i++;
+        }
+        echo '<input type="hidden" name="return" value="'.$return_url.'">
+              <input type="hidden" name="cancel_return" value="'.$cancel_url.'">
+              <input type="hidden" name="notify_url" value="'.$notify_url.'">
+              <input type="hidden" name="custom" value="'.$cus_order['Ord_Id'].'">
+              <input type="submit" value="Pay with PayPal">
+              </form>';
+        echo '<script>document.getElementById("paypalForm").submit();</script>';
+        exit;
+      } else {
+        $query = 'INSERT INTO ORDER_HISTORY VALUES (?, ?, ?, ?)';
+        executeQuery($query, [1, $cus_order['Ord_Id'], 'Order placed', date('Y-m-d H:i:s')]);
+        $self_url = strtok($_SERVER['REQUEST_URI'], '?');
+        header('Location: '.$self_url);
+        exit;
+      }
     }
-
 
     if (count($_SESSION['checkout_errors']) > 0) {
       header('Location: /pages/checkout');

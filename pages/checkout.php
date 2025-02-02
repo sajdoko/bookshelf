@@ -168,6 +168,23 @@
                               </div>
                           <?php endforeach; ?>
                         </div>
+
+                        <h4 class='mb-3'>Payment Method</h4>
+
+                        <div class='my-3'>
+                            <div class='form-check'>
+                                <input id='cod' name='paymentMethod' type='radio' value='cod' class='form-check-input' required>
+                                <label class='form-check-label' for='cod'>Cash on Delivery</label>
+                            </div>
+                            <div class='form-check'>
+                                <input id='paypal' name='paymentMethod' type='radio' value='paypal' class='form-check-input' required>
+                                <label class='form-check-label' for='paypal'>PayPal</label>
+                                <small class='text-muted'>
+                                    Username: <strong>sajdoko-buyer@gmail.com</strong> 
+                                    Password: <strong>GDFiv_b3gP$xHSY</strong>
+                                </small>
+                            </div>
+                        </div>
                     </div>
 
                     <hr class='my-4'>

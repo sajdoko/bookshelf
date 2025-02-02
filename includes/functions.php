@@ -198,7 +198,9 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP $quantity BOOK.Boo_ISBN
     $cookieParams = session_get_cookie_params();
     session_set_cookie_params($cookieParams["lifetime"], $cookieParams["path"], $cookieParams["domain"], false, true);
     session_name($session_name);
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     session_regenerate_id(true);
   }
 

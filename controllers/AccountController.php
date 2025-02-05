@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__DIR__) . '/models/BookModel.php';
-
 class AccountController {
   public function index() {
     if (!login_check_customer()) {
@@ -14,14 +12,14 @@ class AccountController {
     // Process form data when form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Validate form data
-      $new_first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
-      $new_last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
-      $new_phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+      $new_first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $new_last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $new_phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   
-      $new_street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
+      $new_street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
       $new_zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
-      $new_city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-      $new_country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
+      $new_city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+      $new_country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   
       // Check for empty fields
       if (empty($new_first_name)) {
@@ -47,7 +45,7 @@ class AccountController {
       exit;
     }
   
-    $countries = retrieveAllRows('SELECT * FROM COUNTRY ORDER BY Cou_Name');
+    $countries = CountryModel::getAllCountries();
 
     require_once dirname(__DIR__) . '/views/account.php';
   }

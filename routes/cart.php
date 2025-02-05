@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/autoload.php';
   $page_title = 'Cart';
   require_once dirname(__DIR__) . '/views/header.php';
   $self_url = strtok($_SERVER['REQUEST_URI'], '?');

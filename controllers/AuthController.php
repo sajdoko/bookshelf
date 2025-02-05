@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__DIR__) . '/models/BookModel.php';
 
 class AuthController {
   public function login() {
@@ -8,13 +7,13 @@ class AuthController {
 
     if (isset($_POST['email'], $_POST['password'])) {
       $Cus_Email    = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-      $Cus_Pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+      $Cus_Pass = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
       // Check if email and password are not empty
       if (!empty($Cus_Email) || !empty($Cus_Pass)) {
 
-        $query = 'SELECT Cus_Id, Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
-        $user = retrieveOneRow($query, [$Cus_Email]);
+        // Use the new method from BookModel
+        $user = BookModel::retrieveCustomerByEmail($Cus_Email);
 
         // Check if user exists in the database
         if ($user) {
@@ -45,7 +44,7 @@ class AuthController {
 
   public function register() {
     $error_msg = "";
-    $countries = retrieveAllRows('SELECT * FROM COUNTRY ORDER BY Cou_Name');
+    $countries = CountryModel::getAllCountries();
 
     if (isset($_POST['submitRegister'])) {
       // Sanitize and validate the data passed in
@@ -56,7 +55,7 @@ class AuthController {
         $error_msg .= '<p class="text-danger">The email address you entered is not valid</p>';
       }
       else {
-        $password_str = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+        $password_str = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = password_hash($password_str, PASSWORD_DEFAULT);
 
         if (!$password) {
@@ -64,16 +63,16 @@ class AuthController {
         }
         else {
 
-          $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
-          $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
-          $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+          $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-          $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
+          $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
           $zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
-          $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-          $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
+          $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-          $user = retrieveOneRow('SELECT TOP 1 * FROM CUSTOMER WHERE Cus_Email = ?', [$email]);
+          $user = BookModel::retrieveCustomerByEmail($email);
           // Check if email already exists
           if ($user) {
             $error_msg .= '<p class="text-danger">You are allready registered with this email: '.$email.'</p>';

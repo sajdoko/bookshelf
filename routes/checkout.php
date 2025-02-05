@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/autoload.php';
   $page_title = 'Checkout';
   require_once dirname(__DIR__) . '/views/header.php';
 
@@ -29,7 +30,7 @@
   else {
     $errors[] = "You don't have any books added to your shopping cart!";
   }
-  $countries = retrieveAllRows('SELECT * FROM COUNTRY ORDER BY Cou_Name');
+  $countries = CountryModel::getAllCountries();
   $shipping_methods = retrieveAllRows('SELECT * FROM SHIPPING_METHOD');
 
 ?>

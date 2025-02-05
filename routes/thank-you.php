@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/autoload.php';
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require_once dirname(__DIR__) . '/includes/db_conn.php';
     require_once dirname(__DIR__) . '/includes/functions.php';
@@ -15,7 +16,7 @@
     }
 
     $sh_m_id = filter_input(INPUT_POST, 'shippingMethod', FILTER_SANITIZE_NUMBER_INT);
-    $payment_method = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_STRING);
+    $payment_method = filter_input(INPUT_POST, 'paymentMethod', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if (empty($ordered_books) || !$sh_m_id || !$payment_method) {
       $_SESSION['checkout_errors'][] = '<p class="text-danger">There seems to be an error!</p>';
@@ -49,7 +50,7 @@
         $_SESSION['checkout_errors'][] = '<p class="text-danger">The email address you entered is not valid</p>';
       }
       else {
-        $password_str = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+        $password_str = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $password = password_hash($password_str, PASSWORD_DEFAULT);
 
         if (!$password) {
@@ -57,14 +58,14 @@
         }
         else {
 
-          $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
-          $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
-          $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+          $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-          $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
+          $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
           $zip = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
-          $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
-          $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_STRING);
+          $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+          $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
           $user = retrieveOneRow('SELECT TOP 1 * FROM CUSTOMER WHERE Cus_Email = ?', [$email]);
           // Check if email already exists

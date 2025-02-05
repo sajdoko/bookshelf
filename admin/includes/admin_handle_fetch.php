@@ -43,8 +43,8 @@
         $Boo_QOH = (int) $data['Boo_QOH'] ?? 0;
         $Pub_Id = (int) $data['Pub_Id'] ?? 0;
         $Boo_Price = (float) $data['Boo_Price'] ?? 0;
-        $Boo_Title = filter_var($data['Boo_Title'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-        $Boo_Description = filter_var($data['Boo_Description'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $Boo_Title = filter_var($data['Boo_Title'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
+        $Boo_Description = filter_var($data['Boo_Description'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
         $Boo_Pub_Date = $data['Boo_Pub_Date'] ?? false;
         $Boo_Img_url = $data['Boo_Img_url'] ?? false;
         $Boo_Featured = isset($data['Boo_Featured']) ? 1 : 0;
@@ -120,11 +120,11 @@
           exit(json_encode($resp));
         }
 
-        $Cus_FirstName = filter_var($data['Cus_FirstName'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-        $Cus_LastName = filter_var($data['Cus_LastName'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $Cus_FirstName = filter_var($data['Cus_FirstName'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
+        $Cus_LastName = filter_var($data['Cus_LastName'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
         $Cus_Email = filter_var($data['Cus_Email'] ?? false, FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_HIGH);
-        $Cus_Pass = filter_var($data['Cus_Pass'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-        $Cus_Phone = filter_var($data['Cus_Phone'] ?? false, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $Cus_Pass = filter_var($data['Cus_Pass'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
+        $Cus_Phone = filter_var($data['Cus_Phone'] ?? false, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_STRIP_HIGH);
 
         // TODO
         // Add check to control before with the old password.

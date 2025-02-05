@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__DIR__) . '/includes/functions.php';
 
 class BookModel {
   public static function searchBooks($title, $author, $language, $publisher) {
@@ -124,6 +123,11 @@ class BookModel {
             ";
 
     return retrieveAllRows($query);
+  }
+
+  public static function retrieveCustomerByEmail($email) {
+    $query = 'SELECT Cus_Id, Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
+    return retrieveOneRow($query, [$email]);
   }
 
 }

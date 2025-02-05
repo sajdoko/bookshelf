@@ -37,7 +37,7 @@
         <ul class='nav col-12 col-md-auto mb-2 justify-content-center mb-md-0'>
             <li><a href='/' class='nav-link px-2 link-dark'>Home</a></li>
             <li><a href='/browse' class='nav-link px-2 link-dark'>Browse Books</a></li>
-            <li><a href='../cart' title='go to cart' class='nav-link px-2 link-dark position-relative'>
+            <li><a href='/cart' title='go to cart' class='nav-link px-2 link-dark position-relative'>
                     <i class='bi bi-cart3'></i><span
                             class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success'><span
                                 id="cartItems"><?= $num_items_in_cart; ?></span></span>
@@ -53,8 +53,8 @@
                   <li><a href='/logout' class="nav-link px-2 link-dark">Sign out?</a></li>
               </ul>
           <?php else : ?>
-              <a href='../login' class='btn btn-outline-primary me-2'>Sign in</a>
-              <a href='../register' class='btn btn-primary'>Register</a>
+              <a href='/login' class='btn btn-outline-primary me-2'>Sign in</a>
+              <a href='/register' class='btn btn-primary'>Register</a>
           <?php endif; ?>
         </div>
     </header>

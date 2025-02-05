@@ -6,7 +6,7 @@ require_once dirname(__DIR__) . '/views/header.php';
 $error_msg = "";
 
 if (isset($_GET['err'])) {
-  $error_msg .= '<p class="text-danger">'.filter_input(INPUT_GET, 'err', FILTER_SANITIZE_STRING).'</p>';
+  $error_msg .= '<p class="text-danger">'.filter_input(INPUT_GET, 'err', FILTER_SANITIZE_FULL_SPECIAL_CHARS).'</p>';
 }
 
 if (!login_check_customer()) {

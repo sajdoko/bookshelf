@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__DIR__) . '/models/BookModel.php';
 
 class BookController {
     public function show($book_url_string) {

@@ -4,7 +4,7 @@
 
   // Check if the user is logged in
   if (!login_check_customer()) {
-    header("Location: /pages/login");
+    header("Location: /login");
     exit;
   }
 
@@ -15,7 +15,7 @@
   $user = get_customer_info($user_id);
 
   if (empty($user)) {
-    header("Location: /pages/login");
+    header("Location: /login");
     exit;
   }
 

@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/models/BookModel.php';
 class AccountController {
   public function index() {
     if (!login_check_customer()) {
-      header("Location: /pages/login");
+      header("Location: /login");
       exit;
     }
 
@@ -43,7 +43,7 @@ class AccountController {
     $user = get_customer_info($user_id);
 
     if (empty($user)) {
-      header("Location: /pages/login");
+      header("Location: /login");
       exit;
     }
   

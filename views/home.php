@@ -7,7 +7,7 @@ require_once 'header.php';
       <div class="container">
           <div class="row">
               <div class="col-md-6 offset-md-3">
-                  <form action="/pages/browse" method="post">
+                  <form action="/browse" method="post">
                       <div class="input-group mb-3">
                           <input type="text" name="title" class="form-control" placeholder="Which title are you looking for?" required
                                  aria-label="Which title are you looking for?" aria-describedby="button-addon2">
@@ -52,7 +52,7 @@ require_once 'header.php';
                                     by <?= $book['Pub_Name']; ?></small></p>
                             <p class="card-text mb-auto">Price: <?= $book['Boo_Price']; ?></p>
                             <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>
-                            <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                            <form action='../cart' method='post' class='add-book-to-cart'>
                                 <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                 <div class='input-group'>
                                     <label>
@@ -97,7 +97,7 @@ require_once 'header.php';
                         <p class='card-text'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']; ?>
                                 by <?= $book['Pub_Name']; ?></small></p>
                         <p class="card-text">Price: <?= $book['Boo_Price']; ?></p>
-                        <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                        <form action='../cart' method='post' class='add-book-to-cart'>
                             <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                             <div class='input-group'>
                                 <label>

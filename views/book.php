@@ -29,7 +29,7 @@
                             <p class='card-text mb-auto'>Price: &euro;<?= number_format($book['Boo_Price'], 2); ?></p>
                             <p class='text-muted'>In Stock: <?= $book['Boo_QOH'] ?? 0; ?></p>
 
-                            <form action='../pages/cart' method='post' class="add-book-to-cart">
+                            <form action='../cart' method='post' class="add-book-to-cart">
                                 <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                 <div class='input-group mb-3'>
                                     <label>

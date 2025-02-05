@@ -92,10 +92,10 @@ class AuthController {
                 )
               ) {
                 if (login_customer($email, $password_str)) {
-                  header('Location: /pages/account');
+                  header('Location: /account');
                 }
                 else {
-                  header('Location: /pages/login');
+                  header('Location: /login');
                 }
                 exit();
               }

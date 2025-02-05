@@ -22,7 +22,7 @@
 
   if (!$order) {
     http_response_code(404);
-    include_once dirname(__FILE__, 3).'/pages/404.php';
+    include_once dirname(__FILE__, 3).'/404.php';
     die(404);
   }
 

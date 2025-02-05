@@ -58,7 +58,7 @@
             </div>
             <div class='col-12 mt-4'>
                 <input type='submit' name="submitRegister" value="Register" class='w-100 btn btn-lg btn-primary'>
-                <p class='text-center mt-5 text-muted'>Do you have an account? <a href='../pages/login'>Log In</a></p>
+                <p class='text-center mt-5 text-muted'>Do you have an account? <a href='../login'>Log In</a></p>
             </div>
         </div>
     </form>

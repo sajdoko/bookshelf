@@ -114,7 +114,7 @@
                 <div class="text-end">
                     <h4 class="pb-3">Subtotal: &euro;<?= $subtotal ?></h4>
                     <input type="submit" class='btn btn-outline-secondary' value="Update Cart" name="update">
-                    <a href="../pages/checkout" class="btn btn-success mb-3" title="">Go to Checkout</a>
+                    <a href="../checkout" class="btn btn-success mb-3" title="">Go to Checkout</a>
                 </div>
             </form>
         </div>

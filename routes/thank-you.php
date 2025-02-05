@@ -10,7 +10,7 @@
       $_SESSION['cart'] = [];
     } else {
       $_SESSION['checkout_errors'][] = '<p class="text-danger">Your cart is empty!</p>';
-      header('Location: /pages/checkout');
+      header('Location: /checkout');
       exit;
     }
 
@@ -19,7 +19,7 @@
 
     if (empty($ordered_books) || !$sh_m_id || !$payment_method) {
       $_SESSION['checkout_errors'][] = '<p class="text-danger">There seems to be an error!</p>';
-      header('Location: /pages/checkout');
+      header('Location: /checkout');
       exit;
     }
 
@@ -35,8 +35,8 @@
 
     $paypal_email = 'sajdoko-facilitator@gmail.com';
     $paypal_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-    $return_url = 'https://bookshelf.test/pages/thank-you';
-    $cancel_url = 'https://bookshelf.test/pages/checkout';
+    $return_url = 'https://bookshelf.test/thank-you';
+    $cancel_url = 'https://bookshelf.test/checkout';
     $notify_url = 'https://bookshelf.test/includes/paypal_ipn.php';
 
     if (!$user_id) {
@@ -88,7 +88,7 @@
                   $user_id = $customer['Cus_Id'];
                 }
                 else {
-                  header('Location: /pages/login');
+                  header('Location: /login');
                   exit();
                 }
               }
@@ -144,7 +144,7 @@
     }
 
     if (count($_SESSION['checkout_errors']) > 0) {
-      header('Location: /pages/checkout');
+      header('Location: /checkout');
       exit;
     }
   }

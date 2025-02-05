@@ -116,7 +116,7 @@ require_once dirname(__DIR__) .'/includes/db_conn.php';
     $session_name = 'sec_session_id';
 
     if (ini_set('session.use_only_cookies', 1) === false) {
-      header("Location: pages/error.php?err=Could not initiate a safe session (ini_set)");
+      header("Location: error.php?err=Could not initiate a safe session (ini_set)");
       exit();
     }
 

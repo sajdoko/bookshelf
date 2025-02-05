@@ -70,7 +70,7 @@ require_once 'header.php';
                           <td><?= $book['Pub_Name']; ?></td>
                           <td>&euro;<?= number_format($book['Boo_Price'], 2); ?></td>
                           <td>
-                              <form action='../pages/cart' method='post' class='add-book-to-cart'>
+                              <form action='../cart' method='post' class='add-book-to-cart'>
                                   <input type='hidden' name='Boo_ISBN' value="<?= $book['Boo_ISBN'] ?>">
                                   <div class='input-group'>
                                       <label>

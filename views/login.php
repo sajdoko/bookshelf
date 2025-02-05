@@ -22,7 +22,7 @@
         </div>
 
         <button class='w-100 btn btn-lg btn-primary' type='submit'>Sign in</button>
-        <p class='text-center mt-5 text-muted'>Don't have an account? <a href="../pages/register">Register</a></p>
+        <p class='text-center mt-5 text-muted'>Don't have an account? <a href="../register">Register</a></p>
     </form>
 </div>
 

@@ -7,8 +7,11 @@ RewriteRule ^admin/customers/add/?$ /admin/customers/add-customer.php [L]
 
 RewriteRule ^admin/orders/view/([^/]*)/?$ /admin/orders/view-order.php?title=$1 [L]
 
-RewriteRule ^book/([^/]*)/?$ /pages/book.php?title=$1 [L]
-RewriteRule ^genre/([^/]*)/?$ /pages/genre.php?name=$1 [L]
+RewriteRule ^book/([^/]*)/?$ /routes/book.php?title=$1 [L]
+RewriteRule ^genre/([^/]*)/?$ /routes/genre.php?name=$1 [L]
+
+RewriteRule ^(account|my-orders|book|browse|cart|checkout|error|genre|login|register|thank-you)/?$ /routes/$1.php [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 ErrorDocument 404 /views/404.php

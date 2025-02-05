@@ -1,6 +1,6 @@
 <?php
   $page_title = 'Checkout';
-  require_once '../includes/header.php';
+  require_once dirname(__DIR__) . '/views/header.php';
 
   $user_id = $_SESSION['Cus_Id'] ?? 0;
 
@@ -77,7 +77,7 @@
             </div>
             <div class='col-md-7 col-lg-8'>
                 <h4 class='mb-3'>Shipping Details</h4>
-                <form action="../pages/thank-you" method="POST">
+                <form action="/pages/thank-you" method="POST">
                     <div class='row g-3'>
                         <div class='col-sm-6'>
                             <label for='firstName' class='form-label'>First name</label>
@@ -194,4 +194,4 @@
             </div>
         </div>
     </div>
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/views/footer.php'; ?>

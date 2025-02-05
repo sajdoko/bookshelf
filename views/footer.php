@@ -24,10 +24,3 @@
 <script src="/assets/js/script.js"></script>
 </body>
 </html>
-<?php
-
-  /** @var $conn $conn */
-  if ($conn) {
-    $conn = null; // Close the PDO connection
-  }
-?>

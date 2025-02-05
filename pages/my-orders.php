@@ -1,6 +1,6 @@
 <?php
   $page_title = "My orders";
-  require_once '../includes/header.php';
+  require_once dirname(__DIR__) . '/views/header.php';
 
   // Check if the user is logged in
   if (!login_check_customer()) {
@@ -96,10 +96,12 @@
                       <?php endforeach; ?>
                       </tbody>
                   </table>
+            <?php else : ?>
+                <div class='alert alert-info'>You have no orders.</div>
               <?php endif; ?>
             </div>
         </div>
 
     </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/views/footer.php'; ?>

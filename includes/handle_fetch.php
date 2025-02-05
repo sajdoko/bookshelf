@@ -3,12 +3,10 @@
   $json = file_get_contents('php://input');
   $data = json_decode($json, true);
 
-
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && $data) {
     // Include database connection
-    require_once 'db_conn.php';
-    require_once 'functions.php';
-    sec_session_start();
+    require_once dirname(__DIR__) . '/includes/db_conn.php';
+    require_once dirname(__DIR__) . '/includes/functions.php';
 
     if (isset($data['add_to_cart'])) {
 

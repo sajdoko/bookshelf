@@ -1,9 +1,10 @@
 <?php
   // Include database connection
-  require_once 'db_conn.php';
-  require_once 'functions.php';
-  sec_session_start();
+  require_once dirname(__DIR__) . '/includes/db_conn.php';
+  require_once dirname(__DIR__) . '/includes/functions.php';
+//   sec_session_start();
   $logged_in_customer = login_check_customer();
+// var_dump($_SESSION??'{}');
 
   $num_items_in_cart = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
 ?>
@@ -19,9 +20,9 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css'>
     <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
-    <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
-    <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
+    <link rel='apple-touch-icon' sizes='180x180' href='/assets/images/apple-touch-icon.png'>
+    <link rel='icon' type='image/png' sizes='32x32' href='/assets/images/favicon-32x32.png'>
+    <link rel='icon' type='image/png' sizes='16x16' href='/assets/images/favicon-16x16.png'>
     <link rel='manifest' href='/site.webmanifest'>
 </head>
 

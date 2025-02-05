@@ -1,6 +1,6 @@
 <?php
-// Include database connection
-  require_once 'db_conn.php';
+require_once dirname(__DIR__) .'/includes/db_conn.php';
+
 
   /**
    * Get all the rows from the database for the given query.
@@ -95,82 +95,6 @@
     return false;
   }
 
-
-  /**
-   * Get a list of the featured books.
-   *
-   * @param  int  $quantity
-   *
-   * @return array An array of books.
-   */
-  function get_featured_books(int $quantity = 3): array
-  {
-    // Select featured books
-    $query = "
-              SELECT TOP $quantity *
-                FROM BOOK
-                JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
-                JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
-                LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
-                LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
-                LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
-                LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
-                WHERE Boo_Featured = 1;
-            ";
-
-    return retrieveAllRows($query);
-  }
-
-
-  /**
-   * Get a list of the most sold books.
-   *
-   * @param  int  $quantity
-   *
-   * @return array An array of books.
-   */
-  function get_best_sellers(int $quantity = 3): array
-  {
-    // Select most sold books
-    $query = "SELECT TOP $quantity *
-FROM BOOK
-         JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
-         JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
-         LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
-         LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
-         LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
-         LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
-WHERE BOOK.Boo_ISBN IN (SELECT TOP $quantity BOOK.Boo_ISBN
-                        FROM BOOK
-                                 INNER JOIN ORDER_LINE ON BOOK.Boo_ISBN = ORDER_LINE.Boo_ISBN
-                        GROUP BY BOOK.Boo_ISBN
-                        ORDER BY SUM(ORDER_LINE.OrL_Quantity) DESC)";
-
-    return retrieveAllRows($query);
-  }
-
-  /**
-   * Get a list of top genre names.
-   *
-   * @param  int  $quantity
-   *
-   * @return array An array of genre names and books counts.
-   */
-  function get_top_genres_list(int $quantity = 5): array
-  {
-    // Select featured books
-    $query = "
-              SELECT TOP $quantity COUNT(B.Boo_ISBN) AS NrBooks, GENRE.Gen_Name FROM GENRE
-                  LEFT JOIN BOOK_GENRE BG on GENRE.Gen_Id = BG.Gen_Id
-                  LEFT JOIN BOOK B on B.Boo_ISBN = BG.Boo_ISBN
-                  GROUP BY GENRE.Gen_Name
-              ORDER BY NrBooks
-              DESC;
-             ";
-
-    return retrieveAllRows($query);
-  }
-
   /**
    * Get a books by its isbn.
    *
@@ -188,10 +112,11 @@ WHERE BOOK.Boo_ISBN IN (SELECT TOP $quantity BOOK.Boo_ISBN
 
   function sec_session_start(): void
   {
+    return;
     $session_name = 'sec_session_id';
 
     if (ini_set('session.use_only_cookies', 1) === false) {
-      header("Location: error.php?err=Could not initiate a safe session (ini_set)");
+      header("Location: pages/error.php?err=Could not initiate a safe session (ini_set)");
       exit();
     }
 

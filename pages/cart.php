@@ -1,6 +1,6 @@
 <?php
   $page_title = 'Cart';
-  require_once '../includes/header.php';
+  require_once dirname(__DIR__) . '/views/header.php';
   $self_url = strtok($_SERVER['REQUEST_URI'], '?');
 
   $errors = [];
@@ -121,4 +121,4 @@
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/views/footer.php'; ?>

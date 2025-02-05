@@ -11,4 +11,4 @@ RewriteRule ^book/([^/]*)/?$ /pages/book.php?title=$1 [L]
 RewriteRule ^genre/([^/]*)/?$ /pages/genre.php?name=$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
-ErrorDocument 404 /pages/404.php
+ErrorDocument 404 /views/404.php

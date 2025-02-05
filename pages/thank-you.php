@@ -1,8 +1,8 @@
 <?php
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    require_once '../includes/db_conn.php';
-    require_once '../includes/functions.php';
-    sec_session_start();
+    require_once dirname(__DIR__) . '/includes/db_conn.php';
+    require_once dirname(__DIR__) . '/includes/functions.php';
+
     $ordered_books = [];
     $user_id = $_SESSION['Cus_Id'] ?? 0;
     if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
@@ -150,7 +150,7 @@
   }
 
   $page_title = 'Thank You';
-  require_once '../includes/header.php';
+  require_once dirname(__DIR__) . '/views/header.php';
 ?>
 
     <div class="container mt-5">
@@ -163,4 +163,4 @@
         </div>
     </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once dirname(__DIR__) . '/views/footer.php'; ?>

@@ -1,6 +1,6 @@
 <?php
   $page_title = "404 Page Not Found";
-  require_once '../includes/header.php';
+  require_once 'header.php';
 ?>
 
     <div class="container mt-5">
@@ -14,4 +14,4 @@
         </div>
     </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once 'footer.php'; ?>

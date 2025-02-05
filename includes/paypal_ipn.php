@@ -1,6 +1,6 @@
 <?php
-require_once 'db_conn.php';
-require_once 'functions.php';
+require_once dirname(__DIR__) . '/includes/db_conn.php';
+require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Read POST data
 $raw_post_data = file_get_contents('php://input');

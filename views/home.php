@@ -21,7 +21,7 @@ require_once 'header.php';
       </div>
   </section>
 
-  <div class="container featured-categories my-5">
+  <div class="container-fluid featured-categories my-5">
       <div class="row">
         <?php foreach ($top_genres_list as $genre): ?>
             <div class="col-sm-6 col-md-2">
@@ -33,9 +33,9 @@ require_once 'header.php';
       </div>
   </div>
 
-  <div class="container-fluid pt-1 px-5">
+  <div class="container">
       <h2 class='display-3 text-center my-5'>Best Sellers</h2>
-      <div class='row'>
+      <div class='row g-2'>
         <?php foreach ($best_sellers as $book): ?>
             <div class='col-sm-12 col-md-6'>
                 <div class="container">
@@ -47,7 +47,7 @@ require_once 'header.php';
                             </h3>
                             <p class="m-0">Author: <?= $book['Aut_Name']; ?></p>
                             <p class="p-0 mb-auto">Language: <?= $book['BoL_Name']; ?></p>
-                            <p class="card-text mb-auto">Description: <?= substr($book['Boo_Description'], 0, 100); ?> ...</p>
+                            <p class="card-text mb-auto">Description: <?= substr($book['Boo_Description'], 0, 70); ?> ...</p>
                             <p class='card-text mb-auto'><small class='text-muted'>Published: <?= $book['Boo_Pub_Date']; ?>
                                     by <?= $book['Pub_Name']; ?></small></p>
                             <p class="card-text mb-auto">Price: <?= $book['Boo_Price']; ?></p>
@@ -79,11 +79,11 @@ require_once 'header.php';
 
   <div class="container pt-5">
       <h2 class="display-3 my-5">Featured Books</h2>
-      <div class="row">
+      <div class="row g-2">
           <!-- Display a list of featured books here -->
         <?php foreach ($featured_books as $book): ?>
           <?php //print_r($books); ?>
-            <div class="col-sm-12 col-md-4">
+            <div class="col-sm-12 col-md-3">
                 <div class="card shadow-sm">
                     <a href='/book/<?= create_url_string($book['Boo_Title']); ?>' title="<?= $book['Boo_Title']; ?>"><img
                                 src="<?= $book['Boo_Img_url']; ?>" class="bd-placeholder-img card-img-top" alt="Book cover"></a>

@@ -4491,4 +4491,20 @@
   return index_umd;
 
 }));
-//# sourceMappingURL=bootstrap.js.map
+
+function getUID(prefix) {
+  let uid = prefix + Math.floor(Math.random() * 1000000);
+  while (document.getElementById(uid)) {
+    uid = prefix + Math.floor(Math.random() * 1000000);
+  }
+  return uid;
+}
+
+function isElement(obj) {
+  return obj instanceof Element || obj instanceof HTMLDocument;
+}
+
+module.exports = {
+  getUID,
+  isElement
+};

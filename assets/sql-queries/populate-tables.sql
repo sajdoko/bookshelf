@@ -257,28 +257,28 @@ VALUES ('978-0439136358', 5),
        ('9781416524793', 1);
 
 INSERT INTO CUS_ORDER (Ord_Id, Cus_Id, ShM_Id, Ord_Date, Ord_Tot_Val)
-VALUES  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2023-02-01 22:33:12.000', 52),
+VALUES  (NEXT VALUE FOR SEQ_ORD_ID, 1, 1, '2024-02-01 22:33:12.000', 52),
         (NEXT VALUE FOR SEQ_ORD_ID, 1, 3, '2022-08-05 22:33:47.000', 37.2),
         (NEXT VALUE FOR SEQ_ORD_ID, 2, 3, '2022-08-09 22:34:52.000', 29.59),
         (NEXT VALUE FOR SEQ_ORD_ID, 2, 2, '2022-08-24 22:35:13.000', 47.6),
         (NEXT VALUE FOR SEQ_ORD_ID, 2, 3, '2022-10-01 22:35:35.000', 54),
         (NEXT VALUE FOR SEQ_ORD_ID, 3, 1, '2022-10-02 22:37:49.000', 24.2),
         (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2022-11-05 22:38:04.000', 13),
-        (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2023-01-02 22:38:46.000', 18),
-        (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2023-01-03 22:38:46.000', 14.99);
+        (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2024-01-02 22:38:46.000', 18),
+        (NEXT VALUE FOR SEQ_ORD_ID, 3, 3, '2024-01-03 22:38:46.000', 14.99);
 
 INSERT INTO ORDER_HISTORY (OrS_Id, Ord_Id, OrH_Description, OrH_Date)
-VALUES  (1, 1, 'Order placed', '2023-02-01 22:33:12.000'),
-        (2, 1, 'Order shipped', '2023-02-01 22:40:12.000'),
-        (3, 1, 'Order delivered', '2023-02-01 23:40:12.000'),
+VALUES  (1, 1, 'Order placed', '2024-02-01 22:33:12.000'),
+        (2, 1, 'Order shipped', '2024-02-01 22:40:12.000'),
+        (3, 1, 'Order delivered', '2024-02-01 23:40:12.000'),
         (1, 2, 'Order placed', '2022-08-05 22:33:47.000'),
         (1, 3, 'Order placed', '2022-08-09 22:34:52.000'),
         (1, 4, 'Order placed', '2022-08-24 22:35:13.000'),
         (1, 5, 'Order placed', '2022-10-01 22:35:35.000'),
         (1, 6, 'Order placed', '2022-10-02 22:37:49.000'),
         (1, 7, 'Order placed', '2022-11-05 22:38:04.000'),
-        (1, 8, 'Order placed', '2023-01-02 22:38:46.000'),
-        (1, 9, 'Order placed', '2023-01-03 22:38:46.000');
+        (1, 8, 'Order placed', '2024-01-02 22:38:46.000'),
+        (1, 9, 'Order placed', '2024-01-03 22:38:46.000');
 
 INSERT INTO ORDER_LINE (Boo_ISBN, Ord_Id, OrL_Quantity, OrL_Tot_Price, OrL_Price)
 VALUES  ('978-0439136358', 3, 1, 14.6, 14.6),

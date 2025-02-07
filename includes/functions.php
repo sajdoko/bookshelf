@@ -95,6 +95,14 @@ require_once dirname(__DIR__) .'/includes/db_conn.php';
     return false;
   }
 
+  function insertUser($query, $params) {
+      global $conn;
+      $stmt = $conn->prepare($query);
+      $stmt->execute($params);
+      return $stmt->rowCount();
+  }
+
+
   /**
    * Get a books by its isbn.
    *

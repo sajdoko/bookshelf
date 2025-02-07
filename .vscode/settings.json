@@ -1,0 +1,20 @@
+{
+  "sqltools.connections": [
+    {
+      "mssqlOptions": {
+        "appName": "SQLTools",
+        "useUTC": true,
+        "encrypt": true
+      },
+      "previewLimit": 50,
+      "server": "bookshelf-server.database.windows.net",
+      "port": 1433,
+      "driver": "MSSQL",
+      "name": "sqlServer Azure",
+      "group": "bookshelf",
+      "database": "bookshelf",
+      "username": "bookshelf-server-admin",
+      "password": "0W2etZoJjOWYSl9@6"
+    }
+  ]
+}

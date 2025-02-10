@@ -1,8 +1,5 @@
 <?php
-  // Include database connection
-  require_once dirname(__FILE__, 3).'/includes/db_conn.php';
-  require_once dirname(__FILE__, 3).'/includes/functions.php';
-  require_once dirname(__FILE__, 1).'/admin_functions.php';
+    require_once dirname(__FILE__, 3) . '/autoload.php';
   sec_session_start();
   $logged_in_employee = login_check_employee();
 
@@ -26,7 +23,6 @@
     <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
     <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
     <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
-    <link rel='manifest' href='/site.webmanifest'>
 </head>
 
 <body>

@@ -136,9 +136,9 @@ class CartController {
 
       $paypal_email = 'sajdoko-facilitator@gmail.com';
       $paypal_url   = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-      $return_url   = 'https://bookshelf.test/thank-you';
-      $cancel_url   = 'https://bookshelf.test/checkout';
-      $notify_url   = 'https://bookshelf.test/includes/paypal_ipn.php';
+      $return_url   = 'http://' . $_SERVER['HTTP_HOST'] . '/thank-you';
+      $cancel_url   = 'http://' . $_SERVER['HTTP_HOST'] . '/checkout';
+      $notify_url   = 'http://' . $_SERVER['HTTP_HOST'] . '/includes/paypal_ipn.php';
 
       if (! $user_id) {
         // REGISTER Customer
@@ -171,18 +171,15 @@ class CartController {
               $_SESSION['checkout_errors'][] = '<p class="text-danger">You are already registered with this email: ' . $email . '</p>';
             } else {
               $customer = CustomerModel::addOneCustomer($first_name, $last_name, $email, $password, $phone);
+
               if (! isset($customer['Cus_Id'])) {
                 $_SESSION['checkout_errors'][] = '<p class="text-danger">Registration failure: INSERT CUSTOMER</p>';
               } else {
-                if (CustomerModel::addCustomerAddress($customer['Cus_Id'], $street, $zip, $city, $country_id)) {
-                  if (login_customer($email, $password_str)) {
-                    $user_id = $customer['Cus_Id'];
-                  } else {
-                    header('Location: /login');
-                    exit();
-                  }
+                if (login_customer($email, $password_str)) {
+                  $user_id = $customer['Cus_Id'];
                 } else {
-                  $_SESSION['checkout_errors'][] = '<p class="text-danger">Your address could not be saved!</p>';
+                  header('Location: /login');
+                  exit();
                 }
               }
             }

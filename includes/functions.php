@@ -1,7 +1,4 @@
 <?php
-require_once dirname(__DIR__) .'/includes/db_conn.php';
-
-
   /**
    * Get all the rows from the database for the given query.
    *
@@ -203,8 +200,6 @@ require_once dirname(__DIR__) .'/includes/db_conn.php';
 
       // Check if the password is correct
       if (password_verify($Cus_Pass, $user['Cus_Pass'])) {
-        // Start a new session
-        session_start();
 
         // Store the user_id and email in the session
         $_SESSION['Cus_Id'] = $user['Cus_Id'];

@@ -5,10 +5,7 @@
 
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && $data) {
-    // Include database connection
-    require_once dirname(__FILE__, 3).'/includes/db_conn.php';
-    require_once dirname(__FILE__, 3).'/includes/functions.php';
-    require_once dirname(__FILE__, 1).'/admin_functions.php';
+    require_once dirname(__FILE__, 3) . '/autoload.php';
     sec_session_start();
     if (!login_check_employee()) {
       http_response_code(403);
@@ -109,13 +106,42 @@
           exit(json_encode($resp));
         }
         if ($form_action == 'delete') {
-          if (executeQuery('DELETE FROM CUSTOMER WHERE Cus_Id = ?', [$Cus_Id])) {
-            $resp['status'] = 'success';
-            $resp['message'] = 'Customer deleted!';
-          }
-          else {
+          // Check for related orders
+          $related_orders = executeQuery('SELECT COUNT(*) as count FROM CUS_ORDER WHERE Cus_Id = ?', [$Cus_Id]);
+          if ($related_orders === false) {
             $resp['status'] = 'danger';
-            $resp['message'] = 'The Customer could not be deleted!';
+            $resp['message'] = 'The Customer could not be deleted because there are related orders!';
+          } else {
+            // Check for related addresses
+            $related_addresses = executeQuery('SELECT COUNT(*) as count FROM ADDRESS WHERE Cus_Id = ?', [$Cus_Id]);
+            if ($related_addresses === false) {
+              $resp['status'] = 'danger';
+              $resp['message'] = 'The Customer could not be deleted because there are related addresses!';
+            } else {
+              // Get CUS_ORDER ids
+              $orders = retrieveAllRows('SELECT Ord_Id FROM CUS_ORDER WHERE Cus_Id = ?', [$Cus_Id]);
+              executeQuery('DELETE FROM ADDRESS WHERE Cus_Id = ?', [$Cus_Id]);
+
+              // Get CUS_ORDER ids
+              $orders = retrieveAllRows('SELECT Ord_Id FROM CUS_ORDER WHERE Cus_Id = ?', [$Cus_Id]);
+              foreach ($orders as $order) {
+                // Delete related order lines
+                executeQuery('DELETE FROM ORDER_LINE WHERE Ord_Id = ?', [$order['Ord_Id']]);
+                // Delete related order history
+                executeQuery('DELETE FROM ORDER_HISTORY WHERE Ord_Id = ?', [$order['Ord_Id']]);
+              }
+
+              // Delate related orders
+              executeQuery('DELETE FROM CUS_ORDER WHERE Cus_Id = ?', [$Cus_Id]);
+
+              if (executeQuery('DELETE FROM CUSTOMER WHERE Cus_Id = ?', [$Cus_Id])) {
+                $resp['status'] = 'success';
+                $resp['message'] = 'Customer deleted!';
+              } else {
+                $resp['status'] = 'danger';
+                $resp['message'] = 'The Customer could not be deleted!';
+              }
+            }
           }
           exit(json_encode($resp));
         }
@@ -160,6 +186,11 @@
           $resp['message'] = "Customer could not be $form_action ed!";
         }
         $resp['post'] = $data;
+        exit(json_encode($resp));
+      }
+      else if ($data['model'] == 'order') {
+        $resp['status'] = 'warning';
+        $resp['message'] = "This functionality is not yet implemented!";
         exit(json_encode($resp));
       }
     }

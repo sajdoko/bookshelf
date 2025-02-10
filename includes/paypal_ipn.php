@@ -30,6 +30,9 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
 curl_setopt($ch, CURLOPT_HTTPHEADER, ['Connection: Close']);
 $res = curl_exec($ch);
+if (curl_errno($ch)) {
+    error_log('cURL error: ' . curl_error($ch));
+}
 curl_close($ch);
 
 // Inspect IPN validation result and act accordingly

@@ -1,7 +1,4 @@
 <?php
-// Include database connection
-  require_once dirname(__FILE__, 3).'/includes/db_conn.php';
-
   /**
    * Perform the login operation.
    *

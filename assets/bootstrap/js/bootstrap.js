@@ -4504,7 +4504,10 @@ function isElement(obj) {
   return obj instanceof Element || obj instanceof HTMLDocument;
 }
 
-module.exports = {
-  getUID,
-  isElement
-};
+// Export functions for Node.js environment
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = {
+    getUID,
+    isElement
+  };
+}

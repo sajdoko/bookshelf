@@ -125,9 +125,31 @@ class BookModel {
     return retrieveAllRows($query);
   }
 
-  public static function retrieveCustomerByEmail($email) {
-    $query = 'SELECT Cus_Id, Cus_Email, Cus_Pass FROM CUSTOMER WHERE Cus_Email = ?';
-    return retrieveOneRow($query, [$email]);
+  public static function getBookByIsbn($isbn) {
+    $query = "SELECT * FROM BOOK WHERE Boo_ISBN = ?;";
+    return retrieveOneRow($query, [$isbn]);
   }
 
+  public static function getBooksByIsbns($isbns) {
+    $array_to_question_marks = implode(',', array_fill(0, count($isbns), '?'));
+    $query = "SELECT *
+            FROM BOOK
+            JOIN BOOK_LANGUAGE BL on BL.BoL_Id = BOOK.BoL_Id
+            JOIN PUBLISHER P on P.Pub_Id = BOOK.Pub_Id
+            LEFT JOIN BOOK_AUTHOR BA on BOOK.Boo_ISBN = BA.Boo_ISBN
+            LEFT JOIN AUTHOR A on A.Aut_Id = BA.Aut_Id
+            LEFT JOIN BOOK_GENRE BG on BOOK.Boo_ISBN = BG.Boo_ISBN
+            LEFT JOIN GENRE G on G.Gen_Id = BG.Gen_Id
+            WHERE BOOK.Boo_ISBN IN ($array_to_question_marks);
+        ";
+    return retrieveAllRows($query, $isbns);
+  }
+
+  public static function getBookPrice($isbn) {
+    $book = self::getBookByIsbn($isbn);
+    if (!$book) {
+      return 0;
+    }
+    return $book['Boo_Price'];
+  }
 }

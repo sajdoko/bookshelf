@@ -1,6 +1,8 @@
 <?php
 
 class AuthController {
+
+
   public function login() {
 
     $error_msg = "";
@@ -11,9 +13,7 @@ class AuthController {
 
       // Check if email and password are not empty
       if (!empty($Cus_Email) || !empty($Cus_Pass)) {
-
-        // Use the new method from BookModel
-        $user = BookModel::retrieveCustomerByEmail($Cus_Email);
+        $user = CustomerModel::retrieveCustomerByEmail($Cus_Email);
 
         // Check if user exists in the database
         if ($user) {
@@ -72,7 +72,7 @@ class AuthController {
           $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
           $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-          $user = BookModel::retrieveCustomerByEmail($email);
+          $user = CustomerModel::retrieveCustomerByEmail($email);
           // Check if email already exists
           if ($user) {
             $error_msg .= '<p class="text-danger">You are allready registered with this email: '.$email.'</p>';

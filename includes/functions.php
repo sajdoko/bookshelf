@@ -301,20 +301,3 @@ require_once dirname(__DIR__) .'/includes/db_conn.php';
 
     return retrieveAllRows($query, [$Ord_Id]);
   }
-
-  /**
-   * Get the books price.
-   *
-   * @param $Boo_ISBN
-   *
-   * @return float
-   */
-  function get_book_price($Boo_ISBN): float
-  {
-    $book = get_book_by_isbn($Boo_ISBN);
-    if (!$book) {
-      return 0;
-    }
-
-    return $book['Boo_Price'];
-  }

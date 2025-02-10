@@ -1,6 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/includes/db_conn.php';
-require_once dirname(__DIR__) . '/includes/functions.php';
+require_once dirname(__DIR__) . '/autoload.php';
 
 // Read POST data
 $raw_post_data = file_get_contents('php://input');
@@ -48,8 +47,7 @@ if (strcmp($res, "VERIFIED") == 0) {
     if ($payment_status == "Completed") {
         // Update order status in the database
         $order_id = $_POST['custom'];
-        $query = 'UPDATE CUS_ORDER SET Ord_Status = ? WHERE Ord_Id = ?';
-        executeQuery($query, ['Paid', $order_id]);
+        CusOrderModel::addOrderHistory(2, $order_id, 'Paid');
     }
 } else if (strcmp($res, "INVALID") == 0) {
     // The IPN is invalid, log for manual investigation

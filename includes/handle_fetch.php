@@ -10,8 +10,8 @@
 
     if (isset($data['add_to_cart'])) {
 
-      $Boo_ISBN = $data['Boo_ISBN'];
-      $quantity = (int) $data['quantity'];
+      $Boo_ISBN = sanitizeInput($data['Boo_ISBN']);
+      $quantity = (int) sanitizeInput($data['quantity']);
 
       $book = get_book_by_isbn($Boo_ISBN);
       if ($book && ($book['Boo_QOH'] > 0 && $book['Boo_QOH'] >= $quantity)) {

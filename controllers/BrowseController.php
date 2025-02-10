@@ -6,10 +6,10 @@ class BrowseController {
         $books = [];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $title = trim($_POST["title"]);
-            $author = trim($_POST["author"] ?? '');
-            $language = trim($_POST["language"] ?? '');
-            $publisher = trim($_POST["publisher"] ?? '');
+            $title = sanitizeInput($_POST["title"]);
+            $author = sanitizeInput($_POST["author"] ?? '');
+            $language = sanitizeInput($_POST["language"] ?? '');
+            $publisher = sanitizeInput($_POST["publisher"] ?? '');
 
             if (empty($title) && empty($author) && empty($language) && empty($publisher)) {
                 $errors[] = "At least one search field is required.";

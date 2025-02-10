@@ -15,8 +15,8 @@ class CartController {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (isset($_POST['Boo_ISBN'], $_POST['quantity'])) {
 
-        $Boo_ISBN = $_POST['Boo_ISBN'];
-        $quantity = (int) $_POST['quantity'];
+        $Boo_ISBN = sanitizeInput($_POST['Boo_ISBN']);
+        $quantity = (int) sanitizeInput($_POST['quantity']);
 
         $book = BookModel::getBookByIsbn($Boo_ISBN);
         if ($book && $quantity > 0) {
@@ -156,14 +156,9 @@ class CartController {
             $_SESSION['checkout_errors'][] = '<p class="text-danger">Invalid password configuration.</p>';
           } else {
 
-            $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $last_name  = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $phone      = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-            $street     = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $zip        = filter_input(INPUT_POST, 'zip', FILTER_SANITIZE_NUMBER_INT);
-            $city       = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $country_id = filter_input(INPUT_POST, 'country', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $first_name = sanitizeInput($_POST['first_name']);
+            $last_name  = sanitizeInput($_POST['last_name']);
+            $phone      = sanitizeInput($_POST['phone']);
 
             $user = CustomerModel::retrieveCustomerByEmail($email);
             // Check if email already exists
